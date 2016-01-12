@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
 //    texto.setPos(0, -30);
 //    cena.addItem(&texto);
 
-
-
+    //qDebug("%d", int(255*0.5));
+    //qDebug("%g", exp(-(pow((0)/10.0, 2.0)/(pow(2, 2.0)/2.0)))*exp(-(pow((0)/10.0, 2.0)/(pow(2, 2.0)/2.0)))/(2*3.14159265359*pow(2,2.0)));
     //Exibir o stage
     QGraphicsView view(&cena);
     view.resize(700, 500);

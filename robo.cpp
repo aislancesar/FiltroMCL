@@ -45,7 +45,14 @@ void robo::Andar(float u[])
     float r = GaussRnd(u[1], this->trnerr);
     this->setX(this->x()+x);
     this->setY(this->y()+y);
-    this->setRotation(this->rotation()+r);
+    if (this->rotation()+r > 360)
+    {
+        this->setRotation(this->rotation()+r-360.0);
+    }else if(this->rotation()+r < -360){
+        this->setRotation(this->rotation()+r+360.0);
+    }else{
+        this->setRotation(this->rotation()+r);
+    }
 }
 
 //void robo::GiraAH()

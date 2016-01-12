@@ -16,15 +16,17 @@ public:
     float MovErr = 1;
     float RotErr = 1;
     float MedErr = 1;
+    float wf = 0.5, ws = 0.1;
 
 
     Particulas(QColor c, int Q);
 
-    void Atualiza();
+    void Atualiza(float z[]);
     void Move(float u[]);
     void Mede(float z[]);
     void Erros(float Mov, float Rot, float Med);
     void MudaQtd(int nQtd);
+    void DesRobo();
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem
