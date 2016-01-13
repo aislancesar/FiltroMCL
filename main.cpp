@@ -5,30 +5,17 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    // Changes the base of qrand()
     GaussRnd(0,0);
-    //Criando o stage
+
+    // Creates a scene
     AGS cena;
+    // Borders
     cena.addRect(0, 0, 600, 400, Qt::DashLine, Qt::NoBrush);
     cena.addEllipse(-3, -3, 6, 6, Qt::SolidLine, Qt::black);
-
-    //for (int i = 0; i < 1000; i++)
-        //qDebug("f(%f) = %g", i*0.1, qExp(-(qPow(i*0.1, 2.0)/(qPow(1, 2.0)/2.0)))*qExp(-(qPow(i*0.1, 2.0)/(qPow(1, 2.0)/2.0)))/(2*3.14159265359*qPow(1,2.0)));
-//    qDebug("%g", qExp(-(qPow(1, 2.0)/(qPow(1, 2.0)/2.0)))/(2*3.14159265359*qPow(1,2.0))*qExp(-(qPow(1, 2.0)/(qPow(1, 2.0)/2.0)))/(2*3.14159265359*qPow(1,2.0)));
-//    qDebug("%g", qExp(-(qPow(100, 2.0)/(qPow(1, 2.0)/2.0)))/(2*3.14159265359*qPow(1,2.0))*qExp(-(qPow(100, 2.0)/(qPow(1, 2.0)/2.0)))/(2*3.14159265359*qPow(1,2.0)));
-
-    //Caixa de Texto
-//    QGraphicsTextItem texto;
-//    texto.setPos(0, -30);
-//    cena.addItem(&texto);
-
-    //qDebug("%d", int(255*0.5));
-    //qDebug("%g", exp(-(pow((0)/10.0, 2.0)/(pow(2, 2.0)/2.0)))*exp(-(pow((0)/10.0, 2.0)/(pow(2, 2.0)/2.0)))/(2*3.14159265359*pow(2,2.0)));
-    //Exibir o stage
     QGraphicsView view(&cena);
     view.resize(700, 500);
     view.show();
-
-    //cena.R = &D;
 
     return app.exec();
 }

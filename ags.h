@@ -6,17 +6,16 @@
 #include <fun.h>
 #include <particulas.h>
 
-// Minha classe de Cena
+// Class used to hold the objects on screen
 class AGS : public QGraphicsScene
 {
 public:
     AGS();
-    robo *T;
-    Particulas *P;
-    QGraphicsTextItem *texto;
-   // void AtualizaPart()
+    robo *T; // Holds the robot
+    Particulas *P; // Holds the particles
 
 protected:
+    // Keyboard control
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 };
 #endif // AGS_H

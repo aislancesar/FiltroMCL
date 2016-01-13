@@ -2,19 +2,28 @@
 
 float GaussRnd(float mu, float sig)
 {
+    // Pseudo-Gaussian-Random!!!
+    // Changes the qrand() base based on the elapsed miliseconds
     int q = QTime::currentTime().msec();
     qsrand(q);
+    // Starts it
     float r[1000];
     float w[1000];
     float a = 3.716922*sig/1000;
     float rnd = 0;
+
+    // Generates a vector of weights
     for (int i=0; i<1000; i++)
     {
         r[i] = a*i;
         w[i] = exp(-pow(a*i,2)/(2*pow(sig,2)));
         rnd += w[i];
     }
+
+    // Takes a "random" number between 0 and 1;
     rnd *= (qrand()%1000)/1000.0;
+
+    // Select a position of the vectors and returns it
     for (int i=0; i<1000; i++)
     {
         if (w[i]>rnd)
@@ -22,5 +31,7 @@ float GaussRnd(float mu, float sig)
         else
             rnd -= w[i];
     }
+
+    // If it goes wrong return mean
     return mu;
 }

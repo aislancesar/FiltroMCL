@@ -7,21 +7,22 @@
 class robo : public QGraphicsItem
 {
 public:
+    // Sets name and color of the robot
     QString nome;
     QColor cor;
-    int tipo;
-    void Andar(float u[]);
-//    void GiraAH();
-//    void GiraH();
-    float spd = 10, spderr = 1, trn = 10, trnerr = 1, meaerr = 1;
-    void Medida(float z[]);
 
+    // Functions
+    void Andar(float u[]); // Moves the robot
+    float spderr = 1; // Movement Error
+    float trnerr = 1; // Turn Error
+    float meaerr = 1; // Measurement Error
+
+    void Medida(float z[]); // Measures the position
+    void setVars (float velerr, float roterr, float mederr); // No comments
+
+    // Needed functions
     robo (QString n, QColor c, float x, float y, float d);
-
-    void setVars (float vel, float velerr, float rot, float roterr, float mederr);
-
     QRectF boundingRect() const;
-
     void paint(QPainter *painter, const QStyleOptionGraphicsItem
                *option, QWidget *widget);
 };
