@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     cena.addEllipse(-3, -3, 6, 6, Qt::SolidLine, Qt::black);
     QGraphicsView view(&cena);
     view.resize(700, 500);
-    view.show();
+    view.show();        
 
     return app.exec();
 }

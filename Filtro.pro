@@ -16,3 +16,5 @@ HEADERS += \
     particulas.h
 
 DISTFILES +=
+
+QMAKE_CXXFLAGS += -std=c++11

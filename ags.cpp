@@ -3,7 +3,7 @@
 AGS::AGS()
 {
     // Generates the new robot and particle set
-    T = new robo("M", Qt::green, 100, 100, 50);
+    T = new robo("T", Qt::green, 100, 100, 50);
     P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
