@@ -7,7 +7,8 @@ AGS::AGS()
     P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
-    P->Erros(5, 5, 2);
+    T->setVars(2, 2, 2);
+    P->Erros(10, 10, 10);
     // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(T);
@@ -32,6 +33,22 @@ void AGS::keyPressEvent(QKeyEvent *event)
         T->Medida(z);
         P->Atualiza(u, z);
         P->update(-10, -10, 610, 410); // Redraw particles
+        break;
+    case Qt::Key_Q: // Turns counter-clock-wise and updates
+        u[0] = 10.0;
+        u[1] = -10.0;
+        T->Andar(u);
+        T->Medida(z);
+        P->Atualiza(u, z);
+        P->update(-10, -10, 610, 410);
+        break;
+    case Qt::Key_E: // Turns counter-clock-wise and updates
+        u[0] = 10.0;
+        u[1] = 10.0;
+        T->Andar(u);
+        T->Medida(z);
+        P->Atualiza(u, z);
+        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
@@ -73,14 +90,29 @@ void AGS::keyPressEvent(QKeyEvent *event)
         P->Move(u);
         P->update(-10, -10, 610, 410);
         break;
+    case Qt::Key_U: // Just turns counter-clock-wise
+        u[0] = 10.0;
+        u[1] = -10.0;
+        T->Andar(u);
+        P->Move(u);
+        P->update(-10, -10, 610, 410);
+        break;
+    case Qt::Key_O: // Just turns clock-wise
+        u[0] = 10.0;
+        u[1] = 10.0;
+        T->Andar(u);
+        P->Move(u);
+        P->update(-10, -10, 610, 410);
+        break;
     case Qt::Key_Space: // Kidnappes the robot
         T->setX(qrand()%600);
         T->setY(qrand()%400);
         T->setRotation(qrand()%360);
         break;
     case Qt::Key_Enter: // Shows mean of the particles and the robot position
-        P->DesRobo();
-        qDebug("Robo: X.%g Y.%g", T->x(), T->y());
+        qDebug("---");
+        P->DesRobo(T->x(), T->y());
+        qDebug("Robo: X.%g Y.%g R.%g", T->x(), T->y(), T->rotation());
         qDebug("---");
         break;
     }

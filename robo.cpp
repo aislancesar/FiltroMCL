@@ -28,6 +28,8 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->drawLine(linha);
     linha.setAngle(-45);
     painter->drawLine(linha);
+    option = option;
+    widget = widget;
 }
 
 // ---
@@ -43,13 +45,8 @@ void robo::Andar(float u[])
     // I'm using the x, y and rotation of the class QGraphicsItem
     float c = 0.01745329251; // pi/180
 
-    // Not that I'm using my Pseudo-Gauss-Random to generate the statistical errors of movement
-    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*c);
-    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*c);
+    // Note that I'm using my Pseudo-Gauss-Random to generate the statistical errors of movement
     float r = GaussRnd(u[1], trnerr);
-
-    this->setX(this->x()+x);
-    this->setY(this->y()+y);
 
     // This is normalizing the angle
     if (this->rotation()+r > 360)
@@ -60,6 +57,12 @@ void robo::Andar(float u[])
     }else{
         this->setRotation(this->rotation()+r);
     }
+
+    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*c);
+    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*c);
+
+    this->setX(this->x()+x);
+    this->setY(this->y()+y);
 }
 
 void robo::Medida(float z[])

@@ -32,7 +32,7 @@ public:
     void Mede(float z[]); // Aplies the measurement model (updates the weights)
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
-    void DesRobo(); // Control function (ignore this one)
+    void DesRobo(float rx, float ry); // Control function (ignore this one)
 
     // These are needed to draw the particles
     QRectF boundingRect() const;

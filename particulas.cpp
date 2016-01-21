@@ -16,7 +16,7 @@ Particulas::Particulas(QColor c, int Q)
     }
 }
 
-void Particulas::DesRobo()
+void Particulas::DesRobo(float rx, float ry)
 {
     float x = 0, y = 0, rc = 0, rs = 0, w = 0;
     // Takes the average of the particles and gives the aproximated position of the Robot given by the particles
@@ -24,12 +24,16 @@ void Particulas::DesRobo()
     {
         x += Px[i]*Pw[i];
         y += Py[i]*Pw[i];
+        rc += cos(Pr[i])*Pw[i];
+        rs += sin(Pr[i])*Pw[i];
         w += Pw[i];
     }
     x /= w;
     y /= w;
-    // It doesn't makes sense doing it for the angle, since it is not used for the calculation of the weight
-    qDebug("Particulas: x.%g y.%g", x, y);
+    float r = atan2(rs, rc)*180.0/3.1416;
+    float d = sqrt(pow(x-rx,2)+pow(y-ry,2));
+    qDebug("Erro: %g", d);
+    qDebug("Particulas: x.%g y.%g r.%g", x, y, r);
 }
 
 void Particulas::MudaQtd(int nQtd)
@@ -58,21 +62,26 @@ void Particulas::Atualiza(float u[], float z[])
     // These are constants for the old set of particles
     float Max = 0;
     float wa = 0;
-    float pi = 2*3.14159265359;
+    int C = 0;
+    //float pi = 2*3.14159265359;
     // Finds out the biggest weight of the particles set and the average of all weights
     for(int i = 0; i < Qtd; i++)
     {
         if (Pw[i] > Max)
         {
             Max = Pw[i];
+        }else if (Pw[i] < 0.053990967/MedErr)
+        {
+            C++;
+            Pw[i] = 0;
         }
         wa += Pw[i];
     }
     wa /= Qtd;
     // Finds the current values of ws and wf to aply the AMCL algorithm
     wf += 0.5*(wa-wf);
-    ws += 0.1*(wa-ws);
-    Max *= 2;
+    ws += 0.3*(wa-ws);
+    qDebug("- wf %g - ws %g - wa %g -", wf, ws, wa);
     // This part selects the particles
     float rnd = 0;
     int c = qrand()%Qtd;
@@ -85,7 +94,7 @@ void Particulas::Atualiza(float u[], float z[])
             Pnr[i] = qrand()%360;
             Pnw[i] = 0;
         }else{
-            rnd += Max * (qrand()%1000000)/1000000.0;
+            rnd += 2* Max * (qrand()%1000000)/1000000.0;
             while (Pw[c] < rnd)
             {
                 rnd -= Pw[c];
@@ -106,16 +115,7 @@ void Particulas::Atualiza(float u[], float z[])
         Pw[i] = Pnw[i];
     }
     // This uses the ws factor to update the number of particles
-    if (ws > 0.02)
-    {
-        this->MudaQtd(50);
-    }
-    else if(ws < 0.01)
-    {
-        this->MudaQtd(1000);
-    }else{
-        this->MudaQtd(int(1950-95000*ws));
-    }
+    //MudaQtd(Qtd - C);
 }
 
 void Particulas::Erros(float Mov, float Rot, float Med)
@@ -131,9 +131,9 @@ void Particulas::Move(float u[])
     float c = 0.01745329251; // pi/180
     for(int i=0; i<Qtd; i++)
     {
+        Pr[i] += GaussRnd(u[1], RotErr);
         Px[i] += GaussRnd(u[0], MovErr)*cos(Pr[i]*c);
         Py[i] += GaussRnd(u[0], MovErr)*sin(Pr[i]*c);
-        Pr[i] += GaussRnd(u[1], RotErr);
     }
 }
 
@@ -141,9 +141,13 @@ void Particulas::Mede(float z[])
 {
     // Calculates the weight of the particles in the set
     float pi = 2*3.14159265359;
+    float w;
     for (int i=0; i<Qtd; i++)
-    {        
-        Pw[i] = exp(-(pow((Px[i]-z[0])/10.0, 2.0)/(pow(MedErr, 2.0)/2.0)))*exp(-(pow((Py[i]-z[1])/10.0, 2.0)/(pow(MedErr, 2.0)/2.0)))/(pi*pow(MedErr,2.0));
+    {
+        w = 1;
+        w *= exp(-(pow((Px[i]-z[0]), 2.0)/(pow(MedErr, 2.0)/2.0)));
+        w *= exp(-(pow((Py[i]-z[1]), 2.0)/(pow(MedErr, 2.0)/2.0)));
+        Pw[i] = w/(sqrt(pi)*MedErr);
     }
 }
 
@@ -166,4 +170,6 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
         linha.setAngle(-Pr[i]);
         painter->drawLine(linha);
     }
+    option = option;
+    widget = widget;
 }
