@@ -10,11 +10,12 @@ int main(int argc, char *argv[])
 
     // Creates a scene
     AGS cena;
+
     // Borders
-    cena.addRect(0, 0, 600, 400, Qt::DashLine, Qt::NoBrush);
-    cena.addEllipse(-3, -3, 6, 6, Qt::SolidLine, Qt::black);
+//    cena.addRect(0, 0, 600, 400, Qt::DashLine, Qt::NoBrush);
+//    cena.addEllipse(-3, -3, 6, 6, Qt::SolidLine, Qt::black);
     QGraphicsView view(&cena);
-    view.resize(700, 500);
+    view.resize(1000, 700);
     view.show();
 
     return app.exec();

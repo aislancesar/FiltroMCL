@@ -6,6 +6,7 @@ float GaussRnd(float mu, float sig)
     // Pseudo-Gaussian-Random!!!
     // Changes the qrand() base based on the elapsed miliseconds
     int q = sqrt(pow(QTime::currentTime().msec()*QTime::currentTime().second(), 3));
+    qsrand(q);
     std::default_random_engine rnd (q);
     std::normal_distribution<double> dist (mu, sig);
 
@@ -39,4 +40,9 @@ float GaussRnd(float mu, float sig)
 
 //    // If it goes wrong return mean
 //    return mu;
+}
+
+float pi()
+{
+    return 3.14159265358979323846;
 }

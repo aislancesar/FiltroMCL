@@ -62,7 +62,6 @@ void Particulas::Atualiza(float u[], float z[])
     // These are constants for the old set of particles
     float Max = 0;
     float wa = 0;
-    int C = 0;
     //float pi = 2*3.14159265359;
     // Finds out the biggest weight of the particles set and the average of all weights
     for(int i = 0; i < Qtd; i++)
@@ -70,10 +69,6 @@ void Particulas::Atualiza(float u[], float z[])
         if (Pw[i] > Max)
         {
             Max = Pw[i];
-        }else if (Pw[i] < 0.053990967/MedErr)
-        {
-            C++;
-            Pw[i] = 0;
         }
         wa += Pw[i];
     }
@@ -161,8 +156,14 @@ QRectF Particulas::boundingRect() const
 void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
                  *option, QWidget *widget)
 {
+    float x=0, y=0, rc=0, rs=0, w=0;
     for(int i = 0; i<Qtd; i++)
     {
+        x += Px[i]*Pw[i];
+        y += Py[i]*Pw[i];
+        rc += cos(Pr[i])*Pw[i];
+        rs += sin(Pr[i])*Pw[i];
+        w += Pw[i];
         painter->setBrush(Qt::NoBrush);
         painter->setPen(QPen(cor));
         painter->drawEllipse(Px[i]-1.5, Py[i]-1.5, 3, 3);
@@ -170,6 +171,19 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
         linha.setAngle(-Pr[i]);
         painter->drawLine(linha);
     }
+
+    x /= w;
+    y /= w;
+    float r = atan2(rs, rc)*180.0/3.1416;
+
+    painter->setBrush(QBrush(Qt::white));
+    painter->drawEllipse(x-10, y-10, 20, 20);
+    QLineF linha(x, y, x+10, y);
+    linha.setAngle(r+45);
+    painter->drawLine(linha);
+    linha.setAngle(r-45);
+    painter->drawLine(linha);
+
     option = option;
     widget = widget;
 }

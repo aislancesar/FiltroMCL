@@ -5,5 +5,6 @@
 #include <QTime>
 
 float GaussRnd(float mu, float sig);
+float pi();
 
 #endif // FUN_H

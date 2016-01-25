@@ -2,21 +2,45 @@
 
 AGS::AGS()
 {
+    // Desenha o campo
+    this->setBackgroundBrush(Qt::darkGreen);
+    QPen pena = QPen(Qt::white, 2);
+    this->addRect(0, 0, 900, 600, pena, Qt::NoBrush);
+    this->addRect(0, 150, 150, 300, pena, Qt::NoBrush);
+    this->addRect(750, 150, 150, 300, pena, Qt::NoBrush);
+    this->addLine(450, 0, 450, 600, pena);
+    this->addEllipse(350, 200, 200, 200, pena, Qt::NoBrush);
+    // Landmarks L
+    for (int i = 0; i < 8; i++)
+        this->addEllipse(LL[i][0]-10, LL[i][1]-10, 20, 20, QPen(QColor(0, 255, 255)), Qt::NoBrush);
+
+    // Landmarks T
+    for (int i = 0; i < 6; i++)
+        this->addEllipse(LT[i][0]-10, LT[i][1]-10, 20, 20, QPen(QColor(255, 255, 0)), Qt::NoBrush);
+
+    // Landmarks X
+    for (int i = 0; i < 2; i++)
+        this->addEllipse(LX[i][0]-10, LX[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
+
     // Generates the new robot and particle set
     T = new robo("T", Qt::green, 100, 100, 50);
-    P = new Particulas(QColor(0, 0, 255), 1000);
+//    P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
     T->setVars(2, 2, 2);
-    P->Erros(10, 10, 10);
-    // It seens that bigger errors causes the AMCL to converges faster
+//    P->Erros(10, 10, 10);
+   // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(T);
-    this->addItem(P);
+//    this->addItem(P);
 
     // Draws the robot over the particles (unneeded)
     T->setZValue(1000);
-    P->setZValue(30);
+//    P->setZValue(100);
+
+    T->landmarks(LL, LT, LX);
+
+
 }
 
 void AGS::keyPressEvent(QKeyEvent *event)
@@ -108,6 +132,11 @@ void AGS::keyPressEvent(QKeyEvent *event)
         T->setX(qrand()%600);
         T->setY(qrand()%400);
         T->setRotation(qrand()%360);
+        float z[16];
+        T->Medida(z);
+        qDebug("---");
+        this->update(-50, -50, 1000, 700);
+        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
         break;
     case Qt::Key_Enter: // Shows mean of the particles and the robot position
         qDebug("---");
