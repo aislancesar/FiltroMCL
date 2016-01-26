@@ -6,5 +6,6 @@
 
 float GaussRnd(float mu, float sig);
 float pi();
+float Gaussian(float mu, float sig, float x);
 
 #endif // FUN_H

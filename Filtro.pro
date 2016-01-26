@@ -7,13 +7,15 @@ SOURCES += main.cpp \
     robo.cpp \
     ags.cpp \
     particulas.cpp \
-    fun.cpp
+    fun.cpp \
+    mcl.cpp
 
 HEADERS += \
     robo.h \
     ags.h \
     fun.h \
-    particulas.h
+    particulas.h \
+    mcl.h
 
 DISTFILES +=
 

@@ -47,3 +47,7 @@ float pi()
     return 3.14159265358979323846;
 }
 
+float Gaussian(float mu, float sig, float x)
+{
+    return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
+}

@@ -154,6 +154,7 @@ void Particulas::Move(float u[])
 void Particulas::Mede(float zr[])
 {
     float z[16];
+    float d, r;
     for (int c = 0; c < Qtd; c++)
     {
         Pw[c] = 0;
@@ -162,12 +163,12 @@ void Particulas::Mede(float zr[])
 
         for (int i = 0; i < 8; i++)
         {
-            float d = sqrt(pow(LL[i][0]-x(),2)+pow(LL[i][1]-y(),2));
-            float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
+            d = sqrt(pow(LL[i][0]-Px[c],2)+pow(LL[i][1]-Py[c],2));
+            r = atan2((LL[i][1]-Py[c]),(LL[i][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
-            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+
+            if((d < 600) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
                 z[i] = d;
                 int a = i;
@@ -184,12 +185,12 @@ void Particulas::Mede(float zr[])
         }
         for (int i = 8; i < 14; i++)
         {
-            float d = sqrt(pow(LT[i-8][0]-x(),2)+pow(LT[i-8][1]-y(),2));
-            float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
+            d = sqrt(pow(LT[i-8][0]-Px[c],2)+pow(LT[i-8][1]-Py[c],2));
+            r = atan2((LT[i-8][1]-Py[c]),(LT[i-8][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            if((d < 600) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
                 z[i] = d;
                 int a = i;
@@ -206,12 +207,12 @@ void Particulas::Mede(float zr[])
         }
         for (int i = 14; i < 16; i++)
         {
-            float d = sqrt(pow(LX[i-14][0]-x(),2)+pow(LX[i-14][1]-y(),2));
-            float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
+            d = sqrt(pow(LX[i-14][0]-Px[c],2)+pow(LX[i-14][1]-Py[c],2));
+            r = atan2((LX[i-14][1]-Py[c]),(LX[i-14][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            if((d < 600) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
                 z[i] = d;
                 int a = i;
@@ -227,8 +228,17 @@ void Particulas::Mede(float zr[])
             }
         }
 
+        float n = 0;
+
         for (int i = 0; i < 16; i++)
-            Pw[c] += exp(-pow(z[i]-zr[i], 2)/pow(MedErr*z[i]/10, 2))/(sqrt(2*pi())*MedErr*z[i]/10);
+        {
+            n += zr[i];
+            if (zr[i] < 600)
+                Pw[c] += Gaussian(z[i], MedErr, zr[i]);
+                //qDebug("%g", z);
+        }
+        if (n == 600*16) Pw[c] = Gaussian(600, MedErr, 600);
+        qDebug("[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
     }
 }
 
@@ -265,9 +275,9 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->setBrush(QBrush(Qt::white));
     painter->drawEllipse(x-10, y-10, 20, 20);
     QLineF linha(x, y, x+10, y);
-    linha.setAngle(r+45);
+    linha.setAngle(-r+30);
     painter->drawLine(linha);
-    linha.setAngle(r-45);
+    linha.setAngle(-r-30);
     painter->drawLine(linha);
 
     option = option;

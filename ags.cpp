@@ -27,8 +27,8 @@ AGS::AGS()
     P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
-    T->setVars(2, 2, 0.1);
-    P->Erros(2, 2, 0.1);
+    T->setVars(2, 3, 0.1);
+    P->Erros(4, 5, 0.5);
    // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(T);
@@ -39,6 +39,7 @@ AGS::AGS()
     P->setZValue(100);
 
     T->landmarks(LL, LT, LX);
+    P->landmarks(LL, LT, LX);
 
 
 }
@@ -47,7 +48,7 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z[2]; // Measure
+    float z[16]; // Measure
 
     switch (event->key())
     {
@@ -55,35 +56,36 @@ void AGS::keyPressEvent(QKeyEvent *event)
         u[0] = 10.0;
         T->Andar(u);
         T->Medida(z);
+        MCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-//        P->Atualiza(u, z);
+        MCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-//        P->Atualiza(u, z);
+        MCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-//        P->Atualiza(u, z);
+        MCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-//        P->Atualiza(u, z);
+        MCL(P, u, z);
         break;
     case Qt::Key_S: // Removes particles
-        P->MudaQtd(50);
+        P->MudaQtd(1);
         break;
     case Qt::Key_X: // Adds particles
         P->MudaQtd(1000);

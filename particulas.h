@@ -6,9 +6,8 @@
 
 class Particulas : public QGraphicsItem
 {
-    int Qtd; // Quantity of particles, max 1000
-    // Note that only MudaQtd can change this one!
 public:
+    int Qtd; // Quantity of particles, max 1000
     QColor cor; // Color used to draw the particle
     // Here are the vector which holds the informations about the group of particles
     float Px[1000]; // X position

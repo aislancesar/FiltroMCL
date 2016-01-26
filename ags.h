@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include <fun.h>
 #include <particulas.h>
+#include <mcl.h>
 
 // Class used to hold the objects on screen
 class AGS : public QGraphicsScene
