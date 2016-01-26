@@ -97,7 +97,7 @@ void robo::Medida(float z[])
         float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -119,7 +119,7 @@ void robo::Medida(float z[])
         float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -141,7 +141,7 @@ void robo::Medida(float z[])
         float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;

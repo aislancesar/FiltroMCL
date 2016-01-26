@@ -9,11 +9,16 @@ Particulas::Particulas(QColor c, int Q)
     for(int i = 0; i < Q; i++)
     {
         // Note that this generates random particles, but all of them are in a Int state space, even though they are float.
-        Px[i] = qrand()%600;
-        Py[i] = qrand()%400;
-        Pr[i] = qrand()%360;
-        Pw[i] = 0;
+        Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
     }
+}
+
+void Particulas::Nova(float *nPx, float *nPy, float *nPr, float *nPw)
+{
+    *nPx = qrand()%900;
+    *nPy = qrand()%600;
+    *nPr = qrand()%360-180;
+    *nPw = 0;
 }
 
 void Particulas::DesRobo(float rx, float ry)
@@ -43,75 +48,88 @@ void Particulas::MudaQtd(int nQtd)
         // If the quantity is bigger than the older one, we have to generate new random particles
         for(int i = Qtd; i < nQtd; i++)
         {
-            Px[i] = qrand()%600;
-            Py[i] = qrand()%400;
-            Pr[i] = qrand()%360;
-            Pw[i] = 0;
+            Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
         }
     }
     // If not just ignore the particles out of reach
     Qtd = nQtd;
 }
 
-void Particulas::Atualiza(float u[], float z[])
+void Particulas::landmarks(float rLL[8][2], float rLT[6][2], float rLX[2][2])
 {
-    this->Move(u);
-    this->Mede(z);
-    // Generates a new temporary set of particles
-    float Pnx[1000], Pny[1000], Pnr[1000], Pnw[1000];
-    // These are constants for the old set of particles
-    float Max = 0;
-    float wa = 0;
-    //float pi = 2*3.14159265359;
-    // Finds out the biggest weight of the particles set and the average of all weights
-    for(int i = 0; i < Qtd; i++)
+    for (int i = 0; i < 8; i++)
     {
-        if (Pw[i] > Max)
-        {
-            Max = Pw[i];
-        }
-        wa += Pw[i];
+        LL[i][0] = rLL[i][0];
+        LL[i][1] = rLL[i][1];
     }
-    wa /= Qtd;
-    // Finds the current values of ws and wf to aply the AMCL algorithm
-    wf += 0.5*(wa-wf);
-    ws += 0.3*(wa-ws);
-    qDebug("- wf %g - ws %g - wa %g -", wf, ws, wa);
-    // This part selects the particles
-    float rnd = 0;
-    int c = qrand()%Qtd;
-    for(int i = 0; i < Qtd; i++)
+    for (int i = 0; i < 6; i++)
     {
-        if((qrand()%1000)/1000.0 < 1-wf/ws)
-        {
-            Pnx[i] = qrand()%600;
-            Pny[i] = qrand()%400;
-            Pnr[i] = qrand()%360;
-            Pnw[i] = 0;
-        }else{
-            rnd += 2* Max * (qrand()%1000000)/1000000.0;
-            while (Pw[c] < rnd)
-            {
-                rnd -= Pw[c];
-                c = (c+1)%Qtd;
-            }
-            Pnx[i] = Px[c];
-            Pny[i] = Py[c];
-            Pnr[i] = Pr[c];
-            Pnw[i] = Pw[c];
-        }
+        LT[i][0] = rLT[i][0];
+        LT[i][1] = rLT[i][1];
     }
-    // This updates the particles set
-    for(int i = 0; i < Qtd; i++)
+    for (int i = 0; i < 2; i++)
     {
-        Px[i] = Pnx[i];
-        Py[i] = Pny[i];
-        Pr[i] = Pnr[i];
-        Pw[i] = Pnw[i];
+        LX[i][0] = rLX[i][0];
+        LX[i][1] = rLX[i][1];
     }
-    // This uses the ws factor to update the number of particles
-    //MudaQtd(Qtd - C);
 }
+
+//void Particulas::Atualiza(float u[], float z[])
+//{
+//    this->Move(u);
+//    this->Mede(z);
+//    // Generates a new temporary set of particles
+//    float Pnx[1000], Pny[1000], Pnr[1000], Pnw[1000];
+//    // These are constants for the old set of particles
+//    float Max = 0;
+//    float wa = 0;
+//    //float pi = 2*3.14159265359;
+//    // Finds out the biggest weight of the particles set and the average of all weights
+//    for(int i = 0; i < Qtd; i++)
+//    {
+//        if (Pw[i] > Max)
+//        {
+//            Max = Pw[i];
+//        }
+//        wa += Pw[i];
+//    }
+//    wa /= Qtd;
+//    // Finds the current values of ws and wf to aply the AMCL algorithm
+//    wf += 0.5*(wa-wf);
+//    ws += 0.3*(wa-ws);
+//    qDebug("- wf %g - ws %g - wa %g -", wf, ws, wa);
+//    // This part selects the particles
+//    float rnd = 0;
+//    int c = qrand()%Qtd;
+//    for(int i = 0; i < Qtd; i++)
+//    {
+//        if((qrand()%1000)/1000.0 < 1-wf/ws)
+//        {
+//            Nova(&Pnx[i], &Pny[i], &Pnr[i], &Pnw[i]);
+//        }else{
+//            rnd += 2* Max * (qrand()%1000000)/1000000.0;
+//            while (Pw[c] < rnd)
+//            {
+//                rnd -= Pw[c];
+//                c = (c+1)%Qtd;
+//            }
+//            Pnx[i] = Px[c];
+//            Pny[i] = Py[c];
+//            Pnr[i] = Pr[c];
+//            Pnw[i] = Pw[c];
+//        }
+//    }
+//    // This updates the particles set
+//    for(int i = 0; i < Qtd; i++)
+//    {
+//        Px[i] = Pnx[i];
+//        Py[i] = Pny[i];
+//        Pr[i] = Pnr[i];
+//        Pw[i] = Pnw[i];
+//    }
+//    // This uses the ws factor to update the number of particles
+//    //MudaQtd(Qtd - C);
+//}
 
 void Particulas::Erros(float Mov, float Rot, float Med)
 {
@@ -123,26 +141,94 @@ void Particulas::Erros(float Mov, float Rot, float Med)
 void Particulas::Move(float u[])
 {
     // It moves the particles using a Pseudo-Gauss-Random generator
-    float c = 0.01745329251; // pi/180
     for(int i=0; i<Qtd; i++)
     {
         Pr[i] += GaussRnd(u[1], RotErr);
-        Px[i] += GaussRnd(u[0], MovErr)*cos(Pr[i]*c);
-        Py[i] += GaussRnd(u[0], MovErr)*sin(Pr[i]*c);
+        if (Pr[i] > 180) Pr[i] -= 360;
+        if (Pr[i] < -180) Pr[i] += 360;
+        Px[i] += GaussRnd(u[0], MovErr)*cos(Pr[i]*pi()/180);
+        Py[i] += GaussRnd(u[0], MovErr)*sin(Pr[i]*pi()/180);
     }
 }
 
-void Particulas::Mede(float z[])
+void Particulas::Mede(float zr[])
 {
-    // Calculates the weight of the particles in the set
-    float pi = 2*3.14159265359;
-    float w;
-    for (int i=0; i<Qtd; i++)
+    float z[16];
+    for (int c = 0; c < Qtd; c++)
     {
-        w = 1;
-        w *= exp(-(pow((Px[i]-z[0]), 2.0)/(pow(MedErr, 2.0)/2.0)));
-        w *= exp(-(pow((Py[i]-z[1]), 2.0)/(pow(MedErr, 2.0)/2.0)));
-        Pw[i] = w/(sqrt(pi)*MedErr);
+        Pw[c] = 0;
+        for (int i = 0; i < 16; i++)
+            z[i] = 600;
+
+        for (int i = 0; i < 8; i++)
+        {
+            float d = sqrt(pow(LL[i][0]-x(),2)+pow(LL[i][1]-y(),2));
+            float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
+            //if (r < 0) r += 360;
+            d = GaussRnd(d, MedErr*d/10);
+            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            {
+                z[i] = d;
+                int a = i;
+                while (a > 0)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
+            }
+        }
+        for (int i = 8; i < 14; i++)
+        {
+            float d = sqrt(pow(LT[i-8][0]-x(),2)+pow(LT[i-8][1]-y(),2));
+            float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
+            //if (r < 0) r += 360;
+            d = GaussRnd(d, MedErr*d/10);
+            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            {
+                z[i] = d;
+                int a = i;
+                while (a > 8)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
+            }
+        }
+        for (int i = 14; i < 16; i++)
+        {
+            float d = sqrt(pow(LX[i-14][0]-x(),2)+pow(LX[i-14][1]-y(),2));
+            float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
+            //if (r < 0) r += 360;
+            d = GaussRnd(d, MedErr*d/10);
+            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            {
+                z[i] = d;
+                int a = i;
+                while (a > 14)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
+            }
+        }
+
+        for (int i = 0; i < 16; i++)
+            Pw[c] += exp(-pow(z[i]-zr[i], 2)/pow(MedErr*z[i]/10, 2))/(sqrt(2*pi())*MedErr*z[i]/10);
     }
 }
 
@@ -161,8 +247,8 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     {
         x += Px[i]*Pw[i];
         y += Py[i]*Pw[i];
-        rc += cos(Pr[i])*Pw[i];
-        rs += sin(Pr[i])*Pw[i];
+        rc += cos(Pr[i]*pi()/180)*Pw[i];
+        rs += sin(Pr[i]*pi()/180)*Pw[i];
         w += Pw[i];
         painter->setBrush(Qt::NoBrush);
         painter->setPen(QPen(cor));
@@ -174,7 +260,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     x /= w;
     y /= w;
-    float r = atan2(rs, rc)*180.0/3.1416;
+    float r = atan2(rs, rc)*180.0/pi();
 
     painter->setBrush(QBrush(Qt::white));
     painter->drawEllipse(x-10, y-10, 20, 20);

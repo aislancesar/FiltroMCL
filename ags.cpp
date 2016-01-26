@@ -24,19 +24,19 @@ AGS::AGS()
 
     // Generates the new robot and particle set
     T = new robo("T", Qt::green, 100, 100, 50);
-//    P = new Particulas(QColor(0, 0, 255), 1000);
+    P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
     T->setVars(2, 2, 0.1);
-//    P->Erros(10, 10, 10);
+    P->Erros(2, 2, 0.1);
    // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(T);
-//    this->addItem(P);
+    this->addItem(P);
 
     // Draws the robot over the particles (unneeded)
     T->setZValue(1000);
-//    P->setZValue(100);
+    P->setZValue(100);
 
     T->landmarks(LL, LT, LX);
 
@@ -55,78 +55,65 @@ void AGS::keyPressEvent(QKeyEvent *event)
         u[0] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        P->Atualiza(u, z);
-        P->update(-10, -10, 610, 410); // Redraw particles
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-        P->Atualiza(u, z);
-        P->update(-10, -10, 610, 410);
+//        P->Atualiza(u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        P->Atualiza(u, z);
-        P->update(-10, -10, 610, 410);
+//        P->Atualiza(u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-        P->Atualiza(u, z);
-        P->update(-10, -10, 610, 410);
+//        P->Atualiza(u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        P->Atualiza(u, z);
-        P->update(-10, -10, 610, 410);
+//        P->Atualiza(u, z);
         break;
     case Qt::Key_S: // Removes particles
         P->MudaQtd(50);
-        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_X: // Adds particles
         P->MudaQtd(1000);
-        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_I: // Just moves forward
         u[0] = 10.0;
         T->Andar(u);
-        //P->Move(u);
-        //P->update(-10, -10, 610, 410);
+        P->Move(u);
         break;
     case Qt::Key_J: // Just turns counter-clock-wise
         u[1] = -10.0;
         T->Andar(u);
-//        P->Move(u);
-//        P->update(-10, -10, 610, 410);
+        P->Move(u);
         break;
     case Qt::Key_L: // Just turns clock-wise
         u[1] = 10.0;
         T->Andar(u);
-//        P->Move(u);
-//        P->update(-10, -10, 610, 410);
+        P->Move(u);
         break;
     case Qt::Key_U: // Just turns counter-clock-wise
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
-//        P->Move(u);
-//        P->update(-10, -10, 610, 410);
+        P->Move(u);
         break;
     case Qt::Key_O: // Just turns clock-wise
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
-//        P->Move(u);
-//        P->update(-10, -10, 610, 410);
+        P->Move(u);
         break;
     case Qt::Key_Space: // Kidnappes the robot
         T->setX(qrand()%600);

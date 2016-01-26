@@ -6,8 +6,8 @@ QT +=   \
 SOURCES += main.cpp \
     robo.cpp \
     ags.cpp \
-    gaussrnd.cpp \
-    particulas.cpp
+    particulas.cpp \
+    fun.cpp
 
 HEADERS += \
     robo.h \
