@@ -45,23 +45,22 @@ void robo::setVars (float velerr, float roterr, float mederr)
 void robo::Andar(float u[])
 {
     // I'm using the x, y and rotation of the class QGraphicsItem
-    float c = 0.01745329251; // pi/180
 
     // Note that I'm using my Pseudo-Gauss-Random to generate the statistical errors of movement
     float r = GaussRnd(u[1], trnerr);
 
     // This is normalizing the angle
-    if (this->rotation()+r > 360)
+    if (this->rotation()+r > 180)
     {
         this->setRotation(this->rotation()+r-360.0);
-    }else if(this->rotation()+r < -360){
+    }else if(this->rotation()+r < -180){
         this->setRotation(this->rotation()+r+360.0);
     }else{
         this->setRotation(this->rotation()+r);
     }
 
-    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*c);
-    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*c);
+    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*pi()/180);
+    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*pi()/180);
 
     this->setX(this->x()+x);
     this->setY(this->y()+y);
@@ -96,8 +95,9 @@ void robo::Medida(float z[])
     {
         float d = sqrt(pow(LL[i][0]-x(),2)+pow(LL[i][1]-y(),2));
         float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
-        if (r < 0) r += 360;
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //if (r < 0) r += 360;
+        d = GaussRnd(d, meaerr*d/10);
+        qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -117,8 +117,9 @@ void robo::Medida(float z[])
     {
         float d = sqrt(pow(LT[i-8][0]-x(),2)+pow(LT[i-8][1]-y(),2));
         float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
-        if (r < 0) r += 360;
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //if (r < 0) r += 360;
+        d = GaussRnd(d, meaerr*d/10);
+        qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -138,8 +139,9 @@ void robo::Medida(float z[])
     {
         float d = sqrt(pow(LX[i-14][0]-x(),2)+pow(LX[i-14][1]-y(),2));
         float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
-        if (r < 0) r += 360;
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        //if (r < 0) r += 360;
+        d = GaussRnd(d, meaerr*d/10);
+        qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;

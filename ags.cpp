@@ -27,7 +27,7 @@ AGS::AGS()
 //    P = new Particulas(QColor(0, 0, 255), 1000);
 
     // Set the new erros of the particles
-    T->setVars(2, 2, 2);
+    T->setVars(2, 2, 0.1);
 //    P->Erros(10, 10, 10);
    // It seens that bigger errors causes the AMCL to converges faster
 
@@ -99,44 +99,39 @@ void AGS::keyPressEvent(QKeyEvent *event)
     case Qt::Key_I: // Just moves forward
         u[0] = 10.0;
         T->Andar(u);
-        P->Move(u);
-        P->update(-10, -10, 610, 410);
+        //P->Move(u);
+        //P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_J: // Just turns counter-clock-wise
         u[1] = -10.0;
         T->Andar(u);
-        P->Move(u);
-        P->update(-10, -10, 610, 410);
+//        P->Move(u);
+//        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_L: // Just turns clock-wise
         u[1] = 10.0;
         T->Andar(u);
-        P->Move(u);
-        P->update(-10, -10, 610, 410);
+//        P->Move(u);
+//        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_U: // Just turns counter-clock-wise
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
-        P->Move(u);
-        P->update(-10, -10, 610, 410);
+//        P->Move(u);
+//        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_O: // Just turns clock-wise
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
-        P->Move(u);
-        P->update(-10, -10, 610, 410);
+//        P->Move(u);
+//        P->update(-10, -10, 610, 410);
         break;
     case Qt::Key_Space: // Kidnappes the robot
         T->setX(qrand()%600);
         T->setY(qrand()%400);
         T->setRotation(qrand()%360);
-        float z[16];
-        T->Medida(z);
-        qDebug("---");
-        this->update(-50, -50, 1000, 700);
-        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
         break;
     case Qt::Key_Enter: // Shows mean of the particles and the robot position
         qDebug("---");
@@ -144,5 +139,12 @@ void AGS::keyPressEvent(QKeyEvent *event)
         qDebug("Robo: X.%g Y.%g R.%g", T->x(), T->y(), T->rotation());
         qDebug("---");
         break;
+    case Qt::Key_K: // Measures the landmarks
+        float z[16];
+        T->Medida(z);
+        qDebug("---");
+        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
+        break;
     }
+    this->update(-50, -50, 1000, 700);
 }
