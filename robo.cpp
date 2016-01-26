@@ -29,6 +29,7 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
     linha.setAngle(-30);
     painter->drawLine(linha);
     painter->drawArc(-600, -600, 1200, 1200, -30*16, 60*16);
+
     option = option;
     widget = widget;
 }
@@ -94,8 +95,9 @@ void robo::Medida(float z[])
     for (int i = 0; i < 8; i++)
     {
         float d = sqrt(pow(LL[i][0]-x(),2)+pow(LL[i][1]-y(),2));
-
         float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
+        if (r < 0) r += 360;
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -113,8 +115,10 @@ void robo::Medida(float z[])
     }
     for (int i = 8; i < 14; i++)
     {
-        float d = sqrt(pow(LT[i][0]-x(),2)+pow(LT[i][1]-y(),2));
-        float r = atan2((LT[i][1]-y()),(LT[i][0]-x()))*180/pi();
+        float d = sqrt(pow(LT[i-8][0]-x(),2)+pow(LT[i-8][1]-y(),2));
+        float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
+        if (r < 0) r += 360;
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
@@ -132,8 +136,10 @@ void robo::Medida(float z[])
     }
     for (int i = 14; i < 16; i++)
     {
-        float d = sqrt(pow(LX[i][0]-x(),2)+pow(LX[i][1]-y(),2));
-        float r = atan2((LX[i][1]-y()),(LX[i][0]-x()))*180/pi();
+        float d = sqrt(pow(LX[i-14][0]-x(),2)+pow(LX[i-14][1]-y(),2));
+        float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
+        if (r < 0) r += 360;
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
