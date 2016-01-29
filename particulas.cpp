@@ -238,7 +238,7 @@ void Particulas::Mede(float zr[])
         for (int i = 0; i < 16; i++)
         {
             n += zr[i];
-            if (zr[i] < 600)
+            if (zr[i] < 600 || z[i] < 600)
                 Pw[c] += Gaussian(z[i], MedErr, zr[i]);
                 //qDebug("%g", z);
         }
@@ -277,7 +277,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     y /= w;
     float r = atan2(rs, rc)*180.0/pi();
 
-    painter->setBrush(QBrush(Qt::white));
+    painter->setBrush(QBrush(QColor(255, 255, 255, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
     QLineF linha(x, y, x+10, y);
     linha.setAngle(-r+30);

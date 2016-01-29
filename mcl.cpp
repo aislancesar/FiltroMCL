@@ -5,8 +5,8 @@
 void XMCL(Particulas *P, float u[], float z[])
 {
     //MCL(P, u, z);
-    //AMCL(P, u, z);
-    ANMCL(P, u, z);
+    AMCL(P, u, z);
+    //ANMCL(P, u, z);
 }
 
 // Monte-Carlo Localization
@@ -112,7 +112,15 @@ void ANMCL(Particulas *P, float u[], float z[])
 {
     static float ws = 0, wf = 0;
     static int k = 0;
-    float yf = 0.1, ys = 0.01, wa = 0, Max = 0;
+
+    // Tweaking vars...
+    float mf = 1.0; // How near wf can get to wa
+    float ms = 0.7; // How near ws can get to wa
+    float yf = 0.1; // Aproximation rate of wf
+    float ys = 0.01; // Aproximation rate of ws
+    // ---
+
+    float wa = 0, Max = 0;
     float Pnx[N], Pny[N], Pnr[N], Pnw[N];
 
     P->Move(u);
@@ -126,8 +134,8 @@ void ANMCL(Particulas *P, float u[], float z[])
     }
 
     wa /= P->Qtd;
-    wf += yf*(1.0*wa-wf);
-    ws += ys*(0.5*wa-ws);
+    wf += yf*(mf*wa-wf);
+    ws += ys*(ms*wa-ws);
 
     qDebug("wa.append(%g) # %d", wa, k);
     k++;
