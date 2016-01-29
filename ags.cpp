@@ -24,7 +24,7 @@ AGS::AGS()
 
     // Generates the new robot and particle set
     T = new robo("T", Qt::green, 100, 100, 50);
-    P = new Particulas(QColor(0, 0, 255), 1000);
+    P = new Particulas(QColor(0, 0, 255), 2000);
 
     // Set the new erros of the particles
     T->setVars(2, 3, 0.1);
@@ -56,39 +56,42 @@ void AGS::keyPressEvent(QKeyEvent *event)
         u[0] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        MCL(P, u, z);
+        XMCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-        MCL(P, u, z);
+        XMCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        MCL(P, u, z);
+        XMCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         T->Andar(u);
         T->Medida(z);
-        MCL(P, u, z);
+        XMCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         T->Andar(u);
         T->Medida(z);
-        MCL(P, u, z);
+        XMCL(P, u, z);
         break;
-    case Qt::Key_S: // Removes particles
+    case Qt::Key_Z: // Removes particles
         P->MudaQtd(1);
         break;
     case Qt::Key_X: // Adds particles
-        P->MudaQtd(1000);
+        P->MudaQtd(P->Qtd-100);
+        break;
+    case Qt::Key_C: // Adds particles
+        P->MudaQtd(2000);
         break;
     case Qt::Key_I: // Just moves forward
         u[0] = 10.0;

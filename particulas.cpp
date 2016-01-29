@@ -52,7 +52,12 @@ void Particulas::MudaQtd(int nQtd)
         }
     }
     // If not just ignore the particles out of reach
-    Qtd = nQtd;
+    if (nQtd < 1){
+        Qtd = 1;
+    }else{
+        Qtd = nQtd;
+    }
+    qDebug("%d", Qtd);
 }
 
 void Particulas::landmarks(float rLL[8][2], float rLT[6][2], float rLX[2][2])
@@ -238,7 +243,7 @@ void Particulas::Mede(float zr[])
                 //qDebug("%g", z);
         }
         if (n == 600*16) Pw[c] = Gaussian(600, MedErr, 600);
-        qDebug("[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
+       // qDebug("[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
     }
 }
 

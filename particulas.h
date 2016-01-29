@@ -4,16 +4,19 @@
 #include <math.h>
 #include <fun.h>
 
+#define N 2000
+
 class Particulas : public QGraphicsItem
 {
+    //const int N = 2000;
 public:
     int Qtd; // Quantity of particles, max 1000
     QColor cor; // Color used to draw the particle
     // Here are the vector which holds the informations about the group of particles
-    float Px[1000]; // X position
-    float Py[1000]; // Y position
-    float Pr[1000]; // Rotation
-    float Pw[1000]; // Weight, initialises as zeros
+    float Px[N]; // X position
+    float Py[N]; // Y position
+    float Pr[N]; // Rotation
+    float Pw[N]; // Weight, initialises as zeros
     // Erros used to generatre the drift of particles
     float MovErr = 1; // The moviment error
     float RotErr = 1; // The rotation error
