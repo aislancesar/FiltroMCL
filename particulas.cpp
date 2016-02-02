@@ -82,15 +82,16 @@ void Particulas::Move(float u[])
 
 void Particulas::Mede(float zr[])
 {
-    float z[16];
+    float z[L->n];
     float d, r;
     for (int c = 0; c < Qtd; c++)
     {
+        int i = 0;
         double pw = 1;
-        for (int i = 0; i < 16; i++)
-            z[i] = 1000;
+        for (int j = 0; j < 16; j++)
+            z[j] = 1000;
 
-        for (int i = 0; i < 8; i++)
+        for (; i < 8; i++)
         {
             d = sqrt(pow(L->L[i][0]-Px[c],2)+pow(L->L[i][1]-Py[c],2));
             r = atan2((L->L[i][1]-Py[c]),(L->L[i][0]-Px[c]))*180/pi();
@@ -112,7 +113,7 @@ void Particulas::Mede(float zr[])
                 }
             }
         }
-        for (int i = 8; i < 14; i++)
+        for (; i < 14; i++)
         {
             d = sqrt(pow(L->T[i-8][0]-Px[c],2)+pow(L->T[i-8][1]-Py[c],2));
             r = atan2((L->T[i-8][1]-Py[c]),(L->T[i-8][0]-Px[c]))*180/pi();
@@ -134,7 +135,7 @@ void Particulas::Mede(float zr[])
                 }
             }
         }
-        for (int i = 14; i < 16; i++)
+        for (; i < 16; i++)
         {
             d = sqrt(pow(L->X[i-14][0]-Px[c],2)+pow(L->X[i-14][1]-Py[c],2));
             r = atan2((L->X[i-14][1]-Py[c]),(L->X[i-14][0]-Px[c]))*180/pi();
@@ -157,17 +158,27 @@ void Particulas::Mede(float zr[])
             }
         }
 
-        for (int i = 0; i < 16; i++)
+        if(i == L->n - 1)
         {
-            //if(z[i] < 600 || zr[i] < 600)
-                pw *= Gaussian(z[i], MedErr, zr[i]);
+            float d = sqrt(pow(L->B[0]-Px[c],2)+pow(L->B[1]-Py[c],2));
+            float r = atan2((L->B[1]-Py[c]),(L->B[0]-Px[c]))*180/pi();
+            //if (r < 0) r += 360;
+            d = GaussRnd(d, MedErr*d/10);
+            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            {
+                z[i] = d;
+            }
         }
 
+        for (int j = 0; j < L->n; j++)
+        {
+            pw *= Gaussian(zr[j], MedErr, z[j]);
+        }
+
+        // Normalizes weights
         if(pw < 1e-300) pw = 1e-300;
-        Pw[c] = 300+log10(pw);
-       // Pw[c] = sqrt(Pw[c]);
-        //if (n == 600*16) Pw[c] = Gaussian(600, MedErr, 600);
-       // qDebug("[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
+        Pw[c] = 301+log10(pw);
     }
 }
 

@@ -8,14 +8,16 @@ SOURCES += main.cpp \
     ags.cpp \
     particulas.cpp \
     fun.cpp \
-    mcl.cpp
+    mcl.cpp \
+    bola.cpp
 
 HEADERS += \
     robo.h \
     ags.h \
     fun.h \
     particulas.h \
-    mcl.h
+    mcl.h \
+    bola.h
 
 DISTFILES +=
 

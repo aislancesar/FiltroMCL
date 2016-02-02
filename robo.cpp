@@ -70,10 +70,11 @@ void robo::Andar(float u[])
 void robo::Medida(float z[])
 {
     // Returns the measured position with statistical error
-    for (int i = 0; i < 16; i++)
-        z[i] = 600;
+    for (int i = 0; i < L->n; i++)
+        z[i] = 1000;
 
-    for (int i = 0; i < 8; i++)
+    int i = 0;
+    for (; i < 8; i++)
     {
         float d = sqrt(pow(L->L[i][0]-x(),2)+pow(L->L[i][1]-y(),2));
         float r = atan2((L->L[i][1]-y()),(L->L[i][0]-x()))*180/pi();
@@ -95,7 +96,7 @@ void robo::Medida(float z[])
             }
         }
     }
-    for (int i = 8; i < 14; i++)
+    for (; i < 14; i++)
     {
         float d = sqrt(pow(L->T[i-8][0]-x(),2)+pow(L->T[i-8][1]-y(),2));
         float r = atan2((L->T[i-8][1]-y()),(L->T[i-8][0]-x()))*180/pi();
@@ -117,7 +118,7 @@ void robo::Medida(float z[])
             }
         }
     }
-    for (int i = 14; i < 16; i++)
+    for (; i < 16; i++)
     {
         float d = sqrt(pow(L->X[i-14][0]-x(),2)+pow(L->X[i-14][1]-y(),2));
         float r = atan2((L->X[i-14][1]-y()),(L->X[i-14][0]-x()))*180/pi();
@@ -139,5 +140,19 @@ void robo::Medida(float z[])
             }
         }
     }
+    if(i == L->n - 1)
+    {
+        float d = sqrt(pow(L->B[0]-x(),2)+pow(L->B[1]-y(),2));
+        float r = atan2((L->B[1]-y()),(L->B[0]-x()))*180/pi();
+        //if (r < 0) r += 360;
+        d = GaussRnd(d, meaerr*d/10);
+        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
+        if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+        {
+            z[i] = d;
+        }
+    }
+
+    //qDebug() << z[16];
     //qDebug("Robo:[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
 }

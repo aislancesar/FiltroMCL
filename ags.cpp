@@ -22,6 +22,9 @@ AGS::AGS()
     for (int i = 0; i < 2; i++)
         this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
 
+    // Landmarks B
+    B = new Bola(&L);
+
     // Generates the new robot and particle set
     T = new robo("T", Qt::green, 100, 100, 50);
     P = new Particulas(QColor(0, 0, 255), 2000);
@@ -33,10 +36,14 @@ AGS::AGS()
 
     this->addItem(T);
     this->addItem(P);
+    this->addItem(B);
 
     // Draws the robot over the particles (unneeded)
     T->setZValue(1000);
     P->setZValue(100);
+    B->setZValue(500);
+
+    qDebug() << B->x() << L.B[0];
 
     T->L = &L;
     P->L = &L;
@@ -46,7 +53,7 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z[16]; // Measure
+    float z[L.n]; // Measure
 
     switch (event->key())
     {
@@ -135,6 +142,19 @@ void AGS::keyPressEvent(QKeyEvent *event)
         qDebug("---");
         for (int i = 0; i <16; i++) qDebug("%g", z[i]);
         break;
+    case Qt::Key_Up:
+        L.B[1] -= 5;
+        break;
+    case Qt::Key_Down:
+        L.B[1] += 5;
+        break;
+    case Qt::Key_Left:
+        L.B[0] -= 5;
+        break;
+    case Qt::Key_Right:
+        L.B[0] += 5;
+        break;
     }
+    B->Move();
     this->update(-50, -50, 1000, 700);
 }

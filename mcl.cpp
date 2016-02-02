@@ -4,8 +4,8 @@
 // Choose the algorithm to use
 void XMCL(Particulas *P, float u[], float z[])
 {
-    MCL(P, u, z);
-    //AMCL(P, u, z);
+    //MCL(P, u, z);
+    AMCL(P, u, z);
     //ANMCL(P, u, z);
 }
 
@@ -16,13 +16,13 @@ void MCL(Particulas *P, float u[], float z[])
     P->Mede(z);
     float Pnx[N], Pny[N], Pnr[N], Pnw[N];
 
-    float Max = 0;
-    for (int i = 0; i < P->Qtd; i++)
-    {
-        //qDebug() << P->Pw[i];
-        if (P->Pw[i] > Max)
-            Max = P->Pw[i];
-    }
+//    float Max = 0;
+//    for (int i = 0; i < P->Qtd; i++)
+//    {
+//        //qDebug() << P->Pw[i];
+//        if (P->Pw[i] > Max)
+//            Max = P->Pw[i];
+//    }
 
     //qDebug("Max: %g", Max);
 
@@ -30,7 +30,7 @@ void MCL(Particulas *P, float u[], float z[])
     int c = P->Qtd*UniRnd();
     for (int i = 0; i < P->Qtd; i++)
     {
-        rnd += Max * UniRnd();
+        rnd += 2 * 300 * UniRnd(); // The biggest value is 300
         while (P->Pw[c] < rnd)
         {
             rnd -= P->Pw[c];
@@ -56,7 +56,7 @@ void AMCL(Particulas *P, float u[], float z[])
 {
     static float ws = 0, wf = 0;
     static int k = 0;
-    float ys = 0.01, yf = 0.1, wa = 0, Max = 0;
+    float ys = 0.01, yf = 0.1, wa = 0;
     float Pnx[N], Pny[N], Pnr[N], Pnw[N];
 
     P->Move(u);
@@ -65,16 +65,15 @@ void AMCL(Particulas *P, float u[], float z[])
     for (int i = 0; i < P->Qtd; i++)
     {
         wa += P->Pw[i];
-        if (P->Pw[i] > Max)
-            Max = P->Pw[i];
     }
 
     wa /= P->Qtd;
     ws += ys*(wa-ws);
     wf += yf*(wa-wf);
 
-    qDebug("wa.append(%g) # %d", wa, k);
     k++;
+    qDebug("wa.append(%g) # %d", wa, k);
+
 
     float rnd = 0;
     int c = UniRnd() * P->Qtd;
@@ -86,7 +85,7 @@ void AMCL(Particulas *P, float u[], float z[])
         }
         else
         {
-            rnd += Max * UniRnd();
+            rnd += 2 * 300 * UniRnd();
             while (P->Pw[c] < rnd)
             {
                 rnd -= P->Pw[c];
