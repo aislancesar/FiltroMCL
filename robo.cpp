@@ -66,24 +66,6 @@ void robo::Andar(float u[])
     this->setY(this->y()+y);
 }
 
-void robo::landmarks(float rLL[8][2], float rLT[6][2], float rLX[2][2])
-{
-    for (int i = 0; i < 8; i++)
-    {
-        LL[i][0] = rLL[i][0];
-        LL[i][1] = rLL[i][1];
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        LT[i][0] = rLT[i][0];
-        LT[i][1] = rLT[i][1];
-    }
-    for (int i = 0; i < 2; i++)
-    {
-        LX[i][0] = rLX[i][0];
-        LX[i][1] = rLX[i][1];
-    }
-}
 
 void robo::Medida(float z[])
 {
@@ -93,8 +75,8 @@ void robo::Medida(float z[])
 
     for (int i = 0; i < 8; i++)
     {
-        float d = sqrt(pow(LL[i][0]-x(),2)+pow(LL[i][1]-y(),2));
-        float r = atan2((LL[i][1]-y()),(LL[i][0]-x()))*180/pi();
+        float d = sqrt(pow(L->L[i][0]-x(),2)+pow(L->L[i][1]-y(),2));
+        float r = atan2((L->L[i][1]-y()),(L->L[i][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -115,8 +97,8 @@ void robo::Medida(float z[])
     }
     for (int i = 8; i < 14; i++)
     {
-        float d = sqrt(pow(LT[i-8][0]-x(),2)+pow(LT[i-8][1]-y(),2));
-        float r = atan2((LT[i-8][1]-y()),(LT[i-8][0]-x()))*180/pi();
+        float d = sqrt(pow(L->T[i-8][0]-x(),2)+pow(L->T[i-8][1]-y(),2));
+        float r = atan2((L->T[i-8][1]-y()),(L->T[i-8][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -137,8 +119,8 @@ void robo::Medida(float z[])
     }
     for (int i = 14; i < 16; i++)
     {
-        float d = sqrt(pow(LX[i-14][0]-x(),2)+pow(LX[i-14][1]-y(),2));
-        float r = atan2((LX[i-14][1]-y()),(LX[i-14][0]-x()))*180/pi();
+        float d = sqrt(pow(L->X[i-14][0]-x(),2)+pow(L->X[i-14][1]-y(),2));
+        float r = atan2((L->X[i-14][1]-y()),(L->X[i-14][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());

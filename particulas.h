@@ -25,9 +25,10 @@ public:
     float wf = 1; // Sensible to fast changes of the particles weight
     float ws = 0.001; // Sensible to slow changes of the particles weight
     // LandMarks
-    float LL [8][2];
-    float LT [6][2];
-    float LX [2][2];
+    Landmarks *L;
+//    float LL [8][2];
+//    float LT [6][2];
+//    float LX [2][2];
 
     // Initializer
     Particulas(QColor c, int Q);
@@ -40,7 +41,7 @@ public:
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)
     void Nova(float *nPx, float *nPy, float *nPr, float *nPw);
-    void landmarks(float rLL [8][2], float rLT [6][2], float rLX [2][2]);
+
     // These are needed to draw the particles
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem

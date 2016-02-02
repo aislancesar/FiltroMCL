@@ -15,9 +15,9 @@ Particulas::Particulas(QColor c, int Q)
 
 void Particulas::Nova(float *nPx, float *nPy, float *nPr, float *nPw)
 {
-    *nPx = qrand()%900;
-    *nPy = qrand()%600;
-    *nPr = qrand()%360-180;
+    *nPx = 900*UniRnd();
+    *nPy = 600*UniRnd();
+    *nPr = 360*UniRnd()-180;
     *nPw = 0;
 }
 
@@ -60,82 +60,6 @@ void Particulas::MudaQtd(int nQtd)
     qDebug("%d", Qtd);
 }
 
-void Particulas::landmarks(float rLL[8][2], float rLT[6][2], float rLX[2][2])
-{
-    for (int i = 0; i < 8; i++)
-    {
-        LL[i][0] = rLL[i][0];
-        LL[i][1] = rLL[i][1];
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        LT[i][0] = rLT[i][0];
-        LT[i][1] = rLT[i][1];
-    }
-    for (int i = 0; i < 2; i++)
-    {
-        LX[i][0] = rLX[i][0];
-        LX[i][1] = rLX[i][1];
-    }
-}
-
-//void Particulas::Atualiza(float u[], float z[])
-//{
-//    this->Move(u);
-//    this->Mede(z);
-//    // Generates a new temporary set of particles
-//    float Pnx[1000], Pny[1000], Pnr[1000], Pnw[1000];
-//    // These are constants for the old set of particles
-//    float Max = 0;
-//    float wa = 0;
-//    //float pi = 2*3.14159265359;
-//    // Finds out the biggest weight of the particles set and the average of all weights
-//    for(int i = 0; i < Qtd; i++)
-//    {
-//        if (Pw[i] > Max)
-//        {
-//            Max = Pw[i];
-//        }
-//        wa += Pw[i];
-//    }
-//    wa /= Qtd;
-//    // Finds the current values of ws and wf to aply the AMCL algorithm
-//    wf += 0.5*(wa-wf);
-//    ws += 0.3*(wa-ws);
-//    qDebug("- wf %g - ws %g - wa %g -", wf, ws, wa);
-//    // This part selects the particles
-//    float rnd = 0;
-//    int c = qrand()%Qtd;
-//    for(int i = 0; i < Qtd; i++)
-//    {
-//        if((qrand()%1000)/1000.0 < 1-wf/ws)
-//        {
-//            Nova(&Pnx[i], &Pny[i], &Pnr[i], &Pnw[i]);
-//        }else{
-//            rnd += 2* Max * (qrand()%1000000)/1000000.0;
-//            while (Pw[c] < rnd)
-//            {
-//                rnd -= Pw[c];
-//                c = (c+1)%Qtd;
-//            }
-//            Pnx[i] = Px[c];
-//            Pny[i] = Py[c];
-//            Pnr[i] = Pr[c];
-//            Pnw[i] = Pw[c];
-//        }
-//    }
-//    // This updates the particles set
-//    for(int i = 0; i < Qtd; i++)
-//    {
-//        Px[i] = Pnx[i];
-//        Py[i] = Pny[i];
-//        Pr[i] = Pnr[i];
-//        Pw[i] = Pnw[i];
-//    }
-//    // This uses the ws factor to update the number of particles
-//    //MudaQtd(Qtd - C);
-//}
-
 void Particulas::Erros(float Mov, float Rot, float Med)
 {
     MedErr = Med;
@@ -162,14 +86,14 @@ void Particulas::Mede(float zr[])
     float d, r;
     for (int c = 0; c < Qtd; c++)
     {
-        Pw[c] = 0;
+        double pw = 1;
         for (int i = 0; i < 16; i++)
-            z[i] = 600;
+            z[i] = 1000;
 
         for (int i = 0; i < 8; i++)
         {
-            d = sqrt(pow(LL[i][0]-Px[c],2)+pow(LL[i][1]-Py[c],2));
-            r = atan2((LL[i][1]-Py[c]),(LL[i][0]-Px[c]))*180/pi();
+            d = sqrt(pow(L->L[i][0]-Px[c],2)+pow(L->L[i][1]-Py[c],2));
+            r = atan2((L->L[i][1]-Py[c]),(L->L[i][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
 
@@ -190,8 +114,8 @@ void Particulas::Mede(float zr[])
         }
         for (int i = 8; i < 14; i++)
         {
-            d = sqrt(pow(LT[i-8][0]-Px[c],2)+pow(LT[i-8][1]-Py[c],2));
-            r = atan2((LT[i-8][1]-Py[c]),(LT[i-8][0]-Px[c]))*180/pi();
+            d = sqrt(pow(L->T[i-8][0]-Px[c],2)+pow(L->T[i-8][1]-Py[c],2));
+            r = atan2((L->T[i-8][1]-Py[c]),(L->T[i-8][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -212,8 +136,8 @@ void Particulas::Mede(float zr[])
         }
         for (int i = 14; i < 16; i++)
         {
-            d = sqrt(pow(LX[i-14][0]-Px[c],2)+pow(LX[i-14][1]-Py[c],2));
-            r = atan2((LX[i-14][1]-Py[c]),(LX[i-14][0]-Px[c]))*180/pi();
+            d = sqrt(pow(L->X[i-14][0]-Px[c],2)+pow(L->X[i-14][1]-Py[c],2));
+            r = atan2((L->X[i-14][1]-Py[c]),(L->X[i-14][0]-Px[c]))*180/pi();
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -233,16 +157,16 @@ void Particulas::Mede(float zr[])
             }
         }
 
-        float n = 0;
-
         for (int i = 0; i < 16; i++)
         {
-            n += zr[i];
-            if (zr[i] < 600 || z[i] < 600)
-                Pw[c] += Gaussian(z[i], MedErr, zr[i]);
-                //qDebug("%g", z);
+            //if(z[i] < 600 || zr[i] < 600)
+                pw *= Gaussian(z[i], MedErr, zr[i]);
         }
-        if (n == 600*16) Pw[c] = Gaussian(600, MedErr, 600);
+
+        if(pw < 1e-300) pw = 1e-300;
+        Pw[c] = 300+log10(pw);
+       // Pw[c] = sqrt(Pw[c]);
+        //if (n == 600*16) Pw[c] = Gaussian(600, MedErr, 600);
        // qDebug("[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
     }
 }
