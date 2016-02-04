@@ -16,7 +16,7 @@ void Bola::Move()
 QRectF Bola::boundingRect() const
 {
 
-    return QRectF(-3, -3, 6, 6);
+    return QRectF(-5, -5, 10, 10);
 }
 
 void Bola::paint(QPainter *painter, const QStyleOptionGraphicsItem
@@ -24,7 +24,7 @@ void Bola::paint(QPainter *painter, const QStyleOptionGraphicsItem
 {
     painter->setBrush(QColor(255, 255, 0));
     painter->setPen(QPen(QColor(255, 255, 0)));
-    painter->drawEllipse(-3, -3, 6, 6);
+    painter->drawEllipse(-5, -5, 10, 10);
 
     option = option;
     widget = widget;

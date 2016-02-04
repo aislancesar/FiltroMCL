@@ -87,7 +87,7 @@ void Particulas::Mede(float zr[])
     for (int c = 0; c < Qtd; c++)
     {
         int i = 0;
-        double pw = 1;
+        double pw, pc = 1;
         for (int j = 0; j < 16; j++)
             z[j] = 1000;
 
@@ -174,11 +174,14 @@ void Particulas::Mede(float zr[])
         for (int j = 0; j < L->n; j++)
         {
             pw *= Gaussian(zr[j], MedErr, z[j]);
+            pc *= Gaussian(zr[j], MedErr, zr[j]);
         }
 
         // Normalizes weights
         if(pw < 1e-300) pw = 1e-300;
         Pw[c] = 301+log10(pw);
+
+
     }
 }
 
@@ -200,9 +203,8 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
         rc += cos(Pr[i]*pi()/180)*Pw[i];
         rs += sin(Pr[i]*pi()/180)*Pw[i];
         w += Pw[i];
-        painter->setBrush(Qt::NoBrush);
+
         painter->setPen(QPen(cor));
-        painter->drawEllipse(Px[i]-1.5, Py[i]-1.5, 3, 3);
         QLineF linha(Px[i], Py[i], Px[i]+5, Py[i]);
         linha.setAngle(-Pr[i]);
         painter->drawLine(linha);
@@ -214,6 +216,9 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     painter->setBrush(QBrush(QColor(255, 255, 255, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
+    painter->setBrush(Qt::NoBrush);
+//    painter->drawEllipse(x-30, y-30, 60, 60);
+//    painter->drawEllipse(x-100, y-100, 200, 200);
     QLineF linha(x, y, x+10, y);
     linha.setAngle(-r+30);
     painter->drawLine(linha);

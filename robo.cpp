@@ -1,13 +1,14 @@
 #include <robo.h>
 
 // Initializer
-robo::robo (QString n, QColor c, float x, float y, float d)
+robo::robo (int n, QColor c, float x, float y, float d, bool v)
 {
     nome = n;
     cor = c;
     this->setX(x);
     this->setY(y);
     this->setRotation(d);
+    visao = v;
 };
 
 // Needed for dawing
@@ -23,12 +24,20 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
 {
     painter->setBrush(QBrush(cor));
     painter->drawEllipse(-10, -10, 20, 20);
-    QLineF linha(0, 0, 600, 0);
-    linha.setAngle(30);
-    painter->drawLine(linha);
-    linha.setAngle(-30);
-    painter->drawLine(linha);
-    painter->drawArc(-600, -600, 1200, 1200, -30*16, 60*16);
+    QLineF *linha;
+    if(visao)
+    {
+        linha = new QLineF(0, 0, 600, 0);
+        painter->drawArc(-600, -600, 1200, 1200, -30*16, 60*16);
+    }else{
+        linha = new QLineF(0, 0, 10, 0);
+    }
+
+    linha->setAngle(30);
+    painter->drawLine(*linha);
+    linha->setAngle(-30);
+    painter->drawLine(*linha);
+
 
     option = option;
     widget = widget;

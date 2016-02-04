@@ -20,8 +20,11 @@ struct Landmarks
     // X shaped Landmarks
     float X [2][2] = {{450, 200}, {450, 400}};
 
+    // Friend Robots
+    float F [3][2] = {{0, 0}, {0, 0}, {0, 0}};
+
     // Ball
-    float B [2] = {300, 300};
+    float B [2] = {450, 300};
 
     // Total of LandMarks
     int n = 17;

@@ -8,8 +8,9 @@ class robo : public QGraphicsItem
 {
 public:
     // Sets name and color of the robot
-    QString nome;
+    int nome;
     QColor cor;
+    bool visao;
 
     // Functions
     void Andar(float u[]); // Moves the robot
@@ -26,7 +27,7 @@ public:
     void setVars (float velerr, float roterr, float mederr); // No comments
 
     // Needed functions
-    robo (QString n, QColor c, float x, float y, float d);
+    robo (int n, QColor c, float x, float y, float d, bool v);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem
                *option, QWidget *widget);

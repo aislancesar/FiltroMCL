@@ -26,7 +26,10 @@ AGS::AGS()
     B = new Bola(&L);
 
     // Generates the new robot and particle set
-    T = new robo("T", Qt::green, 100, 100, 50);
+    W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true);
+    T = new robo(0, QColor(0, 255, 255), 300, 200, 0, false);
+    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
+
     P = new Particulas(QColor(0, 0, 255), 2000);
 
     // Set the new erros of the particles
@@ -34,18 +37,27 @@ AGS::AGS()
     P->Erros(4, 5, 0.5);
     // It seens that bigger errors causes the AMCL to converges faster
 
-    this->addItem(T);
+    this->addItem(W);
+    //this->addItem(T);
+    //this->addItem(I);
     this->addItem(P);
     this->addItem(B);
 
-    // Draws the robot over the particles (unneeded)
-    T->setZValue(1000);
+    // Draws the robot over the particles
+    W->setZValue(1000);
+    T->setZValue(1001);
+    I->setZValue(1002);
+
     P->setZValue(100);
+
     B->setZValue(500);
 
     qDebug() << B->x() << L.B[0];
 
+    W->L = &L;
     T->L = &L;
+    I->L = &L;
+
     P->L = &L;
 }
 
@@ -59,36 +71,43 @@ void AGS::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_W: // Moves Forward
         u[0] = 10.0;
-        T->Andar(u);
-        T->Medida(z);
+        W->Andar(u);
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
-        T->Andar(u);
-        T->Medida(z);
+        W->Andar(u);
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
-        T->Andar(u);
-        T->Medida(z);
+        W->Andar(u);
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
-        T->Andar(u);
-        T->Medida(z);
+        W->Andar(u);
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
-        T->Andar(u);
-        T->Medida(z);
+        W->Andar(u);
+        W->Medida(z);
         XMCL(P, u, z);
         break;
+    case Qt::Key_S: // Kidnappes the robot
+        W->setX(UniRnd() * 600);
+        W->setY(UniRnd() * 400);
+        W->setRotation(UniRnd() * 360 - 180);
+        break;
+
+
     case Qt::Key_Z: // Removes particles
         P->MudaQtd(1);
         break;

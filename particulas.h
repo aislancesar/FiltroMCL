@@ -12,23 +12,27 @@ class Particulas : public QGraphicsItem
 public:
     int Qtd; // Quantity of particles, max 1000
     QColor cor; // Color used to draw the particle
+
     // Here are the vector which holds the informations about the group of particles
     float Px[N]; // X position
     float Py[N]; // Y position
     float Pr[N]; // Rotation
     float Pw[N]; // Weight, initialises as zeros
+
     // Erros used to generatre the drift of particles
     float MovErr = 1; // The moviment error
     float RotErr = 1; // The rotation error
     float MedErr = 1; // The measurement error
+
     // Vars used in AMCL to generate new random particles
     float wf = 1; // Sensible to fast changes of the particles weight
     float ws = 0.001; // Sensible to slow changes of the particles weight
+
     // LandMarks
     Landmarks *L;
-//    float LL [8][2];
-//    float LT [6][2];
-//    float LX [2][2];
+
+    // Regions
+    float R[4][5];
 
     // Initializer
     Particulas(QColor c, int Q);

@@ -55,7 +55,7 @@ void MCL(Particulas *P, float u[], float z[])
 void AMCL(Particulas *P, float u[], float z[])
 {
     static float ws = 0, wf = 0;
-    static int k = 0;
+    //static int k = 0;
     float ys = 0.01, yf = 0.1, wa = 0;
     float Pnx[N], Pny[N], Pnr[N], Pnw[N];
 
@@ -71,8 +71,8 @@ void AMCL(Particulas *P, float u[], float z[])
     ws += ys*(wa-ws);
     wf += yf*(wa-wf);
 
-    k++;
-    qDebug("wa.append(%g) # %d", wa, k);
+    //k++;
+    //qDebug("wa.append(%g) # %d", wa, k);
 
 
     float rnd = 0;
