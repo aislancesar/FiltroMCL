@@ -52,7 +52,7 @@ AGS::AGS()
 
     B->setZValue(500);
 
-    qDebug() << B->x() << L.B[0];
+    //qDebug() << B->x() << L.B[0];
 
     W->L = &L;
     T->L = &L;

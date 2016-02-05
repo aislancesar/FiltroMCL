@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     QGraphicsView view(&cena);
     view.resize(1000, 700);
     view.show();
+    //qDebug() << 1/sqrt(2) << exp(-0.5);
 
     return app.exec();
 }

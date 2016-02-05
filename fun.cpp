@@ -28,3 +28,9 @@ double Gaussian(float mu, float sig, float x)
     return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
     //return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*pi())*sig*mu);
 }
+
+void dist(float x1, float y1, float x2, float y2, float *d, float *r)
+{
+    *d = sqrt(pow(x1-x2, 2)+pow(y1-y2, 2));
+    *r = atan2((y1-y2), (x1-x2))*180/pi();
+}

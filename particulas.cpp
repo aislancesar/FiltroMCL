@@ -84,17 +84,19 @@ void Particulas::Mede(float zr[])
 {
     float z[L->n];
     float d, r;
+    int o = 0;
+
     for (int c = 0; c < Qtd; c++)
     {
         int i = 0;
-        double pw, pc = 1;
-        for (int j = 0; j < 16; j++)
-            z[j] = 1000;
+        double pw = 1, pc = 1;
+
+        for (int j = 0; j < L->n; j++)
+            z[j] = 600;
 
         for (; i < 8; i++)
         {
-            d = sqrt(pow(L->L[i][0]-Px[c],2)+pow(L->L[i][1]-Py[c],2));
-            r = atan2((L->L[i][1]-Py[c]),(L->L[i][0]-Px[c]))*180/pi();
+            dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
 
@@ -115,8 +117,7 @@ void Particulas::Mede(float zr[])
         }
         for (; i < 14; i++)
         {
-            d = sqrt(pow(L->T[i-8][0]-Px[c],2)+pow(L->T[i-8][1]-Py[c],2));
-            r = atan2((L->T[i-8][1]-Py[c]),(L->T[i-8][0]-Px[c]))*180/pi();
+            dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -137,8 +138,7 @@ void Particulas::Mede(float zr[])
         }
         for (; i < 16; i++)
         {
-            d = sqrt(pow(L->X[i-14][0]-Px[c],2)+pow(L->X[i-14][1]-Py[c],2));
-            r = atan2((L->X[i-14][1]-Py[c]),(L->X[i-14][0]-Px[c]))*180/pi();
+            dist(L->X[i-14][0], L->X[i-14][1], Px[c], Py[c], &d, &r);
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -158,31 +158,38 @@ void Particulas::Mede(float zr[])
             }
         }
 
-        if(i == L->n - 1)
-        {
-            float d = sqrt(pow(L->B[0]-Px[c],2)+pow(L->B[1]-Py[c],2));
-            float r = atan2((L->B[1]-Py[c]),(L->B[0]-Px[c]))*180/pi();
+        if(i == L->n - 1){
+            dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
             //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
+            //if (c == 0) qDebug() << d;
             //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-            if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+            if((d < 600) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
                 z[i] = d;
             }
+            //if (c == 0) qDebug() << d;
         }
 
         for (int j = 0; j < L->n; j++)
         {
             pw *= Gaussian(zr[j], MedErr, z[j]);
-            pc *= Gaussian(zr[j], MedErr, zr[j]);
+            pc *= Gaussian(zr[j], MedErr, zr[j])*exp(-1);
         }
+
+//        if (pw > pc)
+//        {
+//            for(int v = 0; v < 4; v++)
+//            {
+//                if()
+//            }
+//        }
 
         // Normalizes weights
         if(pw < 1e-300) pw = 1e-300;
         Pw[c] = 301+log10(pw);
-
-
     }
+    qDebug("wa.append(%d)", o);
 }
 
 

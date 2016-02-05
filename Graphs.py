@@ -22,1220 +22,399 @@ ws = [wsi]
 we = [0]
 wa = []
 
-wa.append(3.90025) # 1
-wa.append(24.852) # 2
-wa.append(29.5522) # 3
-wa.append(32.4512) # 4
-wa.append(24.2452) # 5
-wa.append(17.6955) # 6
-wa.append(29.6266) # 7
-wa.append(54.4859) # 8
-wa.append(54.9207) # 9
-wa.append(57.9811) # 10
-wa.append(60.894) # 11
-wa.append(65.8668) # 12
-wa.append(68.6469) # 13
-wa.append(70.9332) # 14
-wa.append(29.6072) # 15
-wa.append(23.0838) # 16
-wa.append(34.0383) # 17
-wa.append(38.1924) # 18
-wa.append(45.959) # 19
-wa.append(44.1114) # 20
-wa.append(46.2387) # 21
-wa.append(36.7236) # 22
-wa.append(32.2387) # 23
-wa.append(85.4338) # 24
-wa.append(92.6524) # 25
-wa.append(80.1804) # 26
-wa.append(61.8725) # 27
-wa.append(20.4332) # 28
-wa.append(69.9762) # 29
-wa.append(73.666) # 30
-wa.append(69.571) # 31
-wa.append(57.1925) # 32
-wa.append(23.1946) # 33
-wa.append(40.7956) # 34
-wa.append(66.6387) # 35
-wa.append(81.0444) # 36
-wa.append(84.263) # 37
-wa.append(77.0321) # 38
-wa.append(78.0128) # 39
-wa.append(78.7564) # 40
-wa.append(38.5417) # 41
-wa.append(39.9857) # 42
-wa.append(42.8451) # 43
-wa.append(48.6739) # 44
-wa.append(51.8071) # 45
-wa.append(53.1949) # 46
-wa.append(53.8962) # 47
-wa.append(53.6654) # 48
-wa.append(53.2364) # 49
-wa.append(9.04847) # 50
-wa.append(53.9192) # 51
-wa.append(38.1251) # 52
-wa.append(68.6555) # 53
-wa.append(81.4682) # 54
-wa.append(67.3118) # 55
-wa.append(42.1825) # 56
-wa.append(19.1271) # 57
-wa.append(30.7883) # 58
-wa.append(39.2725) # 59
-wa.append(24.4968) # 60
-wa.append(44.7378) # 61
-wa.append(54.4978) # 62
-wa.append(56.3103) # 63
-wa.append(65.0766) # 64
-wa.append(77.8678) # 65
-wa.append(75.3584) # 66
-wa.append(73.2646) # 67
-wa.append(72.3918) # 68
-wa.append(70.0417) # 69
-wa.append(67.6357) # 70
-wa.append(13.0392) # 71
-wa.append(38.843) # 72
-wa.append(42.1828) # 73
-wa.append(42.4308) # 74
-wa.append(38.924) # 75
-wa.append(35.2806) # 76
-wa.append(22.0845) # 77
-wa.append(56.2881) # 78
-wa.append(59.5521) # 79
-wa.append(59.6308) # 80
-wa.append(9.95499) # 81
-wa.append(47.983) # 82
-wa.append(34.8695) # 83
-wa.append(18.7274) # 84
-wa.append(40.9503) # 85
-wa.append(55.343) # 86
-wa.append(62.9771) # 87
-wa.append(57.8071) # 88
-wa.append(10.0101) # 89
-wa.append(51.9007) # 90
-wa.append(54.1782) # 91
-wa.append(55.2738) # 92
-wa.append(56.2684) # 93
-wa.append(57.04) # 94
-wa.append(56.7892) # 95
-wa.append(57.0937) # 96
-wa.append(57.8836) # 97
-wa.append(57.4474) # 98
-wa.append(54.0541) # 99
-wa.append(55.2954) # 100
-wa.append(56.6335) # 101
-wa.append(56.0098) # 102
-wa.append(46.8296) # 103
-wa.append(26.1954) # 104
-wa.append(68.5815) # 105
-wa.append(11.0571) # 106
-wa.append(53.5059) # 107
-wa.append(67.2391) # 108
-wa.append(73.2461) # 109
-wa.append(77.8483) # 110
-wa.append(81.8548) # 111
-wa.append(83.9019) # 112
-wa.append(84.4884) # 113
-wa.append(85.9692) # 114
-wa.append(85.4907) # 115
-wa.append(86.2135) # 116
-wa.append(86.6806) # 117
-wa.append(85.8931) # 118
-wa.append(86.6269) # 119
-wa.append(86.0019) # 120
-wa.append(85.1395) # 121
-wa.append(85.3149) # 122
-wa.append(84.8119) # 123
-wa.append(83.3594) # 124
-wa.append(82.2086) # 125
-wa.append(80.7725) # 126
-wa.append(79.5264) # 127
-wa.append(78.5261) # 128
-wa.append(77.114) # 129
-wa.append(74.8835) # 130
-wa.append(72.6953) # 131
-wa.append(56.7118) # 132
-wa.append(57.0054) # 133
-wa.append(53.0449) # 134
-wa.append(55.6961) # 135
-wa.append(79.6741) # 136
-wa.append(75.3187) # 137
-wa.append(58.6159) # 138
-wa.append(54.2718) # 139
-wa.append(15.1906) # 140
-wa.append(52.376) # 141
-wa.append(69.3018) # 142
-wa.append(74.0621) # 143
-wa.append(74.5313) # 144
-wa.append(65.6184) # 145
-wa.append(74.1465) # 146
-wa.append(69.6248) # 147
-wa.append(68.826) # 148
-wa.append(67.9469) # 149
-wa.append(66.3502) # 150
-wa.append(64.9759) # 151
-wa.append(65.8275) # 152
-wa.append(64.0692) # 153
-wa.append(64.6865) # 154
-wa.append(64.2686) # 155
-wa.append(62.1067) # 156
-wa.append(60.8924) # 157
-wa.append(49.4209) # 158
-wa.append(26.3458) # 159
-wa.append(25.7593) # 160
-wa.append(57.6421) # 161
-wa.append(40.8447) # 162
-wa.append(79.8618) # 163
-wa.append(62.9611) # 164
-wa.append(38.709) # 165
-wa.append(38.8681) # 166
-wa.append(79.5783) # 167
-wa.append(80.1027) # 168
-wa.append(79.7469) # 169
-wa.append(80.248) # 170
-wa.append(79.5482) # 171
-wa.append(79.0965) # 172
-wa.append(79.5259) # 173
-wa.append(78.9257) # 174
-wa.append(80.3695) # 175
-wa.append(77.9724) # 176
-wa.append(78.3432) # 177
-wa.append(64.2486) # 178
-wa.append(19.8955) # 179
-wa.append(40.9446) # 180
-wa.append(42.2634) # 181
-wa.append(27.8049) # 182
-wa.append(45.1577) # 183
-wa.append(1.51312) # 184
-wa.append(3.42492) # 185
-wa.append(3.04701) # 186
-wa.append(11.7723) # 187
-wa.append(19.2043) # 188
-wa.append(13.5062) # 189
-wa.append(13.1959) # 190
-wa.append(36.4674) # 191
-wa.append(41.0105) # 192
-wa.append(43.0049) # 193
-wa.append(42.2158) # 194
-wa.append(38.0171) # 195
-wa.append(35.9445) # 196
-wa.append(33.5758) # 197
-wa.append(12.8675) # 198
-wa.append(28.996) # 199
-wa.append(25.2493) # 200
-wa.append(23.4077) # 201
-wa.append(21.0411) # 202
-wa.append(36.3072) # 203
-wa.append(37.4711) # 204
-wa.append(26.3721) # 205
-wa.append(27.5751) # 206
-wa.append(25.7496) # 207
-wa.append(18.8571) # 208
-wa.append(28.3972) # 209
-wa.append(29.3653) # 210
-wa.append(30.8798) # 211
-wa.append(31.9868) # 212
-wa.append(32.066) # 213
-wa.append(33.1826) # 214
-wa.append(32.4339) # 215
-wa.append(32.7601) # 216
-wa.append(32.601) # 217
-wa.append(33.4897) # 218
-wa.append(32.0026) # 219
-wa.append(30.2326) # 220
-wa.append(13.5906) # 221
-wa.append(19.4703) # 222
-wa.append(24.8013) # 223
-wa.append(28.1414) # 224
-wa.append(28.9254) # 225
-wa.append(10.3688) # 226
-wa.append(20.4318) # 227
-wa.append(32.8264) # 228
-wa.append(35.1763) # 229
-wa.append(35.5238) # 230
-wa.append(38.3694) # 231
-wa.append(39.4589) # 232
-wa.append(41.5093) # 233
-wa.append(42.0484) # 234
-wa.append(42.8029) # 235
-wa.append(42.7601) # 236
-wa.append(43.1673) # 237
-wa.append(44.1786) # 238
-wa.append(15.6757) # 239
-wa.append(46.9053) # 240
-wa.append(61.4523) # 241
-wa.append(68.5795) # 242
-wa.append(76.2741) # 243
-wa.append(52.4305) # 244
-wa.append(52.4496) # 245
-wa.append(49.8997) # 246
-wa.append(48.636) # 247
-wa.append(40.2703) # 248
-wa.append(43.0357) # 249
-wa.append(41.6635) # 250
-wa.append(45.6887) # 251
-wa.append(46.3833) # 252
-wa.append(42.6488) # 253
-wa.append(35.3299) # 254
-wa.append(32.2033) # 255
-wa.append(60.5059) # 256
-wa.append(61.1887) # 257
-wa.append(62.0164) # 258
-wa.append(61.4769) # 259
-wa.append(57.2289) # 260
-wa.append(67.4247) # 261
-wa.append(71.6942) # 262
-wa.append(68.0234) # 263
-wa.append(70.5974) # 264
-wa.append(72.4048) # 265
-wa.append(73.1231) # 266
-wa.append(73.9835) # 267
-wa.append(73.2999) # 268
-wa.append(72.9802) # 269
-wa.append(69.4283) # 270
-wa.append(65.3184) # 271
-wa.append(63.3867) # 272
-wa.append(60.6016) # 273
-wa.append(42.8919) # 274
-wa.append(47.9126) # 275
-wa.append(40.195) # 276
-wa.append(63.1213) # 277
-wa.append(81.0114) # 278
-wa.append(80.7238) # 279
-wa.append(79.5159) # 280
-wa.append(78.6879) # 281
-wa.append(77.6967) # 282
-wa.append(78.2298) # 283
-wa.append(77.4101) # 284
-wa.append(76.2324) # 285
-wa.append(76.0829) # 286
-wa.append(75.1479) # 287
-wa.append(73.9177) # 288
-wa.append(72.6535) # 289
-wa.append(70.6879) # 290
-wa.append(69.501) # 291
-wa.append(68.9469) # 292
-wa.append(39.6251) # 293
-wa.append(49.2286) # 294
-wa.append(48.5456) # 295
-wa.append(45.5884) # 296
-wa.append(23.08) # 297
-wa.append(45.0786) # 298
-wa.append(49.9734) # 299
-wa.append(72.733) # 300
-wa.append(73.7626) # 301
-wa.append(75.209) # 302
-wa.append(75.068) # 303
-wa.append(74.124) # 304
-wa.append(74.2601) # 305
-wa.append(72.9131) # 306
-wa.append(72.3514) # 307
-wa.append(70.9417) # 308
-wa.append(69.4496) # 309
-wa.append(66.5448) # 310
-wa.append(63.994) # 311
-wa.append(60.3646) # 312
-wa.append(58.7031) # 313
-wa.append(55.6604) # 314
-wa.append(53.5667) # 315
-wa.append(27.2989) # 316
-wa.append(54.6762) # 317
-wa.append(56.6548) # 318
-wa.append(58.3462) # 319
-wa.append(57.7558) # 320
-wa.append(57.1488) # 321
-wa.append(43.6001) # 322
-wa.append(39.3516) # 323
-wa.append(63.5493) # 324
-wa.append(58.9764) # 325
-wa.append(72.0851) # 326
-wa.append(74.1536) # 327
-wa.append(74.475) # 328
-wa.append(77.2988) # 329
-wa.append(78.5355) # 330
-wa.append(80.499) # 331
-wa.append(81.1499) # 332
-wa.append(81.2226) # 333
-wa.append(81.2872) # 334
-wa.append(80.7908) # 335
-wa.append(77.2822) # 336
-wa.append(71.0141) # 337
-wa.append(72.046) # 338
-wa.append(60.1076) # 339
-wa.append(75.404) # 340
-wa.append(66.8113) # 341
-wa.append(10.4785) # 342
-wa.append(53.2145) # 343
-wa.append(0.782706) # 344
-wa.append(12.7465) # 345
-wa.append(12.3329) # 346
-wa.append(11.7555) # 347
-wa.append(3.74544) # 348
-wa.append(12.6097) # 349
-wa.append(20.8992) # 350
-wa.append(20.9974) # 351
-wa.append(19.9535) # 352
-wa.append(16.8206) # 353
-wa.append(15.326) # 354
-wa.append(25.4937) # 355
-wa.append(22.9238) # 356
-wa.append(22.9295) # 357
-wa.append(23.3743) # 358
-wa.append(23.2613) # 359
-wa.append(17.19) # 360
-wa.append(19.198) # 361
-wa.append(20.8363) # 362
-wa.append(23.9479) # 363
-wa.append(21.7835) # 364
-wa.append(26.132) # 365
-wa.append(29.8241) # 366
-wa.append(32.6819) # 367
-wa.append(34.2233) # 368
-wa.append(35.2361) # 369
-wa.append(35.9075) # 370
-wa.append(39.7253) # 371
-wa.append(39.4385) # 372
-wa.append(35.0647) # 373
-wa.append(38.41) # 374
-wa.append(42.4443) # 375
-wa.append(42.1515) # 376
-wa.append(38.8932) # 377
-wa.append(42.5286) # 378
-wa.append(26.5728) # 379
-wa.append(38.7878) # 380
-wa.append(44.0704) # 381
-wa.append(48.3906) # 382
-wa.append(51.886) # 383
-wa.append(55.2115) # 384
-wa.append(59.5531) # 385
-wa.append(63.3645) # 386
-wa.append(70.4214) # 387
-wa.append(76.3394) # 388
-wa.append(80.2673) # 389
-wa.append(82.1866) # 390
-wa.append(84.0889) # 391
-wa.append(83.0019) # 392
-wa.append(83.5285) # 393
-wa.append(83.4066) # 394
-wa.append(81.8544) # 395
-wa.append(21.9163) # 396
-wa.append(78.6225) # 397
-wa.append(74.9771) # 398
-wa.append(81.3303) # 399
-wa.append(83.538) # 400
-wa.append(82.7992) # 401
-wa.append(83.0834) # 402
-wa.append(82.7713) # 403
-wa.append(81.3855) # 404
-wa.append(80.019) # 405
-wa.append(79.2119) # 406
-wa.append(78.2961) # 407
-wa.append(76.8774) # 408
-wa.append(76.7624) # 409
-wa.append(75.1663) # 410
-wa.append(73.4216) # 411
-wa.append(73.4015) # 412
-wa.append(51.9299) # 413
-wa.append(58.5314) # 414
-wa.append(50.6332) # 415
-wa.append(39.1836) # 416
-wa.append(54.8746) # 417
-wa.append(82.0681) # 418
-wa.append(75.8701) # 419
-wa.append(42.6569) # 420
-wa.append(13.9371) # 421
-wa.append(47.1767) # 422
-wa.append(49.7061) # 423
-wa.append(52.1258) # 424
-wa.append(52.3854) # 425
-wa.append(52.6659) # 426
-wa.append(53.9209) # 427
-wa.append(53.8944) # 428
-wa.append(54.804) # 429
-wa.append(56.6644) # 430
-wa.append(57.2897) # 431
-wa.append(43.0822) # 432
-wa.append(43.0167) # 433
-wa.append(42.5565) # 434
-wa.append(17.4196) # 435
-wa.append(38.867) # 436
-wa.append(32.6898) # 437
-wa.append(38.9549) # 438
-wa.append(38.815) # 439
-wa.append(38.5259) # 440
-wa.append(35.776) # 441
-wa.append(30.6169) # 442
-wa.append(13.9068) # 443
-wa.append(44.6255) # 444
-wa.append(51.1064) # 445
-wa.append(48.0907) # 446
-wa.append(37.2331) # 447
-wa.append(45.4002) # 448
-wa.append(28.6148) # 449
-wa.append(48.4346) # 450
-wa.append(56.0959) # 451
-wa.append(56.8214) # 452
-wa.append(56.642) # 453
-wa.append(56.388) # 454
-wa.append(57.4226) # 455
-wa.append(57.2532) # 456
-wa.append(55.9982) # 457
-wa.append(57.4268) # 458
-wa.append(56.5724) # 459
-wa.append(55.2933) # 460
-wa.append(54.9696) # 461
-wa.append(53.7467) # 462
-wa.append(50.31) # 463
-wa.append(46.6036) # 464
-wa.append(42.2788) # 465
-wa.append(38.9121) # 466
-wa.append(29.5909) # 467
-wa.append(55.492) # 468
-wa.append(58.0905) # 469
-wa.append(59.6224) # 470
-wa.append(60.3366) # 471
-wa.append(61.8407) # 472
-wa.append(61.3299) # 473
-wa.append(60.8622) # 474
-wa.append(59.9123) # 475
-wa.append(59.2478) # 476
-wa.append(58.3997) # 477
-wa.append(57.5706) # 478
-wa.append(57.0274) # 479
-wa.append(56.2984) # 480
-wa.append(47.3208) # 481
-wa.append(40.9249) # 482
-wa.append(53.0291) # 483
-wa.append(56.0929) # 484
-wa.append(57.2714) # 485
-wa.append(59.3038) # 486
-wa.append(60.6079) # 487
-wa.append(60.8781) # 488
-wa.append(61.7579) # 489
-wa.append(62.1801) # 490
-wa.append(48.1811) # 491
-wa.append(38.7923) # 492
-wa.append(30.5332) # 493
-wa.append(42.3027) # 494
-wa.append(33.455) # 495
-wa.append(54.6294) # 496
-wa.append(57.6493) # 497
-wa.append(61.349) # 498
-wa.append(65.2316) # 499
-wa.append(67.4108) # 500
-wa.append(70.2099) # 501
-wa.append(72.6331) # 502
-wa.append(74.7686) # 503
-wa.append(76.1346) # 504
-wa.append(76.8304) # 505
-wa.append(77.074) # 506
-wa.append(77.3476) # 507
-wa.append(77.2727) # 508
-wa.append(76.5139) # 509
-wa.append(76.2837) # 510
-wa.append(75.5322) # 511
-wa.append(74.6581) # 512
-wa.append(73.8581) # 513
-wa.append(72.4806) # 514
-wa.append(70.5357) # 515
-wa.append(67.8857) # 516
-wa.append(58.7813) # 517
-wa.append(54.5194) # 518
-wa.append(53.451) # 519
-wa.append(61.0664) # 520
-wa.append(77.3621) # 521
-wa.append(78.4093) # 522
-wa.append(78.8148) # 523
-wa.append(77.1314) # 524
-wa.append(76.8222) # 525
-wa.append(76.6275) # 526
-wa.append(76.3131) # 527
-wa.append(17.9569) # 528
-wa.append(38.0798) # 529
-wa.append(31.4618) # 530
-wa.append(73.379) # 531
-wa.append(74.4319) # 532
-wa.append(65.1599) # 533
-wa.append(51.1747) # 534
-wa.append(43.9777) # 535
-wa.append(44.9006) # 536
-wa.append(33.0473) # 537
-wa.append(46.6645) # 538
-wa.append(51.6539) # 539
-wa.append(19.9303) # 540
-wa.append(46.8382) # 541
-wa.append(48.0614) # 542
-wa.append(50.0166) # 543
-wa.append(37.3914) # 544
-wa.append(35.7491) # 545
-wa.append(48.7077) # 546
-wa.append(56.0796) # 547
-wa.append(59.7254) # 548
-wa.append(62.0318) # 549
-wa.append(64.9613) # 550
-wa.append(65.2589) # 551
-wa.append(32.9346) # 552
-wa.append(66.4187) # 553
-wa.append(75.2223) # 554
-wa.append(81.8562) # 555
-wa.append(84.873) # 556
-wa.append(83.9558) # 557
-wa.append(85.7343) # 558
-wa.append(85.3495) # 559
-wa.append(84.4793) # 560
-wa.append(79.7703) # 561
-wa.append(76.8818) # 562
-wa.append(74.2091) # 563
-wa.append(70.2767) # 564
-wa.append(65.5806) # 565
-wa.append(56.3266) # 566
-wa.append(44.9055) # 567
-wa.append(61.6989) # 568
-wa.append(70.2112) # 569
-wa.append(74.6521) # 570
-wa.append(70.7373) # 571
-wa.append(64.3045) # 572
-wa.append(74.5888) # 573
-wa.append(73.2282) # 574
-wa.append(71.2653) # 575
-wa.append(69.8456) # 576
-wa.append(69.687) # 577
-wa.append(67.3829) # 578
-wa.append(64.919) # 579
-wa.append(64.9509) # 580
-wa.append(64.3987) # 581
-wa.append(63.0537) # 582
-wa.append(61.6823) # 583
-wa.append(61.7465) # 584
-wa.append(60.7444) # 585
-wa.append(59.4407) # 586
-wa.append(58.8687) # 587
-wa.append(56.9048) # 588
-wa.append(53.4569) # 589
-wa.append(53.8275) # 590
-wa.append(53.0179) # 591
-wa.append(9.68314) # 592
-wa.append(10.9847) # 593
-wa.append(15.1949) # 594
-wa.append(30.8168) # 595
-wa.append(32.6254) # 596
-wa.append(28.4209) # 597
-wa.append(26.018) # 598
-wa.append(22.3703) # 599
-wa.append(33.704) # 600
-wa.append(37.9739) # 601
-wa.append(38.6732) # 602
-wa.append(38.7429) # 603
-wa.append(40.078) # 604
-wa.append(39.678) # 605
-wa.append(40.9875) # 606
-wa.append(39.7585) # 607
-wa.append(41.0735) # 608
-wa.append(40.7716) # 609
-wa.append(39.911) # 610
-wa.append(35.7301) # 611
-wa.append(41.6334) # 612
-wa.append(9.95243) # 613
-wa.append(36.1553) # 614
-wa.append(7.08009) # 615
-wa.append(17.8416) # 616
-wa.append(26.354) # 617
-wa.append(29.2031) # 618
-wa.append(30.718) # 619
-wa.append(29.4861) # 620
-wa.append(15.6053) # 621
-wa.append(37.4236) # 622
-wa.append(43.1836) # 623
-wa.append(47.1556) # 624
-wa.append(42.6868) # 625
-wa.append(55.7879) # 626
-wa.append(58.1846) # 627
-wa.append(63.4777) # 628
-wa.append(66.4901) # 629
-wa.append(68.9984) # 630
-wa.append(72.2929) # 631
-wa.append(63.7474) # 632
-wa.append(57.7598) # 633
-wa.append(67.4417) # 634
-wa.append(74.3676) # 635
-wa.append(66.1794) # 636
-wa.append(62.8642) # 637
-wa.append(63.8339) # 638
-wa.append(63.8646) # 639
-wa.append(63.1907) # 640
-wa.append(63.7918) # 641
-wa.append(62.9729) # 642
-wa.append(49.0572) # 643
-wa.append(42.9319) # 644
-wa.append(49.8995) # 645
-wa.append(74.1768) # 646
-wa.append(79.8566) # 647
-wa.append(80.1697) # 648
-wa.append(79.795) # 649
-wa.append(79.311) # 650
-wa.append(79.3238) # 651
-wa.append(78.3458) # 652
-wa.append(77.801) # 653
-wa.append(77.9559) # 654
-wa.append(17.6831) # 655
-wa.append(38.1187) # 656
-wa.append(57.3959) # 657
-wa.append(66.7357) # 658
-wa.append(70.8083) # 659
-wa.append(72.9232) # 660
-wa.append(73.3535) # 661
-wa.append(73.5223) # 662
-wa.append(65.0368) # 663
-wa.append(43.5485) # 664
-wa.append(40.8749) # 665
-wa.append(25.7634) # 666
-wa.append(40.8964) # 667
-wa.append(51.6556) # 668
-wa.append(40.8502) # 669
-wa.append(47.7336) # 670
-wa.append(72.4271) # 671
-wa.append(54.628) # 672
-wa.append(62.6725) # 673
-wa.append(66.6163) # 674
-wa.append(10.207) # 675
-wa.append(59.7719) # 676
-wa.append(62.0114) # 677
-wa.append(62.5574) # 678
-wa.append(60.5302) # 679
-wa.append(57.7697) # 680
-wa.append(56.9391) # 681
-wa.append(53.0621) # 682
-wa.append(45.6692) # 683
-wa.append(65.4509) # 684
-wa.append(73.0123) # 685
-wa.append(75.2495) # 686
-wa.append(75.5796) # 687
-wa.append(67.1907) # 688
-wa.append(56.3995) # 689
-wa.append(87.5598) # 690
-wa.append(79.7986) # 691
-wa.append(20.934) # 692
-wa.append(46.5213) # 693
-wa.append(37.8295) # 694
-wa.append(28.0742) # 695
-wa.append(33.0182) # 696
-wa.append(53.1535) # 697
-wa.append(55.0827) # 698
-wa.append(55.1282) # 699
-wa.append(53.6803) # 700
-wa.append(52.7671) # 701
-wa.append(51.5719) # 702
-wa.append(8.7511) # 703
-wa.append(41.2888) # 704
-wa.append(44.3953) # 705
-wa.append(44.9102) # 706
-wa.append(38.1773) # 707
-wa.append(54.8601) # 708
-wa.append(70.4456) # 709
-wa.append(76.9856) # 710
-wa.append(77.0234) # 711
-wa.append(73.9973) # 712
-wa.append(74.5228) # 713
-wa.append(74.912) # 714
-wa.append(74.8957) # 715
-wa.append(73.9333) # 716
-wa.append(74.5551) # 717
-wa.append(74.0518) # 718
-wa.append(73.0217) # 719
-wa.append(74.1049) # 720
-wa.append(72.9032) # 721
-wa.append(70.8179) # 722
-wa.append(51.1398) # 723
-wa.append(16.4021) # 724
-wa.append(48.8693) # 725
-wa.append(52.457) # 726
-wa.append(53.5757) # 727
-wa.append(51.351) # 728
-wa.append(53.4981) # 729
-wa.append(55.0829) # 730
-wa.append(54.3724) # 731
-wa.append(54.6513) # 732
-wa.append(39.4734) # 733
-wa.append(47.3946) # 734
-wa.append(54.0173) # 735
-wa.append(58.7459) # 736
-wa.append(63.2692) # 737
-wa.append(66.61) # 738
-wa.append(69.2436) # 739
-wa.append(69.1816) # 740
-wa.append(58.0947) # 741
-wa.append(45.7854) # 742
-wa.append(35.051) # 743
-wa.append(39.3643) # 744
-wa.append(45.2001) # 745
-wa.append(1.86742) # 746
-wa.append(32.0137) # 747
-wa.append(38.2279) # 748
-wa.append(19.0849) # 749
-wa.append(23.6865) # 750
-wa.append(24.8454) # 751
-wa.append(24.977) # 752
-wa.append(23.8867) # 753
-wa.append(11.3441) # 754
-wa.append(22.1761) # 755
-wa.append(27.0471) # 756
-wa.append(29.2493) # 757
-wa.append(27.243) # 758
-wa.append(7.72959) # 759
-wa.append(28.2599) # 760
-wa.append(33.4646) # 761
-wa.append(37.0125) # 762
-wa.append(36.5466) # 763
-wa.append(41.4167) # 764
-wa.append(45.0248) # 765
-wa.append(34.8559) # 766
-wa.append(42.5233) # 767
-wa.append(44.7875) # 768
-wa.append(46.1512) # 769
-wa.append(40.14) # 770
-wa.append(48.0319) # 771
-wa.append(21.5484) # 772
-wa.append(61.3308) # 773
-wa.append(66.5733) # 774
-wa.append(69.599) # 775
-wa.append(73.8892) # 776
-wa.append(77.724) # 777
-wa.append(79.0194) # 778
-wa.append(78.8834) # 779
-wa.append(78.2688) # 780
-wa.append(77.0102) # 781
-wa.append(75.4891) # 782
-wa.append(73.295) # 783
-wa.append(67.4417) # 784
-wa.append(60.9526) # 785
-wa.append(31.8575) # 786
-wa.append(36.5815) # 787
-wa.append(46.9632) # 788
-wa.append(22.0199) # 789
-wa.append(36.0636) # 790
-wa.append(37.3839) # 791
-wa.append(29.661) # 792
-wa.append(37.6499) # 793
-wa.append(44.7785) # 794
-wa.append(38.5098) # 795
-wa.append(37.1441) # 796
-wa.append(34.0866) # 797
-wa.append(31.2583) # 798
-wa.append(40.2812) # 799
-wa.append(53.0549) # 800
-wa.append(50.8537) # 801
-wa.append(51.6405) # 802
-wa.append(41.4926) # 803
-wa.append(75.4852) # 804
-wa.append(77.7391) # 805
-wa.append(81.1267) # 806
-wa.append(80.1805) # 807
-wa.append(79.0433) # 808
-wa.append(78.2553) # 809
-wa.append(77.1435) # 810
-wa.append(43.9381) # 811
-wa.append(49.0229) # 812
-wa.append(52.4964) # 813
-wa.append(38.4783) # 814
-wa.append(49.8223) # 815
-wa.append(58.0344) # 816
-wa.append(46.1564) # 817
-wa.append(44.916) # 818
-wa.append(43.6491) # 819
-wa.append(35.3439) # 820
-wa.append(54.6861) # 821
-wa.append(46.7171) # 822
-wa.append(38.4148) # 823
-wa.append(29.216) # 824
-wa.append(47.8582) # 825
-wa.append(46.2423) # 826
-wa.append(41.1479) # 827
-wa.append(50.1986) # 828
-wa.append(51.5778) # 829
-wa.append(50.154) # 830
-wa.append(48.5989) # 831
-wa.append(47.2479) # 832
-wa.append(46.3259) # 833
-wa.append(44.7114) # 834
-wa.append(43.867) # 835
-wa.append(41.8531) # 836
-wa.append(41.6567) # 837
-wa.append(37.2007) # 838
-wa.append(6.87932) # 839
-wa.append(5.1804) # 840
-wa.append(19.6361) # 841
-wa.append(26.5101) # 842
-wa.append(29.8162) # 843
-wa.append(43.4583) # 844
-wa.append(42.8054) # 845
-wa.append(43.4219) # 846
-wa.append(44.2015) # 847
-wa.append(38.2711) # 848
-wa.append(41.2251) # 849
-wa.append(43.1818) # 850
-wa.append(43.9681) # 851
-wa.append(45.5504) # 852
-wa.append(45.7201) # 853
-wa.append(45.5266) # 854
-wa.append(46.5817) # 855
-wa.append(47.3899) # 856
-wa.append(45.9589) # 857
-wa.append(43.6128) # 858
-wa.append(48.9636) # 859
-wa.append(52.4222) # 860
-wa.append(54.4657) # 861
-wa.append(56.0263) # 862
-wa.append(57.7361) # 863
-wa.append(59.9413) # 864
-wa.append(60.9189) # 865
-wa.append(61.9647) # 866
-wa.append(61.2337) # 867
-wa.append(58.3751) # 868
-wa.append(46.8102) # 869
-wa.append(58.2249) # 870
-wa.append(37.7549) # 871
-wa.append(60.5524) # 872
-wa.append(46.4174) # 873
-wa.append(32.5143) # 874
-wa.append(54.1604) # 875
-wa.append(61.588) # 876
-wa.append(63.725) # 877
-wa.append(66.8078) # 878
-wa.append(68.986) # 879
-wa.append(72.317) # 880
-wa.append(74.953) # 881
-wa.append(75.7212) # 882
-wa.append(76.8431) # 883
-wa.append(77.7696) # 884
-wa.append(78.5227) # 885
-wa.append(78.5863) # 886
-wa.append(75.9276) # 887
-wa.append(68.8888) # 888
-wa.append(76.819) # 889
-wa.append(70.6892) # 890
-wa.append(77.6394) # 891
-wa.append(71.9318) # 892
-wa.append(61.7625) # 893
-wa.append(28.945) # 894
-wa.append(54.7246) # 895
-wa.append(54.4128) # 896
-wa.append(24.651) # 897
-wa.append(38.4463) # 898
-wa.append(43.0458) # 899
-wa.append(43.6517) # 900
-wa.append(42.607) # 901
-wa.append(39.7521) # 902
-wa.append(34.6841) # 903
-wa.append(19.1493) # 904
-wa.append(52.6916) # 905
-wa.append(51.0024) # 906
-wa.append(50.4559) # 907
-wa.append(49.1286) # 908
-wa.append(49.6699) # 909
-wa.append(54.2875) # 910
-wa.append(51.2869) # 911
-wa.append(42.6717) # 912
-wa.append(41.0675) # 913
-wa.append(81.4175) # 914
-wa.append(84.3916) # 915
-wa.append(78.9449) # 916
-wa.append(69.9782) # 917
-wa.append(58.9204) # 918
-wa.append(86.8947) # 919
-wa.append(88.6405) # 920
-wa.append(84.8052) # 921
-wa.append(86.7194) # 922
-wa.append(8.51173) # 923
-wa.append(50.7204) # 924
-wa.append(37.1659) # 925
-wa.append(21.4888) # 926
-wa.append(14.6715) # 927
-wa.append(14.1167) # 928
-wa.append(15.4895) # 929
-wa.append(20.8257) # 930
-wa.append(26.0235) # 931
-wa.append(28.7963) # 932
-wa.append(34.7259) # 933
-wa.append(36.7059) # 934
-wa.append(42.8133) # 935
-wa.append(35.4872) # 936
-wa.append(42.6012) # 937
-wa.append(43.0968) # 938
-wa.append(33.2151) # 939
-wa.append(29.3989) # 940
-wa.append(36.1412) # 941
-wa.append(34.41) # 942
-wa.append(57.2664) # 943
-wa.append(60.9433) # 944
-wa.append(45.2876) # 945
-wa.append(63.4263) # 946
-wa.append(70.5249) # 947
-wa.append(16.7079) # 948
-wa.append(67.8795) # 949
-wa.append(78.1865) # 950
-wa.append(84.3252) # 951
-wa.append(87.7198) # 952
-wa.append(88.0046) # 953
-wa.append(87.7894) # 954
-wa.append(88.2107) # 955
-wa.append(87.9105) # 956
-wa.append(87.1527) # 957
-wa.append(85.3037) # 958
-wa.append(83.6537) # 959
-wa.append(82.2079) # 960
-wa.append(79.7512) # 961
-wa.append(78.3181) # 962
-wa.append(77.6089) # 963
-wa.append(69.4316) # 964
-wa.append(72.233) # 965
-wa.append(70.9977) # 966
-wa.append(69.0918) # 967
-wa.append(67.1273) # 968
-wa.append(53.3862) # 969
-wa.append(54.2015) # 970
-wa.append(58.6201) # 971
-wa.append(79.1326) # 972
-wa.append(75.086) # 973
-wa.append(67.4908) # 974
-wa.append(72.3007) # 975
-wa.append(72.7042) # 976
-wa.append(74.2483) # 977
-wa.append(75.0172) # 978
-wa.append(75.465) # 979
-wa.append(76.3517) # 980
-wa.append(76.2895) # 981
-wa.append(77.2635) # 982
-wa.append(76.5772) # 983
-wa.append(77.244) # 984
-wa.append(76.2198) # 985
-wa.append(76.0553) # 986
-wa.append(75.4475) # 987
-wa.append(74.0035) # 988
-wa.append(72.2652) # 989
-wa.append(71.5411) # 990
-wa.append(69.8202) # 991
-wa.append(34.9689) # 992
-wa.append(57.5986) # 993
-wa.append(28.9371) # 994
-wa.append(28.0578) # 995
-wa.append(25.2214) # 996
-wa.append(48.2768) # 997
-wa.append(53.7574) # 998
-wa.append(54.6848) # 999
-wa.append(54.1886) # 1000
-wa.append(54.173) # 1001
-wa.append(54.1448) # 1002
-wa.append(54.1915) # 1003
-wa.append(53.9637) # 1004
-wa.append(54.4967) # 1005
-wa.append(54.7506) # 1006
-wa.append(54.1428) # 1007
-wa.append(54.1456) # 1008
-wa.append(54.6844) # 1009
-wa.append(53.327) # 1010
-wa.append(47.219) # 1011
-wa.append(43.5724) # 1012
-wa.append(37.4503) # 1013
-wa.append(31.6801) # 1014
-wa.append(29.0298) # 1015
-wa.append(40.1241) # 1016
-wa.append(45.2353) # 1017
-wa.append(65.8992) # 1018
-wa.append(52.5028) # 1019
-wa.append(37.6251) # 1020
-wa.append(59.7414) # 1021
-wa.append(69.2658) # 1022
-wa.append(53.0425) # 1023
-wa.append(77.2654) # 1024
-wa.append(64.389) # 1025
-wa.append(50.8062) # 1026
-wa.append(71.143) # 1027
-wa.append(70.1738) # 1028
-wa.append(65.5971) # 1029
-wa.append(55.9629) # 1030
-wa.append(58.4511) # 1031
-wa.append(55.2709) # 1032
-wa.append(22.9445) # 1033
-wa.append(67.6926) # 1034
-wa.append(70.8605) # 1035
-wa.append(72.2654) # 1036
-wa.append(73.1126) # 1037
-wa.append(74.9735) # 1038
-wa.append(76.1472) # 1039
-wa.append(77.6222) # 1040
-wa.append(78.7752) # 1041
-wa.append(79.7445) # 1042
-wa.append(79.6631) # 1043
-wa.append(79.6614) # 1044
-wa.append(80.2158) # 1045
-wa.append(80.0015) # 1046
-wa.append(79.8467) # 1047
-wa.append(80.0348) # 1048
-wa.append(80.691) # 1049
-wa.append(20.4126) # 1050
-wa.append(8.46938) # 1051
-wa.append(8.11386) # 1052
-wa.append(6.33527) # 1053
-wa.append(3.59316) # 1054
-wa.append(45.5909) # 1055
-wa.append(41.7282) # 1056
-wa.append(40.1361) # 1057
-wa.append(12.316) # 1058
-wa.append(28.955) # 1059
-wa.append(20.0063) # 1060
-wa.append(35.5159) # 1061
-wa.append(38.0287) # 1062
-wa.append(37.1792) # 1063
-wa.append(33.9189) # 1064
-wa.append(38.9438) # 1065
-wa.append(43.2813) # 1066
-wa.append(46.3224) # 1067
-wa.append(46.0802) # 1068
-wa.append(44.4916) # 1069
-wa.append(41.5987) # 1070
-wa.append(18.6115) # 1071
-wa.append(34.8686) # 1072
-wa.append(41.9534) # 1073
-wa.append(48.2606) # 1074
-wa.append(57.7063) # 1075
-wa.append(61.236) # 1076
-wa.append(59.0377) # 1077
-wa.append(51.7032) # 1078
-wa.append(30.3296) # 1079
-wa.append(67.3465) # 1080
-wa.append(67.7985) # 1081
-wa.append(70.7395) # 1082
-wa.append(71.7188) # 1083
-wa.append(73.3472) # 1084
-wa.append(31.2453) # 1085
-wa.append(38.4349) # 1086
-wa.append(64.8569) # 1087
-wa.append(66.1757) # 1088
-wa.append(58.3696) # 1089
-wa.append(49.5467) # 1090
-wa.append(54.5592) # 1091
-wa.append(56.4315) # 1092
-wa.append(49.6137) # 1093
-wa.append(35.7842) # 1094
-wa.append(62.3772) # 1095
-wa.append(66.4885) # 1096
-wa.append(68.9105) # 1097
-wa.append(70.3072) # 1098
-wa.append(70.9676) # 1099
-wa.append(71.4213) # 1100
-wa.append(72.4042) # 1101
-wa.append(72.9203) # 1102
-wa.append(73.9108) # 1103
-wa.append(74.5518) # 1104
-wa.append(3.69171) # 1105
-wa.append(45.0175) # 1106
-wa.append(51.0015) # 1107
-wa.append(53.7503) # 1108
-wa.append(53.9415) # 1109
-wa.append(54.668) # 1110
-wa.append(54.5426) # 1111
-wa.append(54.0012) # 1112
-wa.append(54.0172) # 1113
-wa.append(46.6034) # 1114
-wa.append(55.059) # 1115
-wa.append(46.1777) # 1116
-wa.append(10.9567) # 1117
-wa.append(26.8114) # 1118
-wa.append(22.8653) # 1119
-wa.append(42.316) # 1120
-wa.append(41.1787) # 1121
-wa.append(50.8257) # 1122
-wa.append(49.1682) # 1123
-wa.append(51.347) # 1124
-wa.append(49.2905) # 1125
-wa.append(42.3014) # 1126
-wa.append(35.5371) # 1127
-wa.append(43.9875) # 1128
-wa.append(52.4339) # 1129
-wa.append(42.1023) # 1130
-wa.append(41.3032) # 1131
-wa.append(44.9725) # 1132
-wa.append(66.8357) # 1133
-wa.append(73.0162) # 1134
-wa.append(77.2006) # 1135
-wa.append(81.7532) # 1136
-wa.append(82.7562) # 1137
-wa.append(80.9494) # 1138
-wa.append(79.6543) # 1139
-wa.append(78.4317) # 1140
-wa.append(74.4876) # 1141
-wa.append(55.4777) # 1142
-wa.append(62.2848) # 1143
-wa.append(64.4123) # 1144
-wa.append(68.0602) # 1145
-wa.append(71.9823) # 1146
-wa.append(74.0727) # 1147
-wa.append(75.4292) # 1148
-wa.append(39.9485) # 1149
-wa.append(14.2678) # 1150
-wa.append(34.7701) # 1151
-wa.append(39.3253) # 1152
-wa.append(41.8206) # 1153
-wa.append(32.6855) # 1154
-wa.append(41.4105) # 1155
-wa.append(40.426) # 1156
-wa.append(42.6018) # 1157
-wa.append(44.3648) # 1158
-wa.append(38.9447) # 1159
-wa.append(43.7506) # 1160
-wa.append(68.6993) # 1161
-wa.append(70.4698) # 1162
-wa.append(72.8599) # 1163
-wa.append(74.1567) # 1164
-wa.append(73.2578) # 1165
-wa.append(71.1896) # 1166
-wa.append(56.0557) # 1167
-wa.append(52.0209) # 1168
-wa.append(49.5145) # 1169
-wa.append(35.6463) # 1170
-wa.append(18.9499) # 1171
-wa.append(13.3225) # 1172
-wa.append(5.18333) # 1173
-wa.append(8.32454) # 1174
-wa.append(31.0969) # 1175
-wa.append(21.5844) # 1176
-wa.append(26.6532) # 1177
-wa.append(34.9326) # 1178
-wa.append(39.4368) # 1179
-wa.append(43.128) # 1180
-wa.append(45.4945) # 1181
-wa.append(48.5149) # 1182
-wa.append(50.3633) # 1183
-wa.append(52.744) # 1184
-wa.append(54.5653) # 1185
-wa.append(54.6151) # 1186
-wa.append(56.5681) # 1187
-wa.append(56.2334) # 1188
-wa.append(56.7145) # 1189
-wa.append(55.8089) # 1190
-wa.append(53.872) # 1191
-wa.append(46.9239) # 1192
-wa.append(66.2793) # 1193
-wa.append(69.1098) # 1194
-wa.append(71.5248) # 1195
-wa.append(70.9514) # 1196
-wa.append(70.2198) # 1197
-wa.append(67.4716) # 1198
-wa.append(63.0154) # 1199
-wa.append(57.0564) # 1200
-wa.append(61.1914) # 1201
-wa.append(56.4905) # 1202
-wa.append(5.75711) # 1203
-wa.append(53.0688) # 1204
-wa.append(56.4629) # 1205
-wa.append(57.3845) # 1206
-wa.append(56.7673) # 1207
-wa.append(56.0865) # 1208
+wa.append(5)
+wa.append(46)
+wa.append(87)
+wa.append(127)
+wa.append(48)
+wa.append(23)
+wa.append(88)
+wa.append(285)
+wa.append(439)
+wa.append(287)
+wa.append(633)
+wa.append(461)
+wa.append(255)
+wa.append(66)
+wa.append(267)
+wa.append(235)
+wa.append(231)
+wa.append(445)
+wa.append(94)
+wa.append(138)
+wa.append(57)
+wa.append(136)
+wa.append(216)
+wa.append(268)
+wa.append(57)
+wa.append(2)
+wa.append(580)
+wa.append(623)
+wa.append(539)
+wa.append(1)
+wa.append(595)
+wa.append(210)
+wa.append(508)
+wa.append(193)
+wa.append(190)
+wa.append(810)
+wa.append(882)
+wa.append(625)
+wa.append(92)
+wa.append(48)
+wa.append(257)
+wa.append(25)
+wa.append(570)
+wa.append(640)
+wa.append(885)
+wa.append(605)
+wa.append(980)
+wa.append(494)
+wa.append(1221)
+wa.append(1671)
+wa.append(1754)
+wa.append(1799)
+wa.append(1821)
+wa.append(1812)
+wa.append(1821)
+wa.append(1863)
+wa.append(1896)
+wa.append(1858)
+wa.append(1871)
+wa.append(1902)
+wa.append(1730)
+wa.append(1315)
+wa.append(510)
+wa.append(1112)
+wa.append(1210)
+wa.append(1472)
+wa.append(474)
+wa.append(537)
+wa.append(1563)
+wa.append(1704)
+wa.append(1687)
+wa.append(903)
+wa.append(524)
+wa.append(1793)
+wa.append(1372)
+wa.append(1485)
+wa.append(379)
+wa.append(883)
+wa.append(888)
+wa.append(101)
+wa.append(806)
+wa.append(56)
+wa.append(617)
+wa.append(394)
+wa.append(639)
+wa.append(262)
+wa.append(681)
+wa.append(5)
+wa.append(1479)
+wa.append(1623)
+wa.append(674)
+wa.append(1486)
+wa.append(1451)
+wa.append(1127)
+wa.append(1241)
+wa.append(662)
+wa.append(842)
+wa.append(1088)
+wa.append(1292)
+wa.append(375)
+wa.append(572)
+wa.append(1232)
+wa.append(960)
+wa.append(211)
+wa.append(1051)
+wa.append(439)
+wa.append(578)
+wa.append(102)
+wa.append(821)
+wa.append(1354)
+wa.append(1269)
+wa.append(949)
+wa.append(1068)
+wa.append(513)
+wa.append(568)
+wa.append(952)
+wa.append(671)
+wa.append(1103)
+wa.append(91)
+wa.append(1214)
+wa.append(1222)
+wa.append(252)
+wa.append(948)
+wa.append(177)
+wa.append(629)
+wa.append(1014)
+wa.append(933)
+wa.append(703)
+wa.append(604)
+wa.append(573)
+wa.append(4)
+wa.append(103)
+wa.append(124)
+wa.append(120)
+wa.append(739)
+wa.append(727)
+wa.append(733)
+wa.append(690)
+wa.append(13)
+wa.append(327)
+wa.append(172)
+wa.append(984)
+wa.append(880)
+wa.append(740)
+wa.append(1233)
+wa.append(1041)
+wa.append(696)
+wa.append(938)
+wa.append(1021)
+wa.append(792)
+wa.append(302)
+wa.append(866)
+wa.append(1172)
+wa.append(1277)
+wa.append(1340)
+wa.append(1118)
+wa.append(1273)
+wa.append(916)
+wa.append(735)
+wa.append(581)
+wa.append(1248)
+wa.append(1147)
+wa.append(92)
+wa.append(453)
+wa.append(416)
+wa.append(513)
+wa.append(487)
+wa.append(151)
+wa.append(746)
+wa.append(471)
+wa.append(207)
+wa.append(724)
+wa.append(404)
+wa.append(442)
+wa.append(288)
+wa.append(0)
+wa.append(0)
+wa.append(0)
+wa.append(0)
+wa.append(0)
+wa.append(1)
+wa.append(0)
+wa.append(31)
+wa.append(19)
+wa.append(32)
+wa.append(224)
+wa.append(232)
+wa.append(142)
+wa.append(92)
+wa.append(312)
+wa.append(379)
+wa.append(178)
+wa.append(19)
+wa.append(137)
+wa.append(248)
+wa.append(355)
+wa.append(220)
+wa.append(335)
+wa.append(473)
+wa.append(428)
+wa.append(385)
+wa.append(248)
+wa.append(475)
+wa.append(238)
+wa.append(93)
+wa.append(335)
+wa.append(350)
+wa.append(33)
+wa.append(40)
+wa.append(80)
+wa.append(303)
+wa.append(534)
+wa.append(222)
+wa.append(426)
+wa.append(973)
+wa.append(598)
+wa.append(1081)
+wa.append(1117)
+wa.append(1102)
+wa.append(268)
+wa.append(183)
+wa.append(678)
+wa.append(756)
+wa.append(734)
+wa.append(648)
+wa.append(373)
+wa.append(1252)
+wa.append(754)
+wa.append(929)
+wa.append(144)
+wa.append(509)
+wa.append(204)
+wa.append(225)
+wa.append(359)
+wa.append(573)
+wa.append(634)
+wa.append(821)
+wa.append(896)
+wa.append(600)
+wa.append(682)
+wa.append(319)
+wa.append(388)
+wa.append(504)
+wa.append(431)
+wa.append(529)
+wa.append(569)
+wa.append(484)
+wa.append(47)
+wa.append(121)
+wa.append(283)
+wa.append(34)
+wa.append(340)
+wa.append(113)
+wa.append(1145)
+wa.append(1387)
+wa.append(1125)
+wa.append(357)
+wa.append(783)
+wa.append(453)
+wa.append(604)
+wa.append(1131)
+wa.append(1427)
+wa.append(1443)
+wa.append(1361)
+wa.append(680)
+wa.append(1268)
+wa.append(1309)
+wa.append(1285)
+wa.append(1170)
+wa.append(1038)
+wa.append(959)
+wa.append(455)
+wa.append(54)
+wa.append(1153)
+wa.append(1799)
+wa.append(1948)
+wa.append(1772)
+wa.append(1635)
+wa.append(1188)
+wa.append(821)
+wa.append(1070)
+wa.append(1282)
+wa.append(936)
+wa.append(884)
+wa.append(1018)
+wa.append(68)
+wa.append(1207)
+wa.append(1394)
+wa.append(1)
+wa.append(1269)
+wa.append(1276)
+wa.append(1256)
+wa.append(1260)
+wa.append(1345)
+wa.append(1339)
+wa.append(976)
+wa.append(870)
+wa.append(1221)
+wa.append(1099)
+wa.append(887)
+wa.append(868)
+wa.append(795)
+wa.append(784)
+wa.append(53)
+wa.append(503)
+wa.append(758)
+wa.append(465)
+wa.append(394)
+wa.append(464)
+wa.append(268)
+wa.append(869)
+wa.append(973)
+wa.append(926)
+wa.append(1079)
+wa.append(1133)
+wa.append(1112)
+wa.append(1203)
+wa.append(1238)
+wa.append(1238)
+wa.append(1232)
+wa.append(184)
+wa.append(511)
+wa.append(633)
+wa.append(336)
+wa.append(994)
+wa.append(1398)
+wa.append(1509)
+wa.append(416)
+wa.append(1057)
+wa.append(376)
+wa.append(414)
+wa.append(1036)
+wa.append(1465)
+wa.append(1148)
+wa.append(1406)
+wa.append(942)
+wa.append(1188)
+wa.append(1504)
+wa.append(1546)
+wa.append(1362)
+wa.append(1285)
+wa.append(1371)
+wa.append(1304)
+wa.append(1194)
+wa.append(911)
+wa.append(122)
+wa.append(768)
+wa.append(559)
+wa.append(542)
+wa.append(695)
+wa.append(981)
+wa.append(1187)
+wa.append(782)
+wa.append(576)
+wa.append(540)
+wa.append(475)
+wa.append(1227)
+wa.append(493)
+wa.append(1380)
+wa.append(165)
+wa.append(920)
+wa.append(742)
+wa.append(262)
+wa.append(558)
+wa.append(935)
+wa.append(848)
+wa.append(929)
+wa.append(125)
+wa.append(1053)
+wa.append(854)
+wa.append(307)
+wa.append(390)
+wa.append(648)
+wa.append(796)
+wa.append(828)
+wa.append(688)
+wa.append(1056)
+wa.append(990)
+wa.append(662)
+wa.append(991)
+wa.append(554)
+wa.append(611)
+wa.append(274)
+wa.append(161)
+wa.append(113)
+wa.append(84)
+wa.append(590)
 
 #for i in range(len(t)):
 #    mean = mu*(max(1-exp(-(t[i]/5))-exp(-((950-t[i])/1)), 0))
 #    #wa.append(mean)
 #    wa.append(gauss(mean, sig))
-
+'''
 for i in range(len(wa)-1):
     wf.append(wf[i]+alphaf*(yf*wa[i+1]-wf[i]))
     ws.append(ws[i]+alphas*(ys*wa[i+1]-ws[i]))
@@ -1261,4 +440,6 @@ for i in range(len(we)):
 #print l
 
 plot(t, wf, 'r', t, ws, 'b', t, wa, 'g', t, we, 'y', t, l, 'k')
-show()
+show()'''
+if 0 in wa:
+    print "8=D"

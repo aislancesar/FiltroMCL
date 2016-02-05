@@ -32,7 +32,7 @@ public:
     Landmarks *L;
 
     // Regions
-    float R[4][5];
+    float R[4][7];
 
     // Initializer
     Particulas(QColor c, int Q);

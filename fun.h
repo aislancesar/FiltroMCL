@@ -8,6 +8,7 @@ float GaussRnd(float mu, float sig);
 float UniRnd();
 float pi();
 double Gaussian(float mu, float sig, float x);
+void dist(float x1, float y1, float x2, float y2, float *d, float *r);
 
 struct Landmarks
 {

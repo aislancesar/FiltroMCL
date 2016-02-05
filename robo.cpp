@@ -80,13 +80,15 @@ void robo::Medida(float z[])
 {
     // Returns the measured position with statistical error
     for (int i = 0; i < L->n; i++)
-        z[i] = 1000;
+        z[i] = 600;
 
     int i = 0;
     for (; i < 8; i++)
     {
-        float d = sqrt(pow(L->L[i][0]-x(),2)+pow(L->L[i][1]-y(),2));
-        float r = atan2((L->L[i][1]-y()),(L->L[i][0]-x()))*180/pi();
+        float d, r;
+        dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
+//        = sqrt(pow(L->L[i][0]-x(),2)+pow(L->L[i][1]-y(),2));
+//        float r = atan2((L->L[i][1]-y()),(L->L[i][0]-x()))*180/pi();
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -107,8 +109,8 @@ void robo::Medida(float z[])
     }
     for (; i < 14; i++)
     {
-        float d = sqrt(pow(L->T[i-8][0]-x(),2)+pow(L->T[i-8][1]-y(),2));
-        float r = atan2((L->T[i-8][1]-y()),(L->T[i-8][0]-x()))*180/pi();
+        float d, r;
+        dist(L->T[i-8][0], L->T[i-8][1], x(), y(), &d, &r);
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -129,8 +131,9 @@ void robo::Medida(float z[])
     }
     for (; i < 16; i++)
     {
-        float d = sqrt(pow(L->X[i-14][0]-x(),2)+pow(L->X[i-14][1]-y(),2));
-        float r = atan2((L->X[i-14][1]-y()),(L->X[i-14][0]-x()))*180/pi();
+
+        float d, r;
+        dist(L->X[i-14][0], L->X[i-14][1], x(), y(), &d, &r);
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
@@ -151,8 +154,8 @@ void robo::Medida(float z[])
     }
     if(i == L->n - 1)
     {
-        float d = sqrt(pow(L->B[0]-x(),2)+pow(L->B[1]-y(),2));
-        float r = atan2((L->B[1]-y()),(L->B[0]-x()))*180/pi();
+        float d, r;
+        dist(L->B[0], L->B[1], x(), y(), &d, &r);
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
