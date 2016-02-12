@@ -1,12 +1,13 @@
 from math import *
 from matplotlib.pyplot import *
 from numpy import *
+from random import *
 
 def Gauss(mu, sig, x):
     return exp(-pow(mu-x,2)/(2*sig**2))/sqrt(2*pi*sig**2)
 
 def MyGauss(mu, sig, x):
-    return Gauss(mu, mu*sig, x)
+    return Gauss(mu, mu*sig/10.0, x)
 
 def ToPlotGauss(mu, sig, x, f = False):
     y = []

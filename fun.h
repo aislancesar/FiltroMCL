@@ -9,6 +9,9 @@ float UniRnd();
 float pi();
 double Gaussian(float mu, float sig, float x);
 void dist(float x1, float y1, float x2, float y2, float *d, float *r);
+float hcc(float x1, float y1, float x2, float y2);
+float min(float a, float b);
+float max(float a, float b);
 
 struct Landmarks
 {

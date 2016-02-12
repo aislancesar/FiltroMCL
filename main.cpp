@@ -16,5 +16,11 @@ int main(int argc, char *argv[])
     view.show();
     //qDebug() << 1/sqrt(2) << exp(-0.5);
 
+//    cena.addEllipse(200, 200, 200, 200, Qt::SolidLine, Qt::NoBrush);
+//    cena.addEllipse(100, 000, 400, 400, Qt::SolidLine, Qt::NoBrush);
+//    cena.addEllipse(000, 100, 400, 400, Qt::SolidLine, Qt::NoBrush);
+//    cena.addEllipse(200, 100, 400, 400, Qt::SolidLine, Qt::NoBrush);
+//    cena.addEllipse(100, 200, 400, 400, Qt::SolidLine, Qt::NoBrush);
+
     return app.exec();
 }

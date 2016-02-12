@@ -30,11 +30,11 @@ AGS::AGS()
     T = new robo(0, QColor(0, 255, 255), 300, 200, 0, false);
     I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
-    P = new Particulas(QColor(0, 0, 255), 2000);
+    P = new Particulas(QColor(0, 0, 255), N);
 
     // Set the new erros of the particles
-    T->setVars(2, 3, 0.1);
-    P->Erros(4, 5, 0.5);
+    T->setVars(2, 3, 0.2);
+    P->Erros(4, 6, 0.5);
     // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(W);
@@ -107,7 +107,6 @@ void AGS::keyPressEvent(QKeyEvent *event)
         W->setRotation(UniRnd() * 360 - 180);
         break;
 
-
     case Qt::Key_Z: // Removes particles
         P->MudaQtd(1);
         break;
@@ -115,7 +114,10 @@ void AGS::keyPressEvent(QKeyEvent *event)
         P->MudaQtd(P->Qtd-100);
         break;
     case Qt::Key_C: // Adds particles
-        P->MudaQtd(2000);
+        P->MudaQtd(N);
+        break;
+    case Qt::Key_V:
+        qDebug() << P->Qtd;
         break;
     case Qt::Key_I: // Just moves forward
         u[0] = 10.0;

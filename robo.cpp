@@ -92,7 +92,7 @@ void robo::Medida(float z[])
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-        if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+        if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
             int a = i;
@@ -114,7 +114,7 @@ void robo::Medida(float z[])
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-        if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+        if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
             int a = i;
@@ -137,7 +137,7 @@ void robo::Medida(float z[])
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-        if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+        if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
             int a = i;
@@ -159,7 +159,7 @@ void robo::Medida(float z[])
         //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
         //qDebug("---- %g < %g ~ < %g", d, r, rotation());
-        if((d < 600) && (r > rotation()-30) && (r < rotation()+30))
+        if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
             z[i] = d;
         }

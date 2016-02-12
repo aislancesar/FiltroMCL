@@ -31,6 +31,23 @@ double Gaussian(float mu, float sig, float x)
 
 void dist(float x1, float y1, float x2, float y2, float *d, float *r)
 {
-    *d = sqrt(pow(x1-x2, 2)+pow(y1-y2, 2));
+    *d = hcc(x1, y1, x2, y2);
     *r = atan2((y1-y2), (x1-x2))*180/pi();
+}
+
+float hcc(float x1, float y1, float x2, float y2)
+{
+    return sqrt(pow(x1-x2, 2)+pow(y1-y2, 2));
+}
+
+float min(float a, float b)
+{
+    if(a < b) return a;
+    else return b;
+}
+
+float max(float a, float b)
+{
+    if(a > b) return a;
+    else return b;
 }

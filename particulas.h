@@ -4,7 +4,8 @@
 #include <math.h>
 #include <fun.h>
 
-#define N 2000
+#define N 10000
+#define Rg 4
 
 class Particulas : public QGraphicsItem
 {
@@ -17,22 +18,19 @@ public:
     float Px[N]; // X position
     float Py[N]; // Y position
     float Pr[N]; // Rotation
-    float Pw[N]; // Weight, initialises as zeros
+    double Pw[N]; // Weight, initialises as zeros
 
     // Erros used to generatre the drift of particles
     float MovErr = 1; // The moviment error
     float RotErr = 1; // The rotation error
     float MedErr = 1; // The measurement error
 
-    // Vars used in AMCL to generate new random particles
-    float wf = 1; // Sensible to fast changes of the particles weight
-    float ws = 0.001; // Sensible to slow changes of the particles weight
-
     // LandMarks
     Landmarks *L;
 
     // Regions
-    float R[4][7];
+    float Reg[Rg][5];
+    float aReg[Rg];
 
     // Initializer
     Particulas(QColor c, int Q);
@@ -44,7 +42,7 @@ public:
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)
-    void Nova(float *nPx, float *nPy, float *nPr, float *nPw);
+    void Nova(float *nPx, float *nPy, float *nPr, double *nPw);
 
     // These are needed to draw the particles
     QRectF boundingRect() const;
