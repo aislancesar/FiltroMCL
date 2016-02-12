@@ -30,11 +30,11 @@ AGS::AGS()
     T = new robo(0, QColor(0, 255, 255), 300, 200, 0, false);
     I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
-    P = new Particulas(QColor(0, 0, 255), N);
+    P = new Particulas(QColor(0, 255, 0, 128), N);
 
     // Set the new erros of the particles
     T->setVars(2, 3, 0.2);
-    P->Erros(4, 6, 0.5);
+    P->Erros(4, 6, 0.2);
     // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(W);
@@ -65,40 +65,40 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z[L.n]; // Measure
+    float z; // Measure
 
     switch (event->key())
     {
     case Qt::Key_W: // Moves Forward
         u[0] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        z = W->Medida();
         XMCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         W->Andar(u);
-        W->Medida(z);
+        z = W->Medida();
         XMCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        z = W->Medida();
         XMCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         W->Andar(u);
-        W->Medida(z);
+        z = W->Medida();
         XMCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        z = W->Medida();
         XMCL(P, u, z);
         break;
     case Qt::Key_S: // Kidnappes the robot
@@ -157,12 +157,12 @@ void AGS::keyPressEvent(QKeyEvent *event)
         qDebug("Robo: X.%g Y.%g R.%g", T->x(), T->y(), T->rotation());
         qDebug("---");
         break;
-    case Qt::Key_K: // Measures the landmarks
-        float z[16];
-        T->Medida(z);
-        qDebug("---");
-        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
-        break;
+//    case Qt::Key_K: // Measures the landmarks
+//        float z[16];
+//        T->Medida(z);
+//        qDebug("---");
+//        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
+//        break;
     case Qt::Key_Up:
         L.B[1] -= 5;
         break;

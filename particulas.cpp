@@ -13,11 +13,21 @@ Particulas::Particulas(QColor c, int Q)
     }
 }
 
-void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
+void Particulas::Nova(float *nPx, float *nPy, float *nPr, float *nPw)
 {
     *nPx = 900*UniRnd();
     *nPy = 600*UniRnd();
     *nPr = 360*UniRnd()-180;
+    *nPw = 0;
+}
+
+void Particulas::TendNova(float *nPx, float *nPy, float *nPr, float *nPw)
+{
+    int c = UniRnd()*Rg;
+    while(Reg[c][2] == 0) c = (c+1)%Rg;
+    *nPx = GaussRnd(Reg[c][0]/Reg[c][2], Reg[c][5]);
+    *nPy = GaussRnd(Reg[c][1]/Reg[c][2], Reg[c][5]);
+    *nPr = GaussRnd(atan2(Reg[c][4], Reg[c][3])*180/pi(), 1);
     *nPw = 0;
 }
 
@@ -80,116 +90,62 @@ void Particulas::Move(float u[])
     }
 }
 
-void Particulas::Mede(float zr[])
+void Particulas::Mede(float zr)
 {
-    float z[L->n];
+    float z = 0;
     float d, r;
 
     for (int c = 0; c < Qtd; c++)
     {
         int i = 0;
-        double pw = 1;
-
-        for (int j = 0; j < L->n; j++)
-            z[j] = 600;
-
         for (; i < 8; i++)
         {
             dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
-            //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
-
             if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
-                z[i] = d;
-                int a = i;
-                while (a > 0)
-                {
-                    if (z[a-1] > z[a])
-                    {
-                        z[a] = z[a-1];
-                        z[a-1] = d;
-                    }
-                    a--;
-                }
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
             }
         }
         for (; i < 14; i++)
         {
             dist(L->T[i-8][0], L->T[i-8][1], Px[c], Py[c], &d, &r);
-            //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
-            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
             if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
-                z[i] = d;
-                int a = i;
-                while (a > 8)
-                {
-                    if (z[a-1] > z[a])
-                    {
-                        z[a] = z[a-1];
-                        z[a-1] = d;
-                    }
-                    a--;
-                }
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
             }
         }
         for (; i < 16; i++)
         {
             dist(L->X[i-14][0], L->X[i-14][1], Px[c], Py[c], &d, &r);
-            //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
-            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
             if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
-                z[i] = d;
-                int a = i;
-                while (a > 14)
-                {
-                    if (z[a-1] > z[a])
-                    {
-                        z[a] = z[a-1];
-                        z[a-1] = d;
-                    }
-                    a--;
-                }
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
             }
         }
 
         if(i == L->n - 1){
             dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
-            //if (r < 0) r += 360;
             d = GaussRnd(d, MedErr*d/10);
-            //if (c == 0) qDebug() << d;
-            //qDebug("---- %g < %g ~ < %g", d, r, rotation());
             if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
             {
-                z[i] = d;
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
             }
-            //if (c == 0) qDebug() << d;
         }
 
-        for (int j = 0; j < L->n; j++)
-        {
-            pw *= Gaussian(zr[j], MedErr, z[j]);
-//            if(c == 0)
-//            {
-//                qDebug("%g", Gaussian(zr[j], MedErr, z[j]));
-//                qDebug() << j << "| P:" << z[j] << "| R:" << zr[j] << "| G:" <<  Gaussian(zr[j], MedErr, z[j]);
-//            }
-            if(c == 0) qDebug("z.append(%g)\nzr.append(%g)", z[j], zr[j]);
-        }
-
-        //if(c == 0) qDebug() << "pw:" << pw;
-        // Normalizes weights
-        if(pw < 1e-300) pw = 1e-300;
-        //Pw[c] = 301+log10(pw);
-        Pw[c] = pw;
-        //if(c == 0) qDebug() << "Pw:" << Pw[0];
-        //if (hcc(z[16], 0, zr[16], 0) < zr[16]*0.1) qDebug() << Pw[c];
+        z = sqrt(z);
+        Pw[c] = Gaussian(zr, MedErr, z);
     }
-    //qDebug() << "";
 }
 
 
@@ -202,28 +158,39 @@ QRectF Particulas::boundingRect() const
 void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
                  *option, QWidget *widget)
 {
-    float x=0, y=0, rc=0, rs=0, w=0;
+    float x, y, r;
+
     for(int i = 0; i<Qtd; i++)
     {
-        x += Px[i]*Pw[i];
-        y += Py[i]*Pw[i];
-        rc += cos(Pr[i]*pi()/180)*Pw[i];
-        rs += sin(Pr[i]*pi()/180)*Pw[i];
-        w += Pw[i];
-        //int v = 255*Pw[i];
-        painter->setPen(QPen(QColor(0, 0, 255)));
+//        x += Px[i]*Pw[i];
+//        y += Py[i]*Pw[i];
+//        rc += cos(Pr[i]*pi()/180)*Pw[i];
+//        rs += sin(Pr[i]*pi()/180)*Pw[i];
+//        w += Pw[i];
+        painter->setPen(QPen(cor));
         QLineF linha(Px[i], Py[i], Px[i]+5, Py[i]);
         linha.setAngle(-Pr[i]);
-        painter->drawLine(linha);
+        painter->drawLine(linha);    
     }
 
-    x /= w;
-    y /= w;
-    float r = atan2(rs, rc)*180.0/pi();
+//    x /= w;
+//    y /= w;
+//    float r = atan2(rs, rc)*180.0/pi();
+
+    painter->setPen(QPen(QColor(0, 0, 255)));
+    painter->setBrush(Qt::NoBrush);
+    int M = 0;
+    for(int i = 0; i < Rg; i++)
+    {
+        painter->drawEllipse(Reg[i][0]/Reg[i][2]-Reg[i][5], Reg[i][1]/Reg[i][2]-Reg[i][5], 2*Reg[i][5], 2*Reg[i][5]);
+        if (max(Reg[M][2], Reg[i][2]) == Reg[i][2]) M = i;
+    }
+    x = Reg[M][0]/Reg[M][2];
+    y = Reg[M][1]/Reg[M][2];
+    r = atan2(Reg[M][4], Reg[M][3])*180/pi();
 
     painter->setBrush(QBrush(QColor(0, 255, 0, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
-    painter->setBrush(Qt::NoBrush);
 //    painter->drawEllipse(x-30, y-30, 60, 60);
 //    painter->drawEllipse(x-100, y-100, 200, 200);
     QLineF linha(x, y, x+10, y);
@@ -232,6 +199,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     linha.setAngle(-r-30);
     painter->drawLine(linha);
 
+    //qDebug() << Gaussian(2400, MedErr, 2400)*exp(-1);
     option = option;
     widget = widget;
 }

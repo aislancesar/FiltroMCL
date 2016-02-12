@@ -6,6 +6,7 @@
 
 #define N 10000
 #define Rg 4
+#define vRg 7
 
 class Particulas : public QGraphicsItem
 {
@@ -18,7 +19,7 @@ public:
     float Px[N]; // X position
     float Py[N]; // Y position
     float Pr[N]; // Rotation
-    double Pw[N]; // Weight, initialises as zeros
+    float Pw[N]; // Weight, initialises as zeros
 
     // Erros used to generatre the drift of particles
     float MovErr = 1; // The moviment error
@@ -29,8 +30,8 @@ public:
     Landmarks *L;
 
     // Regions
-    float Reg[Rg][5];
-    float aReg[Rg];
+    float Reg[Rg][vRg];
+    //float aReg[Rg];
 
     // Initializer
     Particulas(QColor c, int Q);
@@ -38,11 +39,12 @@ public:
     // Set of functions
     //void Atualiza(float u[], float z[]); // Updates the particle set
     void Move(float u[]); // Aplies the movement model
-    void Mede(float z[]); // Aplies the measurement model (updates the weights)
+    void Mede(float zr); // Aplies the measurement model (updates the weights)
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)
-    void Nova(float *nPx, float *nPy, float *nPr, double *nPw);
+    void Nova(float *nPx, float *nPy, float *nPr, float *nPw);
+    void TendNova(float *nPx, float *nPy, float *nPr, float *nPw);
 
     // These are needed to draw the particles
     QRectF boundingRect() const;

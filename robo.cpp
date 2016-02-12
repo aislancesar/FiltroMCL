@@ -76,57 +76,33 @@ void robo::Andar(float u[])
 }
 
 
-void robo::Medida(float z[])
+float robo::Medida()
 {
+    float z = 0;
     // Returns the measured position with statistical error
-    for (int i = 0; i < L->n; i++)
-        z[i] = 600;
-
     int i = 0;
     for (; i < 8; i++)
     {
         float d, r;
         dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
-//        = sqrt(pow(L->L[i][0]-x(),2)+pow(L->L[i][1]-y(),2));
-//        float r = atan2((L->L[i][1]-y()),(L->L[i][0]-x()))*180/pi();
-        //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
-            z[i] = d;
-            int a = i;
-            while (a > 0)
-            {
-                if (z[a-1] > z[a])
-                {
-                    z[a] = z[a-1];
-                    z[a-1] = d;
-                }
-                a--;
-            }
+            z += pow(d, 2);
+        }else{
+            z += pow(600, 2);
         }
     }
     for (; i < 14; i++)
     {
         float d, r;
         dist(L->T[i-8][0], L->T[i-8][1], x(), y(), &d, &r);
-        //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
-            z[i] = d;
-            int a = i;
-            while (a > 8)
-            {
-                if (z[a-1] > z[a])
-                {
-                    z[a] = z[a-1];
-                    z[a-1] = d;
-                }
-                a--;
-            }
+            z += pow(d, 2);
+        }else{
+            z += pow(600, 2);
         }
     }
     for (; i < 16; i++)
@@ -134,37 +110,27 @@ void robo::Medida(float z[])
 
         float d, r;
         dist(L->X[i-14][0], L->X[i-14][1], x(), y(), &d, &r);
-        //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
-            z[i] = d;
-            int a = i;
-            while (a > 14)
-            {
-                if (z[a-1] > z[a])
-                {
-                    z[a] = z[a-1];
-                    z[a-1] = d;
-                }
-                a--;
-            }
+            z += pow(d, 2);
+        }else{
+            z += pow(600, 2);
         }
     }
     if(i == L->n - 1)
     {
         float d, r;
         dist(L->B[0], L->B[1], x(), y(), &d, &r);
-        //if (r < 0) r += 360;
         d = GaussRnd(d, meaerr*d/10);
-        //qDebug("---- %g < %g ~ < %g", d, r, rotation());
         if((d < 600) && (d > 10) && (r > rotation()-30) && (r < rotation()+30))
         {
-            z[i] = d;
+            z += pow(d, 2);
+        }else{
+            z += pow(600, 2);
         }
     }
-
+    return sqrt(z);
     //qDebug() << z[16];
     //qDebug("Robo:[%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g|%g]", z[0], z[1], z[2], z[3], z[4], z[5], z[6], z[7], z[8], z[9], z[10], z[11], z[12], z[13], z[14], z[15]);
 }

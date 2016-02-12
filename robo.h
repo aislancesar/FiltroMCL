@@ -23,7 +23,7 @@ public:
 //    float LT [6][2];
 //    float LX [2][2];
 
-    void Medida(float z[]); // Measures the position
+    float Medida(); // Measures the position
     void setVars (float velerr, float roterr, float mederr); // No comments
 
     // Needed functions
