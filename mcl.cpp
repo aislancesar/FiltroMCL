@@ -111,7 +111,7 @@ void ANMCL(Particulas *P, float u[], float z)
     P->Move(u);
     P->Mede(z);
     float Pnx[N], Pny[N], Pnr[N], Pnw[N], Max = 0;
-    float t = Gaussian(z, P->MedErr, z)/sqrt(2);
+    float t = Gaussian(z, P->MedErr, z)*exp(-1);
     bool Pr[N];
 
     for (int i = 0; i < P->Qtd; i++)
@@ -167,15 +167,15 @@ void ANMCL(Particulas *P, float u[], float z)
     int k = 0;
     for (int i = 0; i < P->Qtd; i++)
     {
-        if(Pr[i])
-        {
-            P->TendNova(&Pnx[i], &Pny[i], &Pnr[i], &Pnw[i]);
-            k++;
-        }
+//        if(Pr[i])
+//        {
+//            P->TendNova(&Pnx[i], &Pny[i], &Pnr[i], &Pnw[i]);
+//            k++;
+//        }
         P->Px[i] = Pnx[i];
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
         P->Pw[i] = Pnw[i];
     }
-    qDebug() << k;
+    qDebug() << P->Reg[0][6] << P->Reg[1][6] << P->Reg[2][6] << P->Reg[3][6];
 }

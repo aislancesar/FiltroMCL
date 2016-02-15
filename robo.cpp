@@ -76,9 +76,9 @@ void robo::Andar(float u[])
 }
 
 
-float robo::Medida()
+float robo::Medida(float z[])
 {
-    float z = 0;
+    //float z = 0;
     // Returns the measured position with statistical error
     int i = 0;
     for (; i < 8; i++)
