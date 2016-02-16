@@ -4,14 +4,14 @@
 int q = sqrt(pow(QTime::currentTime().msec()*QTime::currentTime().second(), 3));
 std::default_random_engine rnd(q);
 
-float UniRnd()
+double UniRnd()
 {
     std::uniform_real_distribution<double> dist (0.0, 1.0);
 
     return dist(rnd);
 }
 
-float GaussRnd(float mu, float sig)
+double GaussRnd(float mu, float sig)
 {
     std::normal_distribution<double> dist (mu, sig);
 
@@ -40,7 +40,7 @@ float hcc(float x1, float y1, float x2, float y2)
     return sqrt(pow(x1-x2, 2)+pow(y1-y2, 2));
 }
 
-float min(float a, float b)
+double min(double a, double b)
 {
     if(a < b) return a;
     else return b;

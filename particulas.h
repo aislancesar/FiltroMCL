@@ -30,7 +30,8 @@ public:
     Landmarks *L;
 
     // Regions
-    float Reg[Rg][vRg];
+    Regiao Reg[Rg];
+//    float Reg[Rg][vRg];
     //float aReg[Rg];
 
     // Initializer
@@ -43,7 +44,7 @@ public:
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)
-    void Nova(float *nPx, float *nPy, float *nPr, double *nPw);
+    void Nova(float *nPx, float *nPy, float *nPr);
     void TendNova(float *nPx, float *nPy, float *nPr, float *nPw);
 
     // These are needed to draw the particles

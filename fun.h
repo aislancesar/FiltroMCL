@@ -4,13 +4,13 @@
 #include <math.h>
 #include <QTime>
 
-float GaussRnd(float mu, float sig);
-float UniRnd();
+double GaussRnd(float mu, float sig);
+double UniRnd();
 float pi();
 double Gaussian(float mu, float sig, float x);
 void dist(float x1, float y1, float x2, float y2, float *d, float *r);
 float hcc(float x1, float y1, float x2, float y2);
-float min(float a, float b);
+double min(double a, double b);
 double max(double a, double b);
 bool compAng(float ang, float base);
 
@@ -33,6 +33,17 @@ struct Landmarks
 
     // Total of LandMarks
     int n = 17;
+};
+
+struct Regiao
+{
+    float cx = 0;
+    float cy = 0;
+    double pw = 0;
+    float rc = 0;
+    float rs = 0;
+    float d = 0;
+    int i = 0;
 };
 
 #endif // FUN_H

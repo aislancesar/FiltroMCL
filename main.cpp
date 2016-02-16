@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     // Changes the base of qrand()
-    GaussRnd(0,0);
+//    GaussRnd(0,0);
 
     // Creates a scene
     AGS cena;
@@ -15,6 +15,8 @@ int main(int argc, char *argv[])
     QGraphicsView view(&cena);
     view.resize(1000, 700);
     view.show();
+//    for(int i = 0; i < 100; i++)
+//        qDebug() << UniRnd();
 
 //    cena.addEllipse(200, 200, 200, 200, Qt::SolidLine, Qt::NoBrush);
 //    cena.addEllipse(100, 000, 400, 400, Qt::SolidLine, Qt::NoBrush);

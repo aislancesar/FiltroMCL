@@ -9,26 +9,25 @@ Particulas::Particulas(QColor c, int Q)
     for(int i = 0; i < Q; i++)
     {
         // Note that this generates random particles, but all of them are in a Int state space, even though they are float.
-        Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
+        Nova(&Px[i], &Py[i], &Pr[i]);
     }
 }
 
-void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
+void Particulas::Nova(float *nPx, float *nPy, float *nPr)
 {
     *nPx = 900*UniRnd();
     *nPy = 600*UniRnd();
     *nPr = 360*UniRnd()-180;
-    *nPw = 0;
 }
 
 void Particulas::TendNova(float *nPx, float *nPy, float *nPr, float *nPw)
 {
-    int c = UniRnd()*Rg;
-    while(Reg[c][2] == 0) c = (c+1)%Rg;
-    *nPx = GaussRnd(Reg[c][0]/Reg[c][2], Reg[c][5]);
-    *nPy = GaussRnd(Reg[c][1]/Reg[c][2], Reg[c][5]);
-    *nPr = GaussRnd(atan2(Reg[c][4], Reg[c][3])*180/pi(), 1);
-    *nPw = 0;
+//    int c = UniRnd()*Rg;
+//    while(Reg[c][2] == 0) c = (c+1)%Rg;
+//    *nPx = GaussRnd(Reg[c][0]/Reg[c][2], Reg[c][5]);
+//    *nPy = GaussRnd(Reg[c][1]/Reg[c][2], Reg[c][5]);
+//    *nPr = GaussRnd(atan2(Reg[c][4], Reg[c][3])*180/pi(), 1);
+//    *nPw = 0;
 }
 
 void Particulas::DesRobo(float rx, float ry)
@@ -58,7 +57,7 @@ void Particulas::MudaQtd(int nQtd)
         // If the quantity is bigger than the older one, we have to generate new random particles
         for(int i = Qtd; i < nQtd; i++)
         {
-            Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
+            Nova(&Px[i], &Py[i], &Pr[i]);
         }
     }
     // If not just ignore the particles out of reach
@@ -171,11 +170,30 @@ double Particulas::Mede(float zr[])
         }
 
         double pw = 1;
+
         for (int j = 0; j < L->n; j++)
             pw *= Gaussian(zr[j], MedErr, z[j]);
-        Pw[c] = pw;
+        Pw[c] = max(1e-300, pw);
 
-        Max = max(Max, pw);
+//        for (int j = 0; j < L->n; j++)
+//            pw *= Gaussian(zr[j], MedErr, z[j]);
+//        Pw[c] = pow(pw, 1.0/L->n);//max(1e-300, pw);
+
+//        Works
+//        for (int j = 0; j < L->n; j++)
+//        {
+//            if(j < 8)
+//                pw *= pow(Gaussian(zr[j], MedErr, z[j]), 1.0/8);
+//            else if(j < 14)
+//                pw *= pow(Gaussian(zr[j], MedErr, z[j]), 1.0/6);
+//            else if(j < 16)
+//                pw *= pow(Gaussian(zr[j], MedErr, z[j]), 1.0/2);
+//            else
+//                pw *= Gaussian(zr[j], MedErr, z[j]);
+//        }
+//        Pw[c] = pow(pw, 1.0/4);
+
+        Max = max(Max, Pw[c]);
 
 //        if(c == 0){
 //            for (int j = 0; j < 17; j++)
@@ -220,12 +238,12 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     int M = 0;
     for(int i = 0; i < Rg; i++)
     {
-        painter->drawEllipse(Reg[i][0]/Reg[i][2]-Reg[i][5], Reg[i][1]/Reg[i][2]-Reg[i][5], 2*Reg[i][5], 2*Reg[i][5]);
-        if (max(Reg[M][2], Reg[i][2]) == Reg[i][2]) M = i;
+        painter->drawEllipse(Reg[i].cx/Reg[i].pw-Reg[i].d, Reg[i].cy/Reg[i].pw-Reg[i].d, 2*Reg[i].d, 2*Reg[i].d);
+        if (max(Reg[M].pw, Reg[i].pw) == Reg[i].pw) M = i;
     }
-    x = Reg[M][0]/Reg[M][2];
-    y = Reg[M][1]/Reg[M][2];
-    r = atan2(Reg[M][4], Reg[M][3])*180/pi();
+    x = Reg[M].cx/Reg[M].pw;
+    y = Reg[M].cy/Reg[M].pw;
+    r = atan2(Reg[M].rs, Reg[M].rc)*180/pi();
 
     painter->setBrush(QBrush(QColor(0, 255, 0, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
