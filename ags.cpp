@@ -50,6 +50,10 @@ AGS::AGS()
 
     P->setZValue(100);
 
+    P->Px[0] = W->x();
+    P->Py[0] = W->y();
+    P->Pr[0] = W->rotation();
+
     B->setZValue(500);
 
     //qDebug() << B->x() << L.B[0];
@@ -65,40 +69,40 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z; // Measure
+    float z[L.n]; // Measure
 
     switch (event->key())
     {
     case Qt::Key_W: // Moves Forward
         u[0] = 10.0;
         W->Andar(u);
-        z = W->Medida();
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         W->Andar(u);
-        z = W->Medida();
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         W->Andar(u);
-        z = W->Medida();
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         W->Andar(u);
-        z = W->Medida();
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         W->Andar(u);
-        z = W->Medida();
+        W->Medida(z);
         XMCL(P, u, z);
         break;
     case Qt::Key_S: // Kidnappes the robot

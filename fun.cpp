@@ -25,8 +25,8 @@ float pi()
 
 double Gaussian(float mu, float sig, float x)
 {
-    return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
-    //return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*pi())*sig*mu);
+//    return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
+    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*pi())*sig*mu);
 }
 
 void dist(float x1, float y1, float x2, float y2, float *d, float *r)
@@ -46,8 +46,20 @@ float min(float a, float b)
     else return b;
 }
 
-float max(float a, float b)
+double max(double a, double b)
 {
     if(a > b) return a;
     else return b;
+}
+
+bool compAng(float ang, float base)
+{
+    if(base > 150 || base < -150)
+    {
+        if(ang > 0 && base < 0)
+            return (ang < base + 360 + 30) && (ang > base + 360 - 30);
+        else if(ang < 0 && base > 0)
+            return (ang < base - 360 + 30) && (ang > base - 360 - 30);
+    }
+    return (ang < base + 30) && (ang > base - 30);
 }

@@ -1,6 +1,7 @@
 #include <QtWidgets>
 #include <robo.h>
 #include <ags.h>
+#include <fun.h>
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +15,6 @@ int main(int argc, char *argv[])
     QGraphicsView view(&cena);
     view.resize(1000, 700);
     view.show();
-    //qDebug() << 1/sqrt(2) << exp(-0.5);
 
 //    cena.addEllipse(200, 200, 200, 200, Qt::SolidLine, Qt::NoBrush);
 //    cena.addEllipse(100, 000, 400, 400, Qt::SolidLine, Qt::NoBrush);

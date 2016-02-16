@@ -2,24 +2,23 @@
 
 
 // Choose the algorithm to use
-void XMCL(Particulas *P, float u[], float z)
+void XMCL(Particulas *P, float u[], float z[])
 {
-//    MCL(P, u, z);
+    MCL(P, u, z);
 //    AMCL(P, u, z);
-    ANMCL(P, u, z);
+//    ANMCL(P, u, z);
 }
 
 // Monte-Carlo Localization
-void MCL(Particulas *P, float u[], float z)
+void MCL(Particulas *P, float u[], float z[])
 {
     P->Move(u);
-    P->Mede(z);
-    float Pnx[N], Pny[N], Pnr[N], Pnw[N], Max = 0;
+    double Max = P->Mede(z);
 
-    for (int i = 0; i < P->Qtd; i++)
-    {
-        Max = max(Max, P->Pw[i]);
-    }
+    float Pnx[P->Qtd], Pny[P->Qtd], Pnr[P->Qtd];
+
+//    for (int j = 0; j < P->L->n; j++)
+//        Med = Gaussian(z[j], P->MedErr, z[j]);
 
     qDebug() << Max;
 
@@ -36,7 +35,6 @@ void MCL(Particulas *P, float u[], float z)
         Pnx[i] = P->Px[c];
         Pny[i] = P->Py[c];
         Pnr[i] = P->Pr[c];
-        Pnw[i] = P->Pw[c];
     }
 
     for (int i = 0; i < P->Qtd; i++)
@@ -44,17 +42,17 @@ void MCL(Particulas *P, float u[], float z)
         P->Px[i] = Pnx[i];
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
-        P->Pw[i] = Pnw[i];
+        P->Pw[i] = 0;
     }
 }
 
 // Augmented Monte-Carlo Localization
-void AMCL(Particulas *P, float u[], float z)
+void AMCL(Particulas *P, float u[], float z[])
 {
     static float ws = 0, wf = 0;
     //static int k = 0;
     float ys = 0.01, yf = 0.1, wa = 0;
-    float Pnx[N], Pny[N], Pnr[N], Pnw[N];
+    float Pnx[N], Pny[N], Pnr[N];
 
     P->Move(u);
     P->Mede(z);
@@ -79,7 +77,7 @@ void AMCL(Particulas *P, float u[], float z)
     {
         if(UniRnd() < 1-wf/ws)
         {
-            P->Nova(&Pnx[i], &Pny[i], &Pnr[i], &Pnw[i]);
+           // P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
         }
         else
         {
@@ -92,7 +90,6 @@ void AMCL(Particulas *P, float u[], float z)
             Pnx[i] = P->Px[c];
             Pny[i] = P->Py[c];
             Pnr[i] = P->Pr[c];
-            Pnw[i] = P->Pw[c];
         }
     }
 
@@ -101,17 +98,18 @@ void AMCL(Particulas *P, float u[], float z)
         P->Px[i] = Pnx[i];
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
-        P->Pw[i] = Pnw[i];
+        P->Pw[i] = 0;
     }
 }
 
 // All-New Augmented Monte-Carlo Localization
-void ANMCL(Particulas *P, float u[], float z)
+void ANMCL(Particulas *P, float u[], float z[])
 {
     P->Move(u);
     P->Mede(z);
     float Pnx[N], Pny[N], Pnr[N], Pnw[N], Max = 0;
-    float t = Gaussian(z, P->MedErr, z)*exp(-1);
+    float t = 0;
+    for (int j = 0; j < P->L->n; j++) t += Gaussian(z[j], P->MedErr, z[j])*exp(-1);
     bool Pr[N];
 
     for (int i = 0; i < P->Qtd; i++)

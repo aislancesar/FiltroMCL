@@ -13,7 +13,7 @@ Particulas::Particulas(QColor c, int Q)
     }
 }
 
-void Particulas::Nova(float *nPx, float *nPy, float *nPr, float *nPw)
+void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
 {
     *nPx = 900*UniRnd();
     *nPy = 600*UniRnd();
@@ -90,62 +90,100 @@ void Particulas::Move(float u[])
     }
 }
 
-void Particulas::Mede(float zr)
+double Particulas::Mede(float zr[])
 {
-    float z = 0;
+    float z[L->n];
     float d, r;
+
+    double Max = 0;
 
     for (int c = 0; c < Qtd; c++)
     {
         int i = 0;
+
+        for (int j = 0; j < L->n; j++) z[j] = 600;
+
         for (; i < 8; i++)
         {
             dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
-            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
             {
-                z += pow(d, 2);
-            }else{
-                z += pow(600, 2);
+                z[i] = d;
+                int a = i;
+                while (a > 0)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
             }
         }
         for (; i < 14; i++)
         {
             dist(L->T[i-8][0], L->T[i-8][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
-            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
             {
-                z += pow(d, 2);
-            }else{
-                z += pow(600, 2);
+                z[i] = d;
+                int a = i;
+                while (a > 8)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
             }
         }
         for (; i < 16; i++)
         {
             dist(L->X[i-14][0], L->X[i-14][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
-            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
             {
-                z += pow(d, 2);
-            }else{
-                z += pow(600, 2);
+                z[i] = d;
+                int a = i;
+                while (a > 14)
+                {
+                    if (z[a-1] > z[a])
+                    {
+                        z[a] = z[a-1];
+                        z[a-1] = d;
+                    }
+                    a--;
+                }
             }
         }
 
         if(i == L->n - 1){
             dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
-            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
             {
-                z += pow(d, 2);
-            }else{
-                z += pow(600, 2);
+                z[i] = d;
             }
         }
 
-        z = sqrt(z);
-        Pw[c] = Gaussian(zr, MedErr, z);
+        double pw = 1;
+        for (int j = 0; j < L->n; j++)
+            pw *= Gaussian(zr[j], MedErr, z[j]);
+        Pw[c] = pw;
+
+        Max = max(Max, pw);
+
+//        if(c == 0){
+//            for (int j = 0; j < 17; j++)
+//                qDebug("A.append([%g, %g])", zr[j], z[j]);
+//        }
+        //qDebug() << pw;
     }
+    return Max;
 }
 
 
@@ -203,3 +241,62 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     option = option;
     widget = widget;
 }
+
+/* -- Using only multidimensional distance measure...
+void Particulas::Mede(float zr)
+{
+    float z = 0;
+    float d, r;
+
+    for (int c = 0; c < Qtd; c++)
+    {
+        int i = 0;
+        for (; i < 8; i++)
+        {
+            dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            {
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
+            }
+        }
+        for (; i < 14; i++)
+        {
+            dist(L->T[i-8][0], L->T[i-8][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            {
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
+            }
+        }
+        for (; i < 16; i++)
+        {
+            dist(L->X[i-14][0], L->X[i-14][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            {
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
+            }
+        }
+
+        if(i == L->n - 1){
+            dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < 600) && (d > 10) && (r > Pr[c]-30) && (r < Pr[c]+30))
+            {
+                z += pow(d, 2);
+            }else{
+                z += pow(600, 2);
+            }
+        }
+
+        z = sqrt(z);
+        Pw[c] = Gaussian(zr, MedErr, z);
+    }
+}*/
