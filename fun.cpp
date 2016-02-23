@@ -63,3 +63,9 @@ bool compAng(float ang, float base)
     }
     return (ang < base + 30) && (ang > base - 30);
 }
+
+int myround(double a)
+{
+    if(a-int(a) > int(a+1)-a) return int((a+1));
+    else return int(a);
+}

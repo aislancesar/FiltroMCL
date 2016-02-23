@@ -13,6 +13,7 @@ float hcc(float x1, float y1, float x2, float y2);
 double min(double a, double b);
 double max(double a, double b);
 bool compAng(float ang, float base);
+int myround(double a);
 
 struct Landmarks
 {

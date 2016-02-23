@@ -193,7 +193,7 @@ double Particulas::Mede(float zr[])
 //        }
 //        Pw[c] = pow(pw, 1.0/4);
 
-        Max = max(Max, Pw[c]);
+        Max += Pw[c];
 
 //        if(c == 0){
 //            for (int j = 0; j < 17; j++)

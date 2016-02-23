@@ -117,9 +117,10 @@ void AMCL(Particulas *P, float u[], float z[])
 void ANMCL(Particulas *P, float u[], float z[])
 {
     P->Move(u);
-    double Max = P->Mede(z);
+    double Max = P->Mede(z), Pnw[N];
 
     float Pnx[N], Pny[N], Pnr[N];
+    int Pn[N];
     double t = 1;
 
     for (int j = 0; j < P->L->n; j++) t *= Gaussian(z[j], P->MedErr, z[j])*exp(-1);
@@ -127,26 +128,21 @@ void ANMCL(Particulas *P, float u[], float z[])
     Regiao A;
     for(int i = 0; i < Rg; i++) P->Reg[i] = A;
 
-    float rnd = 0;
-    int c = P->Qtd*UniRnd();
-
     //qDebug() << Max << t << t*exp(-17);
+    //float rnd = 0;
+    int k = 0, kb = 0;
 
-    int k = 0;
-    for (int i = 0; i < P->Qtd; i++)
-    {
-        rnd += 2 * Max * UniRnd();
-        while (P->Pw[c] < rnd)
-        {
-            rnd -= P->Pw[c];
-            c = (c+1)%P->Qtd;
-            k++;
-            if(k > 3*P->Qtd)
-            {
-                k = 0;
-                break;
-            }
-        }
+    Pnw[0] = P->Pw[0];
+    for (int i = 1; i < P->Qtd; i++) Pnw[i] = P->Pw[i]+Pnw[i-1];
+
+    int c = 0;
+
+    while(c < P->Qtd){
+
+        while(Pn[c] == 0 && c < P->Qtd) c++;
+        if (c == P->Qtd) break;
+
+        Pn[c]--;
 
         if(P->Pw[c] > t)
         {
@@ -170,15 +166,21 @@ void ANMCL(Particulas *P, float u[], float z[])
             }
         }
 
-        if(P->Pw[c] < t*exp(-17))
-            P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
+        if(P->Pw[c] < t*exp(-P->L->n))
+            P->Nova(&Pnx[k], &Pny[k], &Pnr[k]);
         else
         {
-            Pnx[i] = P->Px[c];
-            Pny[i] = P->Py[c];
-            Pnr[i] = P->Pr[c];
+            Pnx[k] = P->Px[c];
+            Pny[k] = P->Py[c];
+            Pnr[k] = P->Pr[c];
         }
+
+        k++;
     }
+
+    qDebug() << k;
+
+    for (; k < P->Qtd; k++) P->Nova(&Pnx[k], &Pny[k], &Pnr[k]);
 
     for (int i = 0; i < P->Qtd; i++)
     {
@@ -186,5 +188,5 @@ void ANMCL(Particulas *P, float u[], float z[])
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
     }
-    qDebug() << k;
+    //qDebug() << kb << Max;
 }
