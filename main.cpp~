@@ -2,7 +2,6 @@
 #include <robo.h>
 #include <ags.h>
 
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
