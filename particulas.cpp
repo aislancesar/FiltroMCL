@@ -81,7 +81,7 @@ void Particulas::Move(float u[])
 
 double Particulas::Mede(float zr[])
 {
-    float z[L->n];
+    float z[L->n+1];
     float d, r;
 
     double Max = 0;
@@ -164,13 +164,14 @@ double Particulas::Mede(float zr[])
         for (int j = 0; j < L->n; j++)
             pw *= Gaussian(zr[j], MedErr, z[j]);
 
-//        if(pow(Pr[c], 2) > pow(90, 2) && pow(zr[L->n], 2) > pow(90, 2))
-//        {
-//            if(zr[L->n] < 0) zr[L->n] += 360;
-//            if(z[L->n] < 0) z[L->n] += 360;
-//        }
+        z[L->n] = Pr[c];
+        if(pow(z[L->n], 2) > pow(90, 2) && pow(zr[L->n], 2) > pow(90, 2))
+        {
+            if(zr[L->n] < 0) zr[L->n] += 360;
+            if(z[L->n] < 0) z[L->n] += 360;
+        }
 
-//        pw *= Gaussian(zr[L->n], 1.0/zr[L->n], z[L->n]);
+        pw *= Gaussian(zr[L->n], 1.0/zr[L->n], z[L->n]);
 
         Pw[c] = max(1e-300, pw);
 

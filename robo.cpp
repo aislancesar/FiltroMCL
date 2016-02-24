@@ -78,13 +78,13 @@ void robo::Andar(float u[])
 void robo::Medida(float z[])
 {
     for (int i = 0; i < L->n; i++) z[i] = 600;
-//    orienterr = GaussRnd(orienterr, 0.3);
-//    if (pow(orienterr, 2) > pow(30, 2))
-//    {
-//        orienterr = 0;
-//        qDebug() << "IMU Reset";
-//    }
-//    z[L->n] = rotation() + orienterr;
+    orienterr = GaussRnd(orienterr, 0.3);
+    if (pow(orienterr, 2) > pow(30, 2))
+    {
+        orienterr = 0;
+        qDebug() << "-=-=-=-=-=-=- IMU Reset -=-=-=-=-=-=-";
+    }
+    z[L->n] = rotation() + orienterr;
     // Returns the measured position with statistical error
     int i = 0;
     for (; i < 8; i++)
