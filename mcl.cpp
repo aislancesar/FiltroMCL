@@ -117,24 +117,25 @@ void AMCL(Particulas *P, float u[], float z[])
 void ANMCL(Particulas *P, float u[], float z[])
 {
     P->Move(u);
-    double Max = P->Mede(z), Pnw[N];
+    P->Mede(z);
+    double Max, Pnw[N];
     bool Pn[N];
 
     float Pnx[N], Pny[N], Pnr[N];
     double t = 1;
 
-    for (int j = 0; j < P->L->n; j++) t *= Gaussian(z[j], P->MedErr, z[j])*exp(-1);
-//    t *= Gaussian(z[P->L->n], 1.0/z[P->L->n], z[P->L->n])*exp(-1);
+    t *= Gaussian(z[0], 20.0/z[0], z[0])*exp(-1);
+    t *= Gaussian(z[1], P->MedErr, z[1])*exp(-1);
+    t *= Gaussian(z[2], P->MedErr, z[2])*exp(-1);
 
     Regiao A;
     for(int i = 0; i < Rg; i++) P->Reg[i] = A;
 
-    //qDebug() << Max << t << t*exp(-17);
-    //float rnd = 0;
-
     Pnw[0] = P->Pw[0];
     for (int i = 1; i < P->Qtd; i++)
         Pnw[i] = P->Pw[i]+Pnw[i-1];
+
+    Max = Pnw[P->Qtd-1];
 
     int c = 0;
 
@@ -166,7 +167,7 @@ void ANMCL(Particulas *P, float u[], float z[])
             }
         }
 
-        if(P->Pw[c] < t*exp(-(P->L->n)))
+        if(P->Pw[c] < t*exp(-(3)))
             P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
         else
         {
@@ -187,5 +188,4 @@ void ANMCL(Particulas *P, float u[], float z[])
     }
 
     for (int i = 0; i < P->Qtd; i++) if(!Pn[i]) qDebug() << i;
-//    qDebug() << "Pass";
 }

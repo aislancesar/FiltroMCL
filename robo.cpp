@@ -10,6 +10,9 @@ robo::robo (int n, QColor c, float x, float y, float d, bool v, Landmarks *lm, B
     this->setRotation(d);
     visao = v;
     BB = bb;
+    BB->x[nome] = this->x();
+    BB->y[nome] = this->y();
+    BB->r[nome] = this->rotation();
     L = lm;
 };
 
@@ -111,10 +114,13 @@ void robo::Medida(float z[])
 
     dist(BB->x[k], BB->y[k], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
+
     if((d < 600) && (d > 10) && compAng(r, rotation()))
     {
         z[2] = d;
     }else{
         z[2] = 600;
     }
+
+//    qDebug() << BB->x[0] << BB->y[0];
 }

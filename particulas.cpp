@@ -132,7 +132,7 @@ double Particulas::Mede(float zr[])
             if(z[0] < 0) z[0] += 360;
         }
 
-        pw *= Gaussian(zr[0], 2.0/zr[0], z[0]);
+        pw *= Gaussian(zr[0], 20.0/zr[0], z[0]);
 
         Pw[c] = max(1e-300, pw);
 
