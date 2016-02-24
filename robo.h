@@ -18,17 +18,18 @@ public:
     float trnerr = 1; // Turn Error
     float meaerr = 1; // Measurement Error
     float orienterr = 0;
+
     // LandMarks
     Landmarks *L;
-//    float LL [8][2];
-//    float LT [6][2];
-//    float LX [2][2];
+
+    // BlackBoard
+    BlackBoard *BB;
 
     void Medida(float z[]); // Measures the position
     void setVars (float velerr, float roterr, float mederr); // No comments
 
     // Needed functions
-    robo (int n, QColor c, float x, float y, float d, bool v);
+    robo (int n, QColor c, float x, float y, float d, bool v, Landmarks *lm, BlackBoard *bb);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem
                *option, QWidget *widget);

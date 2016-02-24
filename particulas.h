@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include <math.h>
 #include <fun.h>
+#include <robo.h>
 
 #define N 10000
 #define Rg 4
@@ -26,6 +27,9 @@ public:
     float RotErr = 1; // The rotation error
     float MedErr = 1; // The measurement error
 
+    // To which robot the particles are attached
+    int rob;
+
     // LandMarks
     Landmarks *L;
 
@@ -35,7 +39,7 @@ public:
     //float aReg[Rg];
 
     // Initializer
-    Particulas(QColor c, int Q);
+    Particulas(QColor c, int Q, robo *ROB);
 
     // Set of functions
     //void Atualiza(float u[], float z[]); // Updates the particle set

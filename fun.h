@@ -18,22 +18,29 @@ int myround(double a);
 struct Landmarks
 {
     // L shaped Landmarks
-    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
+//    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
 
     // T shaped Landmarks
-    float T [6][2] = {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
+//    float T [6][2] = {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
 
     // X shaped Landmarks
-    float X [2][2] = {{450, 200}, {450, 400}};
+//    float X [2][2] = {{450, 200}, {450, 400}};
 
     // Friend Robots
-    float F [3][2] = {{0, 0}, {0, 0}, {0, 0}};
+    float F [2][2] = {{0, 0}, {0, 0}};
 
     // Ball
     float B [2] = {450, 300};
 
     // Total of LandMarks
-    int n = 17;
+    int n = 2;
+};
+
+struct BlackBoard
+{
+    float x[2];
+    float y[2];
+    float r[2];
 };
 
 struct Regiao

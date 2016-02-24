@@ -11,26 +11,29 @@ AGS::AGS()
     this->addLine(450, 0, 450, 600, pena);
     this->addEllipse(350, 200, 200, 200, pena, Qt::NoBrush);
     // Landmarks L
-    for (int i = 0; i < 8; i++)
-        this->addEllipse(L.L[i][0]-10, L.L[i][1]-10, 20, 20, QPen(QColor(0, 255, 255)), Qt::NoBrush);
+//    for (int i = 0; i < 8; i++)
+//        this->addEllipse(L.L[i][0]-10, L.L[i][1]-10, 20, 20, QPen(QColor(0, 255, 255)), Qt::NoBrush);
 
     // Landmarks T
-    for (int i = 0; i < 6; i++)
-        this->addEllipse(L.T[i][0]-10, L.T[i][1]-10, 20, 20, QPen(QColor(255, 255, 0)), Qt::NoBrush);
+//    for (int i = 0; i < 6; i++)
+//        this->addEllipse(L.T[i][0]-10, L.T[i][1]-10, 20, 20, QPen(QColor(255, 255, 0)), Qt::NoBrush);
 
     // Landmarks X
-    for (int i = 0; i < 2; i++)
-        this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
+//    for (int i = 0; i < 2; i++)
+//        this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
 
     // Landmarks B
     B = new Bola(&L);
 
     // Generates the new robot and particle set
-    W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true);
-    T = new robo(0, QColor(0, 255, 255), 0, 300, 0, false);
-    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
+    W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true, &L, &BB);
+    T = new robo(0, QColor(0, 255, 255), 0, 300, 0, false, &L, &BB);
+//    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
-    P = new Particulas(QColor(0, 255, 0, 128), N);
+    P = new Particulas(QColor(0, 255, 0, 128), N, W);
+
+    L.F[0][0] = 0;
+    L.F[0][1] = 300;
 
     // Set the new erros of the particles
     T->setVars(2, 3, 0.2);
@@ -46,7 +49,7 @@ AGS::AGS()
     // Draws the robot over the particles
     W->setZValue(1000);
     T->setZValue(1001);
-    I->setZValue(1002);
+//    I->setZValue(1002);
 
     P->setZValue(100);
 
@@ -58,9 +61,9 @@ AGS::AGS()
 
     //qDebug() << B->x() << L.B[0];
 
-    W->L = &L;
-    T->L = &L;
-    I->L = &L;
+//    W->L = &L;
+//    T->L = &L;
+//    I->L = &L;
 
     P->L = &L;
 }

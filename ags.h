@@ -14,6 +14,7 @@ class AGS : public QGraphicsScene
 public:
     AGS();
     Landmarks L;
+    BlackBoard BB;
     Bola *B;
 //    float LL [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
 //    float LT [6][2]= {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
