@@ -20,16 +20,6 @@ void Particulas::Nova(float *nPx, float *nPy, float *nPr)
     *nPr = 360*UniRnd()-180;
 }
 
-void Particulas::TendNova(float *nPx, float *nPy, float *nPr, float *nPw)
-{
-//    int c = UniRnd()*Rg;
-//    while(Reg[c][2] == 0) c = (c+1)%Rg;
-//    *nPx = GaussRnd(Reg[c][0]/Reg[c][2], Reg[c][5]);
-//    *nPy = GaussRnd(Reg[c][1]/Reg[c][2], Reg[c][5]);
-//    *nPr = GaussRnd(atan2(Reg[c][4], Reg[c][3])*180/pi(), 1);
-//    *nPw = 0;
-}
-
 void Particulas::DesRobo(float rx, float ry)
 {
     float x = 0, y = 0, rc = 0, rs = 0, w = 0;
@@ -173,6 +163,15 @@ double Particulas::Mede(float zr[])
 
         for (int j = 0; j < L->n; j++)
             pw *= Gaussian(zr[j], MedErr, z[j]);
+
+//        if(pow(Pr[c], 2) > pow(90, 2) && pow(zr[L->n], 2) > pow(90, 2))
+//        {
+//            if(zr[L->n] < 0) zr[L->n] += 360;
+//            if(z[L->n] < 0) z[L->n] += 360;
+//        }
+
+//        pw *= Gaussian(zr[L->n], 1.0/zr[L->n], z[L->n]);
+
         Pw[c] = max(1e-300, pw);
 
 //        for (int j = 0; j < L->n; j++)

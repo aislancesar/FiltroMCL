@@ -17,6 +17,7 @@ public:
     float spderr = 1; // Movement Error
     float trnerr = 1; // Turn Error
     float meaerr = 1; // Measurement Error
+    float orienterr = 0;
     // LandMarks
     Landmarks *L;
 //    float LL [8][2];

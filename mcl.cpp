@@ -118,31 +118,31 @@ void ANMCL(Particulas *P, float u[], float z[])
 {
     P->Move(u);
     double Max = P->Mede(z), Pnw[N];
+    bool Pn[N];
 
     float Pnx[N], Pny[N], Pnr[N];
-    int Pn[N];
     double t = 1;
 
     for (int j = 0; j < P->L->n; j++) t *= Gaussian(z[j], P->MedErr, z[j])*exp(-1);
+//    t *= Gaussian(z[P->L->n], 1.0/z[P->L->n], z[P->L->n])*exp(-1);
 
     Regiao A;
     for(int i = 0; i < Rg; i++) P->Reg[i] = A;
 
     //qDebug() << Max << t << t*exp(-17);
     //float rnd = 0;
-    int k = 0, kb = 0;
 
     Pnw[0] = P->Pw[0];
-    for (int i = 1; i < P->Qtd; i++) Pnw[i] = P->Pw[i]+Pnw[i-1];
+    for (int i = 1; i < P->Qtd; i++)
+        Pnw[i] = P->Pw[i]+Pnw[i-1];
 
     int c = 0;
 
-    while(c < P->Qtd){
+    for (int i = 0; i < P->Qtd; i++){
 
-        while(Pn[c] == 0 && c < P->Qtd) c++;
-        if (c == P->Qtd) break;
+        Pn[i] = false;
 
-        Pn[c]--;
+        while (Pnw[c] < Max*(i+1)/(P->Qtd+1)) c++;
 
         if(P->Pw[c] > t)
         {
@@ -166,27 +166,26 @@ void ANMCL(Particulas *P, float u[], float z[])
             }
         }
 
-        if(P->Pw[c] < t*exp(-P->L->n))
-            P->Nova(&Pnx[k], &Pny[k], &Pnr[k]);
+        if(P->Pw[c] < t*exp(-(P->L->n)))
+            P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
         else
         {
-            Pnx[k] = P->Px[c];
-            Pny[k] = P->Py[c];
-            Pnr[k] = P->Pr[c];
+            Pnx[i] = P->Px[c];
+            Pny[i] = P->Py[c];
+            Pnr[i] = P->Pr[c];
         }
-
-        k++;
     }
-
-    qDebug() << k;
-
-    for (; k < P->Qtd; k++) P->Nova(&Pnx[k], &Pny[k], &Pnr[k]);
 
     for (int i = 0; i < P->Qtd; i++)
     {
-        P->Px[i] = Pnx[i];
-        P->Py[i] = Pny[i];
-        P->Pr[i] = Pnr[i];
+        c = P->Qtd * UniRnd();
+        while(Pn[c]) c = (c+1)%P->Qtd;
+        P->Px[c] = Pnx[i];
+        P->Py[c] = Pny[i];
+        P->Pr[c] = Pnr[i];
+        Pn[c] = true;
     }
-    //qDebug() << kb << Max;
+
+    for (int i = 0; i < P->Qtd; i++) if(!Pn[i]) qDebug() << i;
+//    qDebug() << "Pass";
 }

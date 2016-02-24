@@ -45,7 +45,6 @@ public:
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)
     void Nova(float *nPx, float *nPy, float *nPr);
-    void TendNova(float *nPx, float *nPy, float *nPr, float *nPw);
 
     // These are needed to draw the particles
     QRectF boundingRect() const;

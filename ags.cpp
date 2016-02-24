@@ -27,7 +27,7 @@ AGS::AGS()
 
     // Generates the new robot and particle set
     W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true);
-    T = new robo(0, QColor(0, 255, 255), 300, 200, 0, false);
+    T = new robo(0, QColor(0, 255, 255), 0, 300, 0, false);
     I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
     P = new Particulas(QColor(0, 255, 0, 128), N);
@@ -38,7 +38,7 @@ AGS::AGS()
     // It seens that bigger errors causes the AMCL to converges faster
 
     this->addItem(W);
-    //this->addItem(T);
+    this->addItem(T);
     //this->addItem(I);
     this->addItem(P);
     this->addItem(B);
@@ -69,7 +69,7 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z[L.n]; // Measure
+    float z[L.n+1]; // Measure
 
     switch (event->key())
     {
