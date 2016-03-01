@@ -34,6 +34,7 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
     {
         linha = new QLineF(0, 0, 600, 0);
         painter->drawArc(-600, -600, 1200, 1200, -30*16, 60*16);
+        painter->drawArc(-200, -200, 400, 400, -30*16, 60*16);
     }else{
         linha = new QLineF(0, 0, 10, 0);
     }

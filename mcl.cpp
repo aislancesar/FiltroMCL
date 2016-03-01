@@ -128,14 +128,23 @@ void ANMCL(Particulas *P, float u[], float z[])
     t *= Gaussian(z[1], P->MedErr, z[1])*exp(-1);
     t *= Gaussian(z[2], P->MedErr, z[2])*exp(-1);
 
-    Regiao A;
-    for(int i = 0; i < Rg; i++) P->Reg[i] = A;
-
     Pnw[0] = P->Pw[0];
     for (int i = 1; i < P->Qtd; i++)
         Pnw[i] = P->Pw[i]+Pnw[i-1];
 
     Max = Pnw[P->Qtd-1];
+
+    // Changing number of particles
+    if(P->Reg[0].i > 0)
+    {
+        float s = 0;
+        for(int i = 0; i < Rg; i++) if(P->Reg[i].i > 0) s += 1.0/max(0.00005, min(1, 1.25-0.0125*P->Reg[i].d));
+        s = 1.0/s;
+        P->MudaQtd(min(N, 4/3*(100-N)*s+100+4/3*(N-100)));
+    }
+
+    Regiao A;
+    for(int i = 0; i < Rg; i++) P->Reg[i] = A;
 
     int c = 0;
 
@@ -186,6 +195,4 @@ void ANMCL(Particulas *P, float u[], float z[])
         P->Pr[c] = Pnr[i];
         Pn[c] = true;
     }
-
-    for (int i = 0; i < P->Qtd; i++) if(!Pn[i]) qDebug() << i;
 }

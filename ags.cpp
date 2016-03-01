@@ -27,7 +27,7 @@ AGS::AGS()
 
     // Generates the new robot and particle set
     W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true, &L, &BB);
-    T = new robo(0, QColor(0, 255, 255), 0, 300, 0, false, &L, &BB);
+    T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
 //    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
     P = new Particulas(QColor(0, 255, 0, 128), N, W);
