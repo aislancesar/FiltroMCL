@@ -1,11 +1,12 @@
 #include <particulas.h>
 
 
-Particulas::Particulas(QColor c, int Q, robo *ROB)
+Particulas::Particulas(QColor c, int Q, robo *ROB, Landmarks *l)
 {
     cor = c;
     Qtd = Q;
 
+    L = l;
     rob = ROB->nome;
 
     for(int i = 0; i < Q; i++)
@@ -58,7 +59,7 @@ void Particulas::MudaQtd(int nQtd)
     }else{
         Qtd = nQtd;
     }
-    qDebug("%d", Qtd);
+//    qDebug("%d", Qtd);
 }
 
 void Particulas::Erros(float Mov, float Rot, float Med)
@@ -98,7 +99,7 @@ double Particulas::Mede(float zr[])
 
         dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
         d = GaussRnd(d, MedErr*d/10);
-        if((d < 600) && (d > 10) && compAng(r, Pr[c]))
+        if((d < 600) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
         {
             z[1] = d;
         }else{

@@ -17,6 +17,7 @@ int myround(double a);
 
 struct Landmarks
 {
+    // Used to measure the particles possible position
     // L shaped Landmarks
 //    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
 
@@ -28,6 +29,7 @@ struct Landmarks
 
     // Friend Robots
     float F [2][2] = {{0, 0}, {0, 0}};
+    bool Fknow [2];
 
     // Ball
     float B [2] = {450, 300};
@@ -40,6 +42,8 @@ struct Landmarks
 
 struct BlackBoard
 {
+    // Absolute position of moving objects
+    // Used for vision measures
     float x[2];
     float y[2];
     float r[2];

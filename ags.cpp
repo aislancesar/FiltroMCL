@@ -28,9 +28,11 @@ AGS::AGS()
     // Generates the new robot and particle set
     W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true, &L, &BB);
     T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
+
+    L.Fknow[0] = true;
 //    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
-    P = new Particulas(QColor(0, 255, 0, 128), N, W);
+    P = new Particulas(QColor(0, 255, 0, 128), N, W, &L);
 
     L.F[0][0] = 0;
     L.F[0][1] = 300;
@@ -65,7 +67,7 @@ AGS::AGS()
 //    T->L = &L;
 //    I->L = &L;
 
-    P->L = &L;
+    //P->L = &L;
 }
 
 void AGS::keyPressEvent(QKeyEvent *event)
@@ -199,6 +201,8 @@ void AGS::keyPressEvent(QKeyEvent *event)
         T->FindBall();
         break;
     }
-    qDebug() << L.Bknow[0] << L.Bknow[1];
+
+    qDebug() << L.Bknow[0] << L.Bknow[1] << L.Fknow[0] << L.Fknow[1] << L.B[0] << L.B[1];
+
     this->update(-50, -50, 1000, 700);
 }

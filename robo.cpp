@@ -97,10 +97,13 @@ void robo::Medida(float z[])
     z[0] = rotation() + orienterr;
 
     // Ball
+
+    FindBall();
+
     float d, r;
-    dist(L->B[0], L->B[1], x(), y(), &d, &r);
+    dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
-    if((d < 600) && (d > 10) && compAng(r, rotation()))
+    if((d < 600) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
     {
         z[1] = d;
     }else{
@@ -131,7 +134,7 @@ void robo::FindBall()
     float d, r;
     dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
-    if(!((d < 600) && (d > 10) && compAng(r, rotation())))
+    if(!((d < 600) && (d > 10) && compAng(r, rotation())) || !L->Fknow[nome])
     {
         d = 600;
         L->Bknow[nome] = false;
@@ -163,6 +166,8 @@ void robo::FindBall()
         X2 = Ax+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*cos(A);
         Y2 = Ay+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*sin(A);
     }
+
+    if(Y1 == 0) qDebug() << X1 << X2 << Y1 << Y2;
 
     if (X1 != X2 && Y1 != Y2)
     {

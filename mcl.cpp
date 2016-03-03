@@ -141,6 +141,8 @@ void ANMCL(Particulas *P, float u[], float z[])
         for(int i = 0; i < Rg; i++) if(P->Reg[i].i > 0) s += 1.0/max(0.00005, min(1, 1.25-0.0125*P->Reg[i].d));
         s = 1.0/s;
         P->MudaQtd(min(N, 4/3*(100-N)*s+100+4/3*(N-100)));
+    }else{
+        P->MudaQtd(N);
     }
 
     Regiao A;
@@ -194,5 +196,13 @@ void ANMCL(Particulas *P, float u[], float z[])
         P->Py[c] = Pny[i];
         P->Pr[c] = Pnr[i];
         Pn[c] = true;
+    }
+
+    P->L->Fknow[P->rob] = false;
+    if(P->Reg[1].i == 0)
+    {
+        P->L->F[P->rob][0] = P->Reg[0].cx;
+        P->L->F[P->rob][1] = P->Reg[0].cy;
+        P->L->Fknow[P->rob] = true;
     }
 }

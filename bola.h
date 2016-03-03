@@ -11,7 +11,7 @@ public:
     void Move(float X, float Y);
 
     Landmarks *L;
-    BlackBoard *B;
+    BlackBoard *BB;
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem

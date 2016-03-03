@@ -39,7 +39,7 @@ public:
     //float aReg[Rg];
 
     // Initializer
-    Particulas(QColor c, int Q, robo *ROB);
+    Particulas(QColor c, int Q, robo *ROB, Landmarks *l);
 
     // Set of functions
     //void Atualiza(float u[], float z[]); // Updates the particle set

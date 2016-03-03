@@ -3,11 +3,11 @@
 Bola::Bola(Landmarks *lm, BlackBoard *b)
 {
     L = lm;
-    B = b;
+    BB = b;
     setX(450);
     setY(300);
-    B->B[0] = 450;
-    B->B[1] = 300;
+    BB->B[0] = 450;
+    BB->B[1] = 300;
     L->B[0] = 450;
     L->B[1] = 300;
 }
@@ -16,8 +16,8 @@ void Bola::Move(float X, float Y)
 {
     setX(x()+X);
     setY(y()+Y);
-    B->B[0] = x()+X;
-    B->B[1] = y()+Y;
+    BB->B[0] = x();
+    BB->B[1] = y();
 }
 
 QRectF Bola::boundingRect() const
