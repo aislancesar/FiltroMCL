@@ -7,10 +7,11 @@
 class Bola : public QGraphicsItem
 {
 public:
-    Bola(Landmarks *lm);
-    void Move();
+    Bola(Landmarks *lm, BlackBoard *b);
+    void Move(float X, float Y);
 
     Landmarks *L;
+    BlackBoard *B;
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem

@@ -23,7 +23,7 @@ AGS::AGS()
 //        this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
 
     // Landmarks B
-    B = new Bola(&L);
+    B = new Bola(&L, &BB);
 
     // Generates the new robot and particle set
     W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true, &L, &BB);
@@ -171,18 +171,34 @@ void AGS::keyPressEvent(QKeyEvent *event)
 //        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
 //        break;
     case Qt::Key_Up:
-        L.B[1] -= 5;
+        B->Move(0, -5);
+        L.Bknow[0] = false;
+        L.Bknow[1] = false;
+        W->FindBall();
+        T->FindBall();
         break;
     case Qt::Key_Down:
-        L.B[1] += 5;
+        B->Move(0, 5);
+        L.Bknow[0] = false;
+        L.Bknow[1] = false;
+        W->FindBall();
+        T->FindBall();
         break;
     case Qt::Key_Left:
-        L.B[0] -= 5;
+        B->Move(-5, 0);
+        L.Bknow[0] = false;
+        L.Bknow[1] = false;
+        W->FindBall();
+        T->FindBall();
         break;
     case Qt::Key_Right:
-        L.B[0] += 5;
+        B->Move(5, 0);
+        L.Bknow[0] = false;
+        L.Bknow[1] = false;
+        W->FindBall();
+        T->FindBall();
         break;
     }
-    B->Move();
+    qDebug() << L.Bknow[0] << L.Bknow[1];
     this->update(-50, -50, 1000, 700);
 }

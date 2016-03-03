@@ -31,6 +31,8 @@ struct Landmarks
 
     // Ball
     float B [2] = {450, 300};
+    float Best [2][4];
+    bool Bknow [2];
 
     // Total of LandMarks
     int n = 2;
@@ -41,6 +43,8 @@ struct BlackBoard
     float x[2];
     float y[2];
     float r[2];
+
+    float B[2];
 };
 
 struct Regiao

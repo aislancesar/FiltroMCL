@@ -125,3 +125,51 @@ void robo::Medida(float z[])
 
 //    qDebug() << BB->x[0] << BB->y[0];
 }
+
+void robo::FindBall()
+{
+    float d, r;
+    dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
+    d = GaussRnd(d, meaerr*d/10);
+    if(!((d < 600) && (d > 10) && compAng(r, rotation())))
+    {
+        d = 600;
+        L->Bknow[nome] = false;
+        return;
+    }
+
+    r = r*pi()/180;
+    L->Best[nome][0] = x();
+    L->Best[nome][1] = y();
+    L->Best[nome][2] = d;
+    L->Best[nome][3] = r;
+    L->Bknow[nome] = true;
+
+    float X1 = 0;
+    float Y1 = 0;
+    float X2 = 1;
+    float Y2 = 1;
+
+    if (L->Bknow[0] && L->Bknow[1])
+    {
+        float Ax = L->Best[0][0];
+        float Ay = L->Best[0][1];
+        float A = L->Best[0][3];
+        float Bx = L->Best[1][0];
+        float By = L->Best[1][1];
+        float B = L->Best[1][3];
+        X1 = Bx+(cos(A)*(By-Ay)+sin(A)*(Ax-Bx))/(sin(A)*cos(B)-sin(B)*cos(A))*cos(B);
+        Y1 = By+(cos(A)*(By-Ay)+sin(A)*(Ax-Bx))/(sin(A)*cos(B)-sin(B)*cos(A))*sin(B);
+        X2 = Ax+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*cos(A);
+        Y2 = Ay+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*sin(A);
+    }
+
+    if (X1 != X2 && Y1 != Y2)
+    {
+        X1 = x()+d*cos(r);
+        Y1 = y()+d*sin(r);
+    }
+
+    L->B[0] = X1;
+    L->B[1] = Y1;
+}

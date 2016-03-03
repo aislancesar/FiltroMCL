@@ -27,6 +27,7 @@ public:
 
     void Medida(float z[]); // Measures the position
     void setVars (float velerr, float roterr, float mederr); // No comments
+    void FindBall();
 
     // Needed functions
     robo (int n, QColor c, float x, float y, float d, bool v, Landmarks *lm, BlackBoard *bb);
