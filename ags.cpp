@@ -30,6 +30,11 @@ AGS::AGS()
     T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
 
     L.Fknow[0] = true;
+    L.Best[0][0] = 0;
+    L.Best[0][1] = 300;
+    L.Best[0][2] = 450;
+    L.Best[0][3] = 0;
+    L.Bknow[0] = true;
 //    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
 
     P = new Particulas(QColor(0, 255, 0, 128), N, W, &L);
@@ -202,7 +207,7 @@ void AGS::keyPressEvent(QKeyEvent *event)
         break;
     }
 
-    qDebug() << L.Bknow[0] << L.Bknow[1] << L.Fknow[0] << L.Fknow[1] << L.B[0] << L.B[1];
+//    qDebug() << L.Bknow[0] << L.Bknow[1] << L.Fknow[0] << L.Fknow[1] << L.B[0] << L.B[1];
 
     this->update(-50, -50, 1000, 700);
 }
