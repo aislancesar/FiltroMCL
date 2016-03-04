@@ -79,13 +79,13 @@ struct Regiao
 struct Measures
 {
     float orientation;
-    float ball = 600;
-    float robo = 600;
-    float goal1 = 600;
-    float goal2 = 600;
-    float lmL = 200;
-    float lmT = 200;
-    float lmX = 200;
+    float ball = LDIST;
+    float robo = LDIST;
+    float goal1 = LDIST;
+    float goal2 = LDIST;
+    float lmL = SDIST;
+    float lmT = SDIST;
+    float lmX = SDIST;
     int n = 9;
 };
 

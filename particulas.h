@@ -22,7 +22,7 @@ public:
     float MovErr = 1; // The moviment error
     float RotErr = 1; // The rotation error
     float MedErr = 1; // The measurement error
-    float OGVar = PI/9;
+    float OGVar = PI/6;
 
     // To which robot the particles are attached
     int rob;
