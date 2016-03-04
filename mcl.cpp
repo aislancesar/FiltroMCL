@@ -2,7 +2,7 @@
 
 
 // Choose the algorithm to use
-void XMCL(Particulas *P, float u[], float z[])
+void XMCL(Particulas *P, float u[], Measures z)
 {
 //    MCL(P, u, z);
 //    AMCL(P, u, z);
@@ -10,97 +10,93 @@ void XMCL(Particulas *P, float u[], float z[])
 }
 
 // Monte-Carlo Localization
-void MCL(Particulas *P, float u[], float z[])
+void MCL(Particulas *P, float u[], Measures z)
 {
     P->Move(u);
-    double Max = P->Mede(z);
+    double Sum = P->Mede(z);
 
     float Pnx[P->Qtd], Pny[P->Qtd], Pnr[P->Qtd];
+    double Pnw[P->Qtd];
 
-    float rnd = 0;
-    int c = P->Qtd*UniRnd(), k = 0;
+    Pnw[0] = P->Pw[0];
+    P->Reg[0].cx = 0;
+    P->Reg[0].cy = 0;
+    P->Reg[0].pw = 0;
+    P->Reg[0].rc = 0;
+    P->Reg[0].rs = 0;
+    P->Reg[0].d = 1;
+    P->Reg[0].i = 0;
+
+    for (int i = 1; i < P->Qtd; i++) Pnw[i] = Pnw[i-1]+P->Pw[i];
+
+    int c = 0;
     for (int i = 0; i < P->Qtd; i++)
     {
-        rnd += 2 * Max * UniRnd();
-        while (P->Pw[c] < rnd)
-        {
-            rnd -= P->Pw[c];
-            c = (c+1)%P->Qtd;
-            k++;
-            if(k > 3*P->Qtd)
-            {
-                k = 0;
-                break;
-            }
-        }
+        while (Pnw[c] < Sum*(i+1)/(P->Qtd+1)) c++;
         Pnx[i] = P->Px[c];
         Pny[i] = P->Py[c];
         Pnr[i] = P->Pr[c];
-    }
 
-    qDebug() << k << Max;
+        P->Reg[0].cx += P->Px[c]*P->Pw[c];
+        P->Reg[0].cy += P->Py[c]*P->Pw[c];
+        P->Reg[0].pw += P->Pw[c];
+        P->Reg[0].rc += cos(P->Pr[c]*pi()/180)*P->Pw[c];
+        P->Reg[0].rs += sin(P->Pr[c]*pi()/180)*P->Pw[c];
+        P->Reg[0].i++;
+    }
 
     for (int i = 0; i < P->Qtd; i++)
     {
         P->Px[i] = Pnx[i];
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
-        P->Pw[i] = 0;
     }
 }
 
 // Augmented Monte-Carlo Localization
-void AMCL(Particulas *P, float u[], float z[])
+void AMCL(Particulas *P, float u[], Measures z)
 {
     static float ws = 0, wf = 0;
-    //static int k = 0;
     float ys = 0.01, yf = 0.1, wa = 0;
-    float Pnx[N], Pny[N], Pnr[N];
-
-    double Max;
+    float Pnx[P->Qtd], Pny[P->Qtd], Pnr[P->Qtd];
+    double Pnw[P->Qtd];
 
     P->Move(u);
-    Max = P->Mede(z);
+    double Sum = P->Mede(z);
 
-    for (int i = 0; i < P->Qtd; i++)
-    {
-        wa += P->Pw[i];
-    }
-
-    wa /= P->Qtd;
+    wa = Sum/P->Qtd;
     ws += ys*(wa-ws);
     wf += yf*(wa-wf);
 
-    //qDebug() << Max;
-    //k++;
-    //qDebug("wa.append(%g) # %d", wa, k);
+    Pnw[0] = P->Pw[0];
+    P->Reg[0].cx = 0;
+    P->Reg[0].cy = 0;
+    P->Reg[0].pw = 0;
+    P->Reg[0].rc = 0;
+    P->Reg[0].rs = 0;
+    P->Reg[0].d = 1;
+    P->Reg[0].i = 0;
 
+    for (int i = 1; i < P->Qtd; i++) Pnw[i] = Pnw[i-1]+P->Pw[i];
 
-    float rnd = 0;
-    int c = UniRnd() * P->Qtd, k = 0;
+    int c = 0;
     for (int i = 0; i < P->Qtd; i++)
     {
         if(UniRnd() < 1-wf/ws)
         {
             P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
-        }
-        else
-        {
-            rnd += 2 * Max * UniRnd();
-            while (P->Pw[c] < rnd)
-            {
-                rnd -= P->Pw[c];
-                c = (c+1)%P->Qtd;
-                k++;
-                if(k > 3*P->Qtd)
-                {
-                    k = 0;
-                    break;
-                }
-            }
+        }else{
+            while (Pnw[c] < Sum*(i+1)/(P->Qtd+1)) c++;
             Pnx[i] = P->Px[c];
             Pny[i] = P->Py[c];
             Pnr[i] = P->Pr[c];
+
+            P->Reg[0].cx += P->Px[c]*P->Pw[c];
+            P->Reg[0].cy += P->Py[c]*P->Pw[c];
+            P->Reg[0].pw += P->Pw[c];
+            P->Reg[0].rc += cos(P->Pr[c]*pi()/180)*P->Pw[c];
+            P->Reg[0].rs += sin(P->Pr[c]*pi()/180)*P->Pw[c];
+            P->Reg[0].i++;
         }
     }
 
@@ -109,30 +105,32 @@ void AMCL(Particulas *P, float u[], float z[])
         P->Px[i] = Pnx[i];
         P->Py[i] = Pny[i];
         P->Pr[i] = Pnr[i];
-        P->Pw[i] = 0;
     }
 }
 
 // All-New Augmented Monte-Carlo Localization
-void ANMCL(Particulas *P, float u[], float z[])
+void ANMCL(Particulas *P, float u[], Measures z)
 {
     P->Move(u);
-    P->Mede(z);
-    double Max, Pnw[N];
+    double Sum = P->Mede(z);
+    double Pnw[N];
     bool Pn[N];
 
     float Pnx[N], Pny[N], Pnr[N];
     double t = 1;
 
-    t *= Gaussian(z[0], 20.0/z[0], z[0])*exp(-1);
-    t *= Gaussian(z[1], P->MedErr, z[1])*exp(-1);
-    t *= Gaussian(z[2], P->MedErr, z[2])*exp(-1);
+    t *= AngGaussian(z.orientation, pi()/9, z.orientation);
+    t *= Gaussian(z.ball, P->MedErr, z.ball);
+    t *= Gaussian(z.goal1, P->MedErr, z.goal1);
+    t *= Gaussian(z.goal2, P->MedErr, z.goal2);
+    t *= Gaussian(z.lmL, P->MedErr, z.lmL);
+    t *= Gaussian(z.lmT, P->MedErr, z.lmT);
+    t *= Gaussian(z.lmX, P->MedErr, z.lmX);
+    t *= Gaussian(z.robo, P->MedErr, z.robo);
 
     Pnw[0] = P->Pw[0];
     for (int i = 1; i < P->Qtd; i++)
         Pnw[i] = P->Pw[i]+Pnw[i-1];
-
-    Max = Pnw[P->Qtd-1];
 
     // Changing number of particles
     if(P->Reg[0].i > 0)
@@ -154,9 +152,9 @@ void ANMCL(Particulas *P, float u[], float z[])
 
         Pn[i] = false;
 
-        while (Pnw[c] < Max*(i+1)/(P->Qtd+1)) c++;
+        while (Pnw[c] < Sum*(i+1)/(P->Qtd+1)) c++;
 
-        if(P->Pw[c] > t)
+        if(P->Pw[c] > t*exp(-P->L->n))
         {
             for(int j = 0; j < Rg; j++)
             {
@@ -178,7 +176,7 @@ void ANMCL(Particulas *P, float u[], float z[])
             }
         }
 
-        if(P->Pw[c] < t*exp(-(3)))
+        if(P->Pw[c] < t*exp(-2*P->L->n))
             P->Nova(&Pnx[i], &Pny[i], &Pnr[i]);
         else
         {
@@ -201,8 +199,8 @@ void ANMCL(Particulas *P, float u[], float z[])
     P->L->Fknow[P->rob] = false;
     if(P->Reg[1].i == 0)
     {
-        P->L->F[P->rob][0] = P->Reg[0].cx;
-        P->L->F[P->rob][1] = P->Reg[0].cy;
+        P->L->F[P->rob][0] = P->Reg[0].cx/P->Reg[0].pw;
+        P->L->F[P->rob][1] = P->Reg[0].cy/P->Reg[0].pw;
         P->L->Fknow[P->rob] = true;
     }
 }

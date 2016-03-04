@@ -82,30 +82,26 @@ void Particulas::Move(float u[])
     }
 }
 
-double Particulas::Mede(float zr[])
+double Particulas::Mede(Measures zr)
 {
-    float z[3];
     float d, r;
 
-    double Max = 0;
+    double Sum = 0;
 
     for (int c = 0; c < Qtd; c++)
     {
+        Measures z;
 
         // Orientation
-        z[0] = Pr[c];
+        z.orientation = Pr[c];
 
         // Ball
-
         dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
         d = GaussRnd(d, MedErr*d/10);
         if((d < 600) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
         {
-            z[1] = d;
-        }else{
-            z[1] = 600;
+            z.ball = d;
         }
-
 
         // GoalKeeper
         int k;
@@ -117,29 +113,75 @@ double Particulas::Mede(float zr[])
         d = GaussRnd(d, MedErr*d/10);
         if((d < 600) && (d > 10) && compAng(r, Pr[c]))
         {
-            z[2] = d;
-        }else{
-            z[2] = 600;
+            z.robo = d;
+        }
+
+        // Landmark L
+        for (int i = 0; i < 8; i++)
+        {
+            dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+
+            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
+                z.lmL = d;
+        }
+
+        // Landmark T
+        for (int i = 0; i < 6; i++)
+        {
+            dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+
+            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
+                z.lmT = d;
+        }
+
+        // Landmark X
+        for (int i = 0; i < 2; i++)
+        {
+            dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+
+            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
+                z.lmX = d;
+        }
+
+        // Goal Poles
+        for (int i = 0; i < 4; i++)
+        {
+            dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+
+            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
+            {
+                if (d < z.goal1)
+                {
+                    z.goal2 = z.goal1;
+                    z.goal1 = d;
+                }else if(d < z.goal2){
+                    z.goal2 = d;
+                }
+            }
         }
 
         double pw = 1;
 
-        pw *= Gaussian(zr[1], MedErr, z[1]);
-        pw *= Gaussian(zr[2], MedErr, z[2]);
+        pw *= AngGaussian(zr.orientation, pi()/9, z.orientation);
+        pw *= Gaussian(zr.ball, MedErr, z.ball);
+        pw *= Gaussian(zr.goal1, MedErr, z.goal1);
+        pw *= Gaussian(zr.goal2, MedErr, z.goal2);
+        pw *= Gaussian(zr.lmL, MedErr, z.lmL);
+        pw *= Gaussian(zr.lmT, MedErr, z.lmT);
+        pw *= Gaussian(zr.lmX, MedErr, z.lmX);
+        pw *= Gaussian(zr.robo, MedErr, z.robo);
 
-        if(pow(z[0], 2) > pow(90, 2) && pow(zr[0], 2) > pow(90, 2))
-        {
-            if(zr[0] < 0) zr[0] += 360;
-            if(z[0] < 0) z[0] += 360;
-        }
-
-        pw *= Gaussian(zr[0], 20.0/zr[0], z[0]);
+//        qDebug() << c << ":" << pw;
 
         Pw[c] = max(1e-300, pw);
 
-        Max = max(Pw[c], Max);
+        Sum += Pw[c];
     }
-    return Max;
+    return Sum;
 }
 
 
@@ -171,6 +213,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
 //    y /= w;
 //    float r = atan2(rs, rc)*180.0/pi();
 
+
     painter->setPen(QPen(QColor(0, 0, 255)));
     painter->setBrush(Qt::NoBrush);
     int M = 0;
@@ -192,6 +235,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->drawLine(linha);
     linha.setAngle(-r-30);
     painter->drawLine(linha);
+
 
     //qDebug() << Gaussian(2400, MedErr, 2400)*exp(-1);
     option = option;

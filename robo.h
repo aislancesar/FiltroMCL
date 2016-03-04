@@ -25,7 +25,7 @@ public:
     // BlackBoard
     BlackBoard *BB;
 
-    void Medida(float z[]); // Measures the position
+    void Medida(Measures *z); // Measures the position
     void setVars (float velerr, float roterr, float mederr); // No comments
     void FindBall();
 

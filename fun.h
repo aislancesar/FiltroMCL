@@ -14,18 +14,19 @@ double min(double a, double b);
 double max(double a, double b);
 bool compAng(float ang, float base);
 int myround(double a);
+double AngGaussian(float mu, float sig, float x);
 
 struct Landmarks
 {
     // Used to measure the particles possible position
     // L shaped Landmarks
-//    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
+    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
 
     // T shaped Landmarks
-//    float T [6][2] = {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
+    float T [6][2] = {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
 
     // X shaped Landmarks
-//    float X [2][2] = {{450, 200}, {450, 400}};
+    float X [2][2] = {{450, 200}, {450, 400}};
 
     // Friend Robots
     float F [2][2] = {{0, 0}, {0, 0}};
@@ -36,8 +37,11 @@ struct Landmarks
     float Best [2][4];
     bool Bknow [2];
 
+    // Goal Poles
+    float G[4][2] = {{0, 200}, {0, 400}, {900, 200}, {900, 400}};
+
     // Total of LandMarks
-    int n = 2;
+    int n = 9;
 };
 
 struct BlackBoard
@@ -60,6 +64,19 @@ struct Regiao
     float rs = 0;
     float d = 0;
     int i = 0;
+};
+
+struct Measures
+{
+    float orientation;
+    float ball = 600;
+    float robo = 600;
+    float goal1 = 600;
+    float goal2 = 600;
+    float lmL = 200;
+    float lmT = 200;
+    float lmX = 200;
+    int n = 9;
 };
 
 #endif // FUN_H

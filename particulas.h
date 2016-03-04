@@ -44,7 +44,7 @@ public:
     // Set of functions
     //void Atualiza(float u[], float z[]); // Updates the particle set
     void Move(float u[]); // Aplies the movement model
-    double Mede(float zr[]); // Aplies the measurement model (updates the weights)
+    double Mede(Measures zr); // Aplies the measurement model (updates the weights)
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void DesRobo(float rx, float ry); // Control function (ignore this one)

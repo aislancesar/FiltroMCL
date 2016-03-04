@@ -69,3 +69,19 @@ int myround(double a)
     if(a-int(a) > int(a+1)-a) return int((a+1));
     else return int(a);
 }
+
+double AngGaussian(float mu, float sig, float x)
+{
+    float radmu = mu*pi()/180;
+    float radx = x*pi()/180;
+
+    double cosmu = cos(radmu);
+    double sinmu = sin(radmu);
+    double cosx = cos(radx);
+    double sinx = sin(radx);
+
+    double ret = 1;
+    ret *= exp(-pow(cosmu-cosx, 2)/(2*pow(sig, 2)))/sqrt(2*pi()*pow(sig, 2));
+    ret *= exp(-pow(sinmu-sinx, 2)/(2*pow(sig, 2)))/sqrt(2*pi()*pow(sig, 2));
+    return ret;
+}

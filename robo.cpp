@@ -85,7 +85,7 @@ void robo::Andar(float u[])
     BB->r[nome] = this->rotation();
 }
 
-void robo::Medida(float z[])
+void robo::Medida(Measures *z)
 {
     // Orientation
     orienterr = GaussRnd(orienterr, 0.3);
@@ -94,7 +94,7 @@ void robo::Medida(float z[])
         orienterr = 0;
         qDebug() << "-=-=-=-=-=-=- IMU Reset -=-=-=-=-=-=-";
     }
-    z[0] = rotation() + orienterr;
+    z->orientation = rotation() + orienterr;
 
     // Ball
 
@@ -105,9 +105,7 @@ void robo::Medida(float z[])
     d = GaussRnd(d, meaerr*d/10);
     if((d < 600) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
     {
-        z[1] = d;
-    }else{
-        z[1] = 600;
+        z->ball = d;
     }
 
     // Goalkeeper
@@ -121,9 +119,55 @@ void robo::Medida(float z[])
 
     if((d < 600) && (d > 10) && compAng(r, rotation()))
     {
-        z[2] = d;
-    }else{
-        z[2] = 600;
+        z->robo = d;
+    }
+
+    // Landmark L
+    for (int i = 0; i < 8; i++)
+    {
+        dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
+
+        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmL))
+            z->lmL = d;
+    }
+
+    // Landmark T
+    for (int i = 0; i < 6; i++)
+    {
+        dist(L->T[i][0], L->T[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
+
+        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmT))
+            z->lmT = d;
+    }
+
+    // Landmark X
+    for (int i = 0; i < 2; i++)
+    {
+        dist(L->X[i][0], L->X[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
+
+        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmX))
+            z->lmX = d;
+    }
+
+    // Goal Poles
+    for (int i = 0; i < 4; i++)
+    {
+        dist(L->G[i][0], L->G[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
+
+        if((d < 600) && (d > 10) && compAng(r, rotation()))
+        {
+            if (d < z->goal1)
+            {
+                z->goal2 = z->goal1;
+                z->goal1 = d;
+            }else if(d < z->goal2){
+                z->goal2 = d;
+            }
+        }
     }
 
 //    qDebug() << BB->x[0] << BB->y[0];
@@ -137,7 +181,6 @@ void robo::FindBall()
     d = GaussRnd(d, meaerr*d/10);
     if(!((d < 600) && (d > 10) && compAng(r, rotation())) || !L->Fknow[nome])
     {
-        d = 600;
         L->Bknow[nome] = false;
         return;
     }
@@ -167,8 +210,6 @@ void robo::FindBall()
         X2 = Ax+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*cos(A);
         Y2 = Ay+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*sin(A);
     }
-
-
 
     if (X1 != X2 && Y1 != Y2)
     {

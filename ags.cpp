@@ -10,17 +10,22 @@ AGS::AGS()
     this->addRect(750, 150, 150, 300, pena, Qt::NoBrush);
     this->addLine(450, 0, 450, 600, pena);
     this->addEllipse(350, 200, 200, 200, pena, Qt::NoBrush);
+
+    // Landmarks Goal
+    for (int i = 0; i < 4; i++)
+        this->addEllipse(L.G[i][0]-5, L.G[i][1]-5, 10, 10, QPen(QColor(200, 200, 200)), QBrush(QColor(200, 200, 200)));
+
     // Landmarks L
-//    for (int i = 0; i < 8; i++)
-//        this->addEllipse(L.L[i][0]-10, L.L[i][1]-10, 20, 20, QPen(QColor(0, 255, 255)), Qt::NoBrush);
+    for (int i = 0; i < 8; i++)
+        this->addEllipse(L.L[i][0]-10, L.L[i][1]-10, 20, 20, QPen(QColor(0, 255, 255)), Qt::NoBrush);
 
     // Landmarks T
-//    for (int i = 0; i < 6; i++)
-//        this->addEllipse(L.T[i][0]-10, L.T[i][1]-10, 20, 20, QPen(QColor(255, 255, 0)), Qt::NoBrush);
+    for (int i = 0; i < 6; i++)
+        this->addEllipse(L.T[i][0]-10, L.T[i][1]-10, 20, 20, QPen(QColor(255, 255, 0)), Qt::NoBrush);
 
     // Landmarks X
-//    for (int i = 0; i < 2; i++)
-//        this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
+    for (int i = 0; i < 2; i++)
+        this->addEllipse(L.X[i][0]-10, L.X[i][1]-10, 20, 20, QPen(QColor(255, 0, 255)), Qt::NoBrush);
 
     // Landmarks B
     B = new Bola(&L, &BB);
@@ -30,6 +35,8 @@ AGS::AGS()
     T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
 
     L.Fknow[0] = true;
+    L.Fknow[1] = true;
+
     L.Best[0][0] = 0;
     L.Best[0][1] = 300;
     L.Best[0][2] = 450;
@@ -79,40 +86,40 @@ void AGS::keyPressEvent(QKeyEvent *event)
 {
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
-    float z[L.n+1]; // Measure
+    Measures z; // Measure
 
     switch (event->key())
     {
     case Qt::Key_W: // Moves Forward
         u[0] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        W->Medida(&z);
         XMCL(P, u, z);
         break;
     case Qt::Key_Q: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = -10.0;
         W->Andar(u);
-        W->Medida(z);
+        W->Medida(&z);
         XMCL(P, u, z);
         break;
     case Qt::Key_E: // Turns counter-clock-wise and updates
         u[0] = 10.0;
         u[1] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        W->Medida(&z);
         XMCL(P, u, z);
         break;
     case Qt::Key_A: // Turns counter-clock-wise and updates
         u[1] = -10.0;
         W->Andar(u);
-        W->Medida(z);
+        W->Medida(&z);
         XMCL(P, u, z);
         break;
     case Qt::Key_D: // Turns clock-wise and updates
         u[1] = 10.0;
         W->Andar(u);
-        W->Medida(z);
+        W->Medida(&z);
         XMCL(P, u, z);
         break;
     case Qt::Key_S: // Kidnappes the robot
@@ -136,29 +143,29 @@ void AGS::keyPressEvent(QKeyEvent *event)
     case Qt::Key_I: // Just moves forward
         u[0] = 10.0;
         T->Andar(u);
-        P->Move(u);
+//        P->Move(u);
         break;
     case Qt::Key_J: // Just turns counter-clock-wise
         u[1] = -10.0;
         T->Andar(u);
-        P->Move(u);
+//        P->Move(u);
         break;
     case Qt::Key_L: // Just turns clock-wise
         u[1] = 10.0;
         T->Andar(u);
-        P->Move(u);
+//        P->Move(u);
         break;
     case Qt::Key_U: // Just turns counter-clock-wise
         u[0] = 10.0;
         u[1] = -10.0;
         T->Andar(u);
-        P->Move(u);
+//        P->Move(u);
         break;
     case Qt::Key_O: // Just turns clock-wise
         u[0] = 10.0;
         u[1] = 10.0;
         T->Andar(u);
-        P->Move(u);
+//        P->Move(u);
         break;
     case Qt::Key_Space: // Kidnappes the robot
         T->setX(UniRnd() * 600);
