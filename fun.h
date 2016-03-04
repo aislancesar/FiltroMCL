@@ -1,19 +1,29 @@
 #ifndef FUN_H
 #define FUN_H
-#include <QWidget>
+#include <QtWidgets>
 #include <math.h>
 #include <QTime>
+#include <random>
+
+#define PI 3.14159265358979323846
+
+// Max Number of particles
+#define N 10000
+// Max Number of regions for ANMCL
+#define Rg 4
+
+// Vision parameters
+#define LDIST 600 // Long distance
+#define SDIST 200 // Short distance
 
 double GaussRnd(float mu, float sig);
 double UniRnd();
-float pi();
 double Gaussian(float mu, float sig, float x);
 void dist(float x1, float y1, float x2, float y2, float *d, float *r);
 float hcc(float x1, float y1, float x2, float y2);
 double min(double a, double b);
 double max(double a, double b);
 bool compAng(float ang, float base);
-int myround(double a);
 double AngGaussian(float mu, float sig, float x);
 
 struct Landmarks

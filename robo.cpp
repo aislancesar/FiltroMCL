@@ -32,9 +32,9 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QLineF *linha;
     if(visao)
     {
-        linha = new QLineF(0, 0, 600, 0);
-        painter->drawArc(-600, -600, 1200, 1200, -30*16, 60*16);
-        painter->drawArc(-200, -200, 400, 400, -30*16, 60*16);
+        linha = new QLineF(0, 0, LDIST, 0);
+        painter->drawArc(-LDIST, -LDIST, 2*LDIST, 2*LDIST, -30*16, 60*16);
+        painter->drawArc(-SDIST, -SDIST, 2*SDIST, 2*SDIST, -30*16, 60*16);
     }else{
         linha = new QLineF(0, 0, 10, 0);
     }
@@ -74,8 +74,8 @@ void robo::Andar(float u[])
         this->setRotation(this->rotation()+r);
     }
 
-    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*pi()/180);
-    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*pi()/180);
+    float x = GaussRnd(u[0], spderr)*cos(this->rotation()*PI/180);
+    float y = GaussRnd(u[0], spderr)*sin(this->rotation()*PI/180);
 
     this->setX(this->x()+x);
     this->setY(this->y()+y);
@@ -103,7 +103,7 @@ void robo::Medida(Measures *z)
     float d, r;
     dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
-    if((d < 600) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
+    if((d < LDIST) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
     {
         z->ball = d;
     }
@@ -117,7 +117,7 @@ void robo::Medida(Measures *z)
     dist(BB->x[k], BB->y[k], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
 
-    if((d < 600) && (d > 10) && compAng(r, rotation()))
+    if((d < LDIST) && (d > 10) && compAng(r, rotation()))
     {
         z->robo = d;
     }
@@ -128,7 +128,7 @@ void robo::Medida(Measures *z)
         dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
         d = GaussRnd(d, meaerr*d/10);
 
-        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmL))
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmL))
             z->lmL = d;
     }
 
@@ -138,7 +138,7 @@ void robo::Medida(Measures *z)
         dist(L->T[i][0], L->T[i][1], x(), y(), &d, &r);
         d = GaussRnd(d, meaerr*d/10);
 
-        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmT))
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmT))
             z->lmT = d;
     }
 
@@ -148,7 +148,7 @@ void robo::Medida(Measures *z)
         dist(L->X[i][0], L->X[i][1], x(), y(), &d, &r);
         d = GaussRnd(d, meaerr*d/10);
 
-        if((d < 200) && (d > 10) && compAng(r, rotation()) && (d < z->lmX))
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmX))
             z->lmX = d;
     }
 
@@ -158,7 +158,7 @@ void robo::Medida(Measures *z)
         dist(L->G[i][0], L->G[i][1], x(), y(), &d, &r);
         d = GaussRnd(d, meaerr*d/10);
 
-        if((d < 600) && (d > 10) && compAng(r, rotation()))
+        if((d < LDIST) && (d > 10) && compAng(r, rotation()))
         {
             if (d < z->goal1)
             {
@@ -179,13 +179,13 @@ void robo::FindBall()
     float d, r;
     dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
-    if(!((d < 600) && (d > 10) && compAng(r, rotation())) || !L->Fknow[nome])
+    if(!((d < LDIST) && (d > 10) && compAng(r, rotation())) || !L->Fknow[nome])
     {
         L->Bknow[nome] = false;
         return;
     }
 
-    r = r*pi()/180;
+    r = r*PI/180;
     L->Best[nome][0] = x();
     L->Best[nome][1] = y();
     L->Best[nome][2] = d;

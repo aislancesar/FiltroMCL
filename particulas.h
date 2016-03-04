@@ -5,10 +5,6 @@
 #include <fun.h>
 #include <robo.h>
 
-#define N 10000
-#define Rg 4
-#define vRg 7
-
 class Particulas : public QGraphicsItem
 {
     //const int N = 2000;
@@ -26,6 +22,7 @@ public:
     float MovErr = 1; // The moviment error
     float RotErr = 1; // The rotation error
     float MedErr = 1; // The measurement error
+    float OGVar = PI/9;
 
     // To which robot the particles are attached
     int rob;

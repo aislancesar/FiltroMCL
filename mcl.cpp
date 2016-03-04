@@ -1,5 +1,11 @@
 #include <mcl.h>
 
+// AMCL adaptation coeficients
+#define yf 0.1
+#define ys 0.01
+
+// ANMCL max distance
+#define DIST 100
 
 // Choose the algorithm to use
 void XMCL(Particulas *P, float u[], Measures z)
@@ -40,8 +46,8 @@ void MCL(Particulas *P, float u[], Measures z)
         P->Reg[0].cx += P->Px[c]*P->Pw[c];
         P->Reg[0].cy += P->Py[c]*P->Pw[c];
         P->Reg[0].pw += P->Pw[c];
-        P->Reg[0].rc += cos(P->Pr[c]*pi()/180)*P->Pw[c];
-        P->Reg[0].rs += sin(P->Pr[c]*pi()/180)*P->Pw[c];
+        P->Reg[0].rc += cos(P->Pr[c]*PI/180)*P->Pw[c];
+        P->Reg[0].rs += sin(P->Pr[c]*PI/180)*P->Pw[c];
         P->Reg[0].i++;
     }
 
@@ -57,7 +63,7 @@ void MCL(Particulas *P, float u[], Measures z)
 void AMCL(Particulas *P, float u[], Measures z)
 {
     static float ws = 0, wf = 0;
-    float ys = 0.01, yf = 0.1, wa = 0;
+    double wa = 0;
     float Pnx[P->Qtd], Pny[P->Qtd], Pnr[P->Qtd];
     double Pnw[P->Qtd];
 
@@ -94,8 +100,8 @@ void AMCL(Particulas *P, float u[], Measures z)
             P->Reg[0].cx += P->Px[c]*P->Pw[c];
             P->Reg[0].cy += P->Py[c]*P->Pw[c];
             P->Reg[0].pw += P->Pw[c];
-            P->Reg[0].rc += cos(P->Pr[c]*pi()/180)*P->Pw[c];
-            P->Reg[0].rs += sin(P->Pr[c]*pi()/180)*P->Pw[c];
+            P->Reg[0].rc += cos(P->Pr[c]*PI/180)*P->Pw[c];
+            P->Reg[0].rs += sin(P->Pr[c]*PI/180)*P->Pw[c];
             P->Reg[0].i++;
         }
     }
@@ -119,7 +125,7 @@ void ANMCL(Particulas *P, float u[], Measures z)
     float Pnx[N], Pny[N], Pnr[N];
     double t = 1;
 
-    t *= AngGaussian(z.orientation, pi()/9, z.orientation);
+    t *= AngGaussian(z.orientation, P->OGVar, z.orientation);
     t *= Gaussian(z.ball, P->MedErr, z.ball);
     t *= Gaussian(z.goal1, P->MedErr, z.goal1);
     t *= Gaussian(z.goal2, P->MedErr, z.goal2);
@@ -162,13 +168,13 @@ void ANMCL(Particulas *P, float u[], Measures z)
                 float cy = P->Reg[j].cy+P->Pw[c]*P->Py[c];
                 double pw = P->Reg[j].pw+P->Pw[c];
                 float d = hcc(cx/pw, cy/pw, P->Px[c], P->Py[c]);
-                if(d <= 100)
+                if(d <= DIST)
                 {
                     P->Reg[j].cx = cx;
                     P->Reg[j].cy = cy;
                     P->Reg[j].pw = pw;
-                    P->Reg[j].rc += cos(P->Pr[c]*pi()/180)*P->Pw[c];
-                    P->Reg[j].rs += sin(P->Pr[c]*pi()/180)*P->Pw[c];
+                    P->Reg[j].rc += cos(P->Pr[c]*PI/180)*P->Pw[c];
+                    P->Reg[j].rs += sin(P->Pr[c]*PI/180)*P->Pw[c];
                     P->Reg[j].d = max(d, P->Reg[j].d);
                     P->Reg[j].i++;
                     break;

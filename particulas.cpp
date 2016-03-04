@@ -1,6 +1,5 @@
 #include <particulas.h>
 
-
 Particulas::Particulas(QColor c, int Q, robo *ROB, Landmarks *l)
 {
     cor = c;
@@ -37,7 +36,7 @@ void Particulas::DesRobo(float rx, float ry)
     }
     x /= w;
     y /= w;
-    float r = atan2(rs, rc)*180.0/3.1416;
+    float r = atan2(rs, rc)*180.0/PI;
     float d = sqrt(pow(x-rx,2)+pow(y-ry,2));
     qDebug("Erro: %g", d);
     qDebug("Particulas: x.%g y.%g r.%g", x, y, r);
@@ -77,8 +76,8 @@ void Particulas::Move(float u[])
         Pr[i] += GaussRnd(u[1], RotErr);
         if (Pr[i] > 180) Pr[i] -= 360;
         if (Pr[i] < -180) Pr[i] += 360;
-        Px[i] += GaussRnd(u[0], MovErr)*cos(Pr[i]*pi()/180);
-        Py[i] += GaussRnd(u[0], MovErr)*sin(Pr[i]*pi()/180);
+        Px[i] += GaussRnd(u[0], MovErr)*cos(Pr[i]*PI/180);
+        Py[i] += GaussRnd(u[0], MovErr)*sin(Pr[i]*PI/180);
     }
 }
 
@@ -98,7 +97,7 @@ double Particulas::Mede(Measures zr)
         // Ball
         dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
         d = GaussRnd(d, MedErr*d/10);
-        if((d < 600) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
+        if((d < LDIST) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
         {
             z.ball = d;
         }
@@ -111,7 +110,7 @@ double Particulas::Mede(Measures zr)
 
         dist(L->F[k][0], L->F[k][1], Px[c], Py[c], &d, &r);
         d = GaussRnd(d, MedErr*d/10);
-        if((d < 600) && (d > 10) && compAng(r, Pr[c]))
+        if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
         {
             z.robo = d;
         }
@@ -122,7 +121,7 @@ double Particulas::Mede(Measures zr)
             dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
                 z.lmL = d;
         }
 
@@ -132,7 +131,7 @@ double Particulas::Mede(Measures zr)
             dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
                 z.lmT = d;
         }
 
@@ -142,7 +141,7 @@ double Particulas::Mede(Measures zr)
             dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < 200) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
                 z.lmX = d;
         }
 
@@ -152,7 +151,7 @@ double Particulas::Mede(Measures zr)
             dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < 600) && (d > 10) && compAng(r, Pr[c]))
+            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
             {
                 if (d < z.goal1)
                 {
@@ -166,7 +165,7 @@ double Particulas::Mede(Measures zr)
 
         double pw = 1;
 
-        pw *= AngGaussian(zr.orientation, pi()/9, z.orientation);
+        pw *= AngGaussian(zr.orientation, OGVar, z.orientation);
         pw *= Gaussian(zr.ball, MedErr, z.ball);
         pw *= Gaussian(zr.goal1, MedErr, z.goal1);
         pw *= Gaussian(zr.goal2, MedErr, z.goal2);
@@ -224,7 +223,7 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     }
     x = Reg[M].cx/Reg[M].pw;
     y = Reg[M].cy/Reg[M].pw;
-    r = atan2(Reg[M].rs, Reg[M].rc)*180/pi();
+    r = atan2(Reg[M].rs, Reg[M].rc)*180/PI;
 
     painter->setBrush(QBrush(QColor(0, 255, 0, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
