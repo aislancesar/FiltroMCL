@@ -1,7 +1,8 @@
 QT +=   \
         widgets\
         core \
-        gui
+        gui \
+        testlib
 
 SOURCES += main.cpp \
     robo.cpp \

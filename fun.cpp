@@ -20,7 +20,8 @@ double GaussRnd(float mu, float sig)
 double Gaussian(float mu, float sig, float x)
 {
 //    return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
-    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*PI)*sig*mu);
+//    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*PI)*sig*mu);
+    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)));
 }
 
 void dist(float x1, float y1, float x2, float y2, float *d, float *r)
@@ -68,8 +69,8 @@ double AngGaussian(float mu, float sig, float x)
     double cosx = cos(radx);
     double sinx = sin(radx);
 
-    double ret = 1;
-    ret *= exp(-pow(cosmu-cosx, 2)/(2*pow(sig, 2)))/sqrt(2*PI*pow(sig, 2));
-    ret *= exp(-pow(sinmu-sinx, 2)/(2*pow(sig, 2)))/sqrt(2*PI*pow(sig, 2));
+    double ret = exp(-(pow(cosmu-cosx,2)+pow(sinmu-sinx,2))/(2*pow(sig, 2)))/sqrt(2*PI*pow(sig, 2));
+//    ret *= exp(-pow(cosmu-cosx, 2)/(2*pow(sig, 2)))/sqrt(2*PI*pow(sig, 2));
+//    ret *= exp(-pow(sinmu-sinx, 2)/(2*pow(sig, 2)))/sqrt(2*PI*pow(sig, 2));
     return ret;
 }

@@ -44,8 +44,8 @@ public:
     double Mede(Measures zr); // Aplies the measurement model (updates the weights)
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
-    void DesRobo(float rx, float ry); // Control function (ignore this one)
-    void Nova(float *nPx, float *nPy, float *nPr);
+    void EstRobo(); // Control function (ignore this one)
+    void Nova(float *nPx, float *nPy, float *nPr, double *nPw);
 
     // These are needed to draw the particles
     QRectF boundingRect() const;

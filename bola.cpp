@@ -4,12 +4,12 @@ Bola::Bola(Landmarks *lm, BlackBoard *b)
 {
     L = lm;
     BB = b;
-    setX(450);
-    setY(300);
-    BB->B[0] = 450;
-    BB->B[1] = 300;
-    L->B[0] = 450;
-    L->B[1] = 300;
+    setX(BolaX);
+    setY(BolaY);
+    BB->B[0] = BolaX;
+    BB->B[1] = BolaY;
+    L->B[0] = BolaX;
+    L->B[1] = BolaY;
 }
 
 void Bola::Move(float X, float Y)

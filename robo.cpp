@@ -44,7 +44,6 @@ void robo::paint(QPainter *painter, const QStyleOptionGraphicsItem
     linha->setAngle(-30);
     painter->drawLine(*linha);
 
-
     option = option;
     widget = widget;
 }
@@ -87,6 +86,7 @@ void robo::Andar(float u[])
 
 void robo::Medida(Measures *z)
 {
+
     // Orientation
     orienterr = GaussRnd(orienterr, 0.3);
     if (pow(orienterr, 2) > pow(30, 2))
@@ -98,7 +98,7 @@ void robo::Medida(Measures *z)
 
     // Ball
 
-    FindBall();
+//    FindBall();
 
     float d, r;
     dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
@@ -186,8 +186,9 @@ void robo::FindBall()
     }
 
     r = r*PI/180;
-    L->Best[nome][0] = x();
-    L->Best[nome][1] = y();
+
+    L->Best[nome][0] = L->F[nome][0];
+    L->Best[nome][1] = L->F[nome][1];
     L->Best[nome][2] = d;
     L->Best[nome][3] = r;
     L->Bknow[nome] = true;
@@ -211,7 +212,9 @@ void robo::FindBall()
         Y2 = Ay+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*sin(A);
     }
 
-    if (X1 != X2 && Y1 != Y2)
+//    qDebug() << nome << X1 << X2 << Y1 << Y2;
+
+    if (X1 != X2 || Y1 != Y2)
     {
         X1 = x()+d*cos(r);
         Y1 = y()+d*sin(r);

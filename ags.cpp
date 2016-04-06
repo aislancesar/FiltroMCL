@@ -31,15 +31,15 @@ AGS::AGS()
     B = new Bola(&L, &BB);
 
     // Generates the new robot and particle set
-    W = new robo(1, QColor(0, 255, 0), 200, 300, 0, true, &L, &BB);
+    W = new robo(1, QColor(0, 255, 0), 200, 500, 0, true, &L, &BB);
     T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
 
     L.Fknow[0] = true;
     L.Fknow[1] = true;
 
     L.Best[0][0] = 0;
-    L.Best[0][1] = 300;
-    L.Best[0][2] = 450;
+    L.Best[0][1] = BolaX;
+    L.Best[0][2] = BolaY;
     L.Best[0][3] = 0;
     L.Bknow[0] = true;
 //    I = new robo(2, QColor(50, 50, 255), 300, 400, 0, false);
@@ -172,18 +172,6 @@ void AGS::keyPressEvent(QKeyEvent *event)
         T->setY(UniRnd() * 400);
         T->setRotation(UniRnd() * 360 - 180);
         break;
-    case Qt::Key_Enter: // Shows mean of the particles and the robot position
-        qDebug("---");
-        P->DesRobo(T->x(), T->y());
-        qDebug("Robo: X.%g Y.%g R.%g", T->x(), T->y(), T->rotation());
-        qDebug("---");
-        break;
-//    case Qt::Key_K: // Measures the landmarks
-//        float z[16];
-//        T->Medida(z);
-//        qDebug("---");
-//        for (int i = 0; i <16; i++) qDebug("%g", z[i]);
-//        break;
     case Qt::Key_Up:
         B->Move(0, -5);
         L.Bknow[0] = false;
@@ -212,9 +200,78 @@ void AGS::keyPressEvent(QKeyEvent *event)
         W->FindBall();
         T->FindBall();
         break;
+    case Qt::Key_F5:
+        Auto();
+        break;
     }
 
 //    qDebug() << L.Bknow[0] << L.Bknow[1] << L.Fknow[0] << L.Fknow[1] << L.B[0] << L.B[1];
 
     this->update(-50, -50, 1000, 700);
+}
+
+void AGS::Auto()
+{
+    float u[2] = {0, 0}; // Moviment command
+    Measures *z;
+    // Unidade de Movimento
+    int c = 0;
+
+    u[1] = -6;
+    W->setX(300);
+    W->setY(200);
+    W->setRotation(30);
+    this->update(-50, -50, 1000, 700);
+    QTest::qWait(300);
+
+    for(;c < 40; c++){
+        z = new Measures; // Measure
+        W->Andar(u);
+        W->Medida(z);
+        XMCL(P, u, *z);
+//        c++;
+        qDebug() << c;
+        this->update(-50, -50, 1000, 700);
+        QTest::qWait(300);
+    }
+
+    u[0] = 10;
+    u[1] = 0;
+    for(; c < 60; c++){
+        z = new Measures; // Measure
+        W->Andar(u);
+        W->Medida(z);
+        XMCL(P, u, *z);
+//        c++;
+        qDebug() << c;
+        this->update(-50, -50, 1000, 700);
+        QTest::qWait(300);
+    }
+
+    u[0] = 0;
+    u[1] = -6;
+    for (; c < 80; c++){
+        z = new Measures; // Measure
+        W->Andar(u);
+        W->Medida(z);
+        XMCL(P, u, *z);
+//        c++;
+        qDebug() << c;
+        this->update(-50, -50, 1000, 700);
+        QTest::qWait(300);
+    }
+
+    u[0] = 10;
+    u[1] = 0;
+    for (; c < 100; c++){
+        z = new Measures; // Measure
+        W->Andar(u);
+        W->Medida(z);
+        XMCL(P, u, *z);
+//        c++;
+        qDebug() << c;
+        this->update(-50, -50, 1000, 700);
+        QTest::qWait(300);
+    }
+//    this->update(-50, -50, 1000, 700);
 }

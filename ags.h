@@ -7,6 +7,7 @@
 #include <particulas.h>
 #include <mcl.h>
 #include <bola.h>
+#include <QtTest/QtTest>
 
 // Class used to hold the objects on screen
 class AGS : public QGraphicsScene
@@ -21,6 +22,8 @@ public:
 //    float LX [2][2] = {{450, 200}, {450, 400}};
     robo *W, *T, *I; // Holds the robots
     Particulas *P; // Holds the particles
+
+    void Auto();
 
 protected:
     // Keyboard control

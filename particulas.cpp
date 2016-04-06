@@ -4,42 +4,40 @@ Particulas::Particulas(QColor c, int Q, robo *ROB, Landmarks *l)
 {
     cor = c;
     Qtd = Q;
-
     L = l;
     rob = ROB->nome;
 
     for(int i = 0; i < Q; i++)
     {
         // Note that this generates random particles, but all of them are in a Int state space, even though they are float.
-        Nova(&Px[i], &Py[i], &Pr[i]);
+        Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
     }
 }
 
-void Particulas::Nova(float *nPx, float *nPy, float *nPr)
+void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
 {
     *nPx = 900*UniRnd();
     *nPy = 600*UniRnd();
     *nPr = 360*UniRnd()-180;
+    *nPw = 0;
 }
 
-void Particulas::DesRobo(float rx, float ry)
+void Particulas::EstRobo()
 {
-    float x = 0, y = 0, rc = 0, rs = 0, w = 0;
-    // Takes the average of the particles and gives the aproximated position of the Robot given by the particles
-    for (int i = 0; i < Qtd; i++)
-    {
-        x += Px[i]*Pw[i];
-        y += Py[i]*Pw[i];
-        rc += cos(Pr[i])*Pw[i];
-        rs += sin(Pr[i])*Pw[i];
-        w += Pw[i];
+    Regiao A;
+    for(int i = 0; i < Rg; i++) Reg[i] = A;
+
+    for (int i = 0; i < Qtd; i++){
+        Reg[0].cx += Pw[i]*Px[i];
+        Reg[0].cy += Pw[i]*Py[i];
+        Reg[0].pw += Pw[i];
+        Reg[0].rc += cos(Pr[i]*PI/180)*Pw[i];
+        Reg[0].rs += sin(Pr[i]*PI/180)*Pw[i];
     }
-    x /= w;
-    y /= w;
-    float r = atan2(rs, rc)*180.0/PI;
-    float d = sqrt(pow(x-rx,2)+pow(y-ry,2));
-    qDebug("Erro: %g", d);
-    qDebug("Particulas: x.%g y.%g r.%g", x, y, r);
+
+    L->F[rob][0] = Reg[0].cx/Reg[0].pw;
+    L->F[rob][1] = Reg[0].cy/Reg[0].pw;
+    L->Fknow[rob] = true;
 }
 
 void Particulas::MudaQtd(int nQtd)
@@ -49,7 +47,7 @@ void Particulas::MudaQtd(int nQtd)
         // If the quantity is bigger than the older one, we have to generate new random particles
         for(int i = Qtd; i < nQtd; i++)
         {
-            Nova(&Px[i], &Py[i], &Pr[i]);
+            Nova(&Px[i], &Py[i], &Pr[i], &Pw[i]);
         }
     }
     // If not just ignore the particles out of reach
@@ -58,7 +56,7 @@ void Particulas::MudaQtd(int nQtd)
     }else{
         Qtd = nQtd;
     }
-//    qDebug("%d", Qtd);
+//    qDebug() << Qtd;
 }
 
 void Particulas::Erros(float Mov, float Rot, float Med)
@@ -234,6 +232,10 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->drawLine(linha);
     linha.setAngle(-r-30);
     painter->drawLine(linha);
+
+//    linha = QLineF(x, y, x+1000, y);
+//    linha.setAngle(-r);
+//    painter->drawLine(linha);
 
 
     //qDebug() << Gaussian(2400, MedErr, 2400)*exp(-1);

@@ -4,6 +4,9 @@
 #include <QtWidgets>
 #include <fun.h>
 
+#define BolaX 550
+#define BolaY 300
+
 class Bola : public QGraphicsItem
 {
 public:
