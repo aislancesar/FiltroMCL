@@ -8,6 +8,8 @@
 #include <mcl.h>
 #include <bola.h>
 #include <QtTest/QtTest>
+#include <string>
+#include <fstream>
 
 // Class used to hold the objects on screen
 class AGS : public QGraphicsScene
