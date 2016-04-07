@@ -224,7 +224,7 @@ void AGS::Auto()
         P->MudaQtd(N);
 
         qDebug() << "Move 1";
-        std::ofstream myfile1 ("../Data/MCL-10k-All/M-1-" + std::to_string(i) + ".txt");
+        std::ofstream myfile1 ("../Data/Incoming/M-1-" + std::to_string(i) + ".txt");
         int c = 0;
 
         u[1] = -6;
@@ -290,7 +290,7 @@ void AGS::Auto()
         P->MudaQtd(N);
 
         qDebug() << "Move 2";
-        std::ofstream myfile2 ("../Data/MCL-10k-All/M-2-" + std::to_string(i) + ".txt");
+        std::ofstream myfile2 ("../Data/Incoming/M-2-" + std::to_string(i) + ".txt");
 
         u[0] = 6;
         u[1] = 0.6;
@@ -317,7 +317,7 @@ void AGS::Auto()
         P->MudaQtd(N);
 
         qDebug() << "Move 3";
-        std::ofstream myfile3 ("../Data/MCL-10k-All/M-3-" + std::to_string(i) + ".txt");
+        std::ofstream myfile3 ("../Data/Incoming/M-3-" + std::to_string(i) + ".txt");
 
         u[0] = 7.5;
         u[1] = 0;
@@ -370,7 +370,7 @@ void AGS::Auto()
         P->MudaQtd(N);
 
         qDebug() << "Move 4";
-        std::ofstream myfile4 ("../Data/MCL-10k-All/M-4-" + std::to_string(i) + ".txt");
+        std::ofstream myfile4 ("../Data/Incoming/M-4-" + std::to_string(i) + ".txt");
 
         u[0] = 12;
         u[1] = -7;
@@ -397,7 +397,7 @@ void AGS::Auto()
         P->MudaQtd(N);
 
         qDebug() << "Move 5";
-        std::ofstream myfile5 ("../Data/MCL-10k-All/M-5-" + std::to_string(i) + ".txt");
+        std::ofstream myfile5 ("../Data/Incoming/M-5-" + std::to_string(i) + ".txt");
 
         u[0] = 7.5;
         u[1] = 0;
@@ -447,8 +447,10 @@ void AGS::Auto()
         tempo.restart();
     }
 
-    std::ofstream myfile ("../Data/MCL-10k-All/Times.txt");
+    std::ofstream myfile ("../Data/Incoming/Times.txt");
     for (int i = 0; i < 100; i++)
         myfile << i << " " << time[i] << "\n";
     myfile.close();
+
+    qDebug() << "Done!";
 }
