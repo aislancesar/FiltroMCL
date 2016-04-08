@@ -81,12 +81,12 @@ struct Measures
     float orientation;
     float ball = LDIST;
     float robo = LDIST;
-    float goal1 = LDIST;
-    float goal2 = LDIST;
-    float lmL = SDIST;
-    float lmT = SDIST;
-    float lmX = SDIST;
-    int n = 9;
+//    float goal1 = LDIST;
+//    float goal2 = LDIST;
+//    float lmL = SDIST;
+//    float lmT = SDIST;
+//    float lmX = SDIST;
+    int n = 4;
 };
 
 #endif // FUN_H

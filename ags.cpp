@@ -46,6 +46,8 @@ AGS::AGS()
 
     P = new Particulas(QColor(0, 255, 0, 128), N, W, &L);
 
+    P->BB = &BB;
+
     L.F[0][0] = 0;
     L.F[0][1] = 300;
 

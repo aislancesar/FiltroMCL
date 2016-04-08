@@ -30,6 +30,9 @@ public:
     // LandMarks
     Landmarks *L;
 
+    // Black Board
+    BlackBoard *BB;
+
     // Regions
     Regiao Reg[Rg];
 //    float Reg[Rg][vRg];
