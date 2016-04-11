@@ -31,7 +31,7 @@ AGS::AGS()
     B = new Bola(&L, &BB);
 
     // Generates the new robot and particle set
-    W = new robo(1, QColor(0, 255, 0), 200, 500, 0, true, &L, &BB);
+    W = new robo(1, QColor(0, 255, 0), 450, 300, 0, true, &L, &BB);
     T = new robo(0, QColor(0, 255, 255), 0, 300, 0, true, &L, &BB);
 
     L.Fknow[0] = true;
@@ -90,6 +90,9 @@ void AGS::keyPressEvent(QKeyEvent *event)
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
     Measures z; // Measure
+    Measures_Mode(&z, true, true);
+
+//    qDebug() << z.n;
 
     switch (event->key())
     {
@@ -206,6 +209,12 @@ void AGS::keyPressEvent(QKeyEvent *event)
     case Qt::Key_F5:
         Auto();
         break;
+    case Qt::Key_Escape:
+        P->MudaQtd(0);
+        P->MudaQtd(N);
+        W->setX(450);
+        W->setY(300);
+        W->setRotation(0);
     }
 
 //    qDebug() << L.Bknow[0] << L.Bknow[1] << L.Fknow[0] << L.Fknow[1] << L.B[0] << L.B[1];
@@ -217,242 +226,369 @@ void AGS::Auto()
 {
     float u[2] = {0, 0}; // Moviment command
     Measures *z;
-    int time[100];
+    bool Dyn = true;
+    bool Stt = true;
+    int Qtd;
+    std::string nome = "All";
+
     QTime tempo;
     tempo.start();
 
-    for (int i = 0; i < 100; i++){
-        P->MudaQtd(0);
-        P->MudaQtd(N);
+    QTime total;
+    total.start();
 
-        qDebug() << "Move 1";
-        std::ofstream myfile1 ("../Data/Incoming/M-1-" + std::to_string(i) + ".txt");
-        int c = 0;
+    for (int j = 0; j < 5; j++){
+        if (j == 0)
+            Qtd = 10000;
+        else if(j == 1)
+            Qtd = 5000;
+        else if(j == 2)
+            Qtd = 2000;
+        else if(j == 3)
+            Qtd = 1000;
+        else
+            Qtd = 500;
 
-        u[1] = -6;
-        W->setX(300);
-        W->setY(200);
-        W->setRotation(30);
-//      this->update(-50, -50, 1000, 700);
-//      QTest::qWait(100);
+        for (int k = 0; k < 3; k++){
+            if (k == 0){
+                Dyn = true;
+                Stt = true;
+                nome = "All";
+            }else if (k == 1){
+                Dyn = false;
+                Stt = true;
+                nome = "Stt";
+            }else{
+                Dyn = true;
+                Stt = false;
+                nome = "Dyn";
+            }
 
-        for(;c < 40; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
-//          this->update(-50, -50, 1000, 700);
-//          QTest::qWait(100);
+
+            std::ofstream TimeFile ("../Data/Incoming/Time-" + nome + "-" + std::to_string(Qtd) + ".txt");
+
+            for (int i = 0; i < 100; i++){
+                P->MudaQtd(0);
+                P->MudaQtd(Qtd);
+                W->setX(450);
+                W->setY(300);
+                W->setRotation(0);
+
+                int c = 0;
+
+                std::ofstream DataFile ("../Data/Incoming/Data-" + nome + "-" + std::to_string(Qtd) + "-" + std::to_string(i) + ".txt");
+
+                tempo.restart();
+
+                u[0] = 0;
+                u[1] = 10;
+
+                for (; c < 36; c++){
+                    z = new Measures;
+                    Measures_Mode(z, Dyn, Stt);
+                    W->Andar(u);
+                    W->Medida(z);
+                    XMCL(P, u, *z);
+//                    qDebug() << j+1 << "/ 5 -" << k+1 << "/ 3 -" << i+1 << "/ 100 -" << c+1 << "/ 100";
+                    DataFile << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+            //        this->update(-50, -50, 1000, 700);
+            //        QTest::qWait(100);
+                }
+
+                u[0] = 10;
+                u[1] = 0;
+
+                for (; c < 41; c++){
+                    z = new Measures;
+                    Measures_Mode(z, Dyn, Stt);
+                    W->Andar(u);
+                    W->Medida(z);
+                    XMCL(P, u, *z);
+//                    qDebug() << j+1 << "/ 5 -" << k+1 << "/ 3 -" << i+1 << "/ 100 -" << c+1 << "/ 100";
+                    DataFile << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+            //        this->update(-50, -50, 1000, 700);
+            //        QTest::qWait(100);
+                }
+
+                u[0] = 10;
+                u[1] = 10;
+
+                for (; c < 60; c++){
+                    z = new Measures;
+                    Measures_Mode(z, Dyn, Stt);
+                    W->Andar(u);
+                    W->Medida(z);
+                    XMCL(P, u, *z);
+//                    qDebug() << j+1 << "/ 5 -" << k+1 << "/ 3 -" << i+1 << "/ 100 -" << c+1 << "/ 100";
+                    DataFile << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+            //        this->update(-50, -50, 1000, 700);
+            //        QTest::qWait(100);
+                }
+
+                u[0] = 10;
+                u[1] = 0;
+
+                for (; c < 100; c++){
+                    z = new Measures;
+                    Measures_Mode(z, Dyn, Stt);
+                    W->Andar(u);
+                    W->Medida(z);
+                    XMCL(P, u, *z);
+//                    qDebug() << j+1 << "/ 5 -" << k+1 << "/ 3 -" << i+1 << "/ 100 -" << c+1 << "/ 100";
+                    DataFile << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+            //        this->update(-50, -50, 1000, 700);
+            //        QTest::qWait(100);
+                }
+
+                int t = tempo.elapsed();
+
+                qDebug() << j+1 << "/ 5 -" << k+1 << "/ 3 -" << i+1 << "/ 100 - Time:" << t;
+                TimeFile << i << " " << t << "\n";
+
+                DataFile.close();
+            }
+            qDebug() << "\n";
+            TimeFile.close();
         }
-
-        u[0] = 10;
-        u[1] = 0;
-        for(; c < 60; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
-//          this->update(-50, -50, 1000, 700);
-//          QTest::qWait(100);
-        }
-
-        u[0] = 0;
-        u[1] = -6;
-        for (; c < 80; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
-//          this->update(-50, -50, 1000, 700);
-//          QTest::qWait(100);
-        }
-
-        u[0] = 10;
-        u[1] = 0;
-        for (; c < 100; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
-//          this->update(-50, -50, 1000, 700);
-//          QTest::qWait(100);
-        }
-
-        myfile1.close();
-
-        P->MudaQtd(0);
-        P->MudaQtd(N);
-
-        qDebug() << "Move 2";
-        std::ofstream myfile2 ("../Data/Incoming/M-2-" + std::to_string(i) + ".txt");
-
-        u[0] = 6;
-        u[1] = 0.6;
-        W->setX(700);
-        W->setY(100);
-        W->setRotation(120);
-//        this->update(-50, -50, 1000, 700);
-//        QTest::qWait(100);
-
-        for (c = 0; c < 100; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile2 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 2 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        myfile2.close();
-
-        P->MudaQtd(0);
-        P->MudaQtd(N);
-
-        qDebug() << "Move 3";
-        std::ofstream myfile3 ("../Data/Incoming/M-3-" + std::to_string(i) + ".txt");
-
-        u[0] = 7.5;
-        u[1] = 0;
-        W->setX(200);
-        W->setY(50);
-        W->setRotation(120);
-//      this->update(-50, -50, 1000, 700);
-//      QTest::qWait(100);
-
-        for(c = 0; c < 13; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        u[0] = 0;
-        u[1] = -5;
-        for(; c < 31; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        u[0] = 7.5;
-        u[1] = 0;
-        for(; c < 100; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        myfile3.close();
-
-        P->MudaQtd(0);
-        P->MudaQtd(N);
-
-        qDebug() << "Move 4";
-        std::ofstream myfile4 ("../Data/Incoming/M-4-" + std::to_string(i) + ".txt");
-
-        u[0] = 12;
-        u[1] = -7;
-        W->setX(300);
-        W->setY(500);
-        W->setRotation(0);
-//            this->update(-50, -50, 1000, 700);
-//            QTest::qWait(100);
-
-        for (c = 0; c < 100; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile4 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 4 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        myfile4.close();
-
-        P->MudaQtd(0);
-        P->MudaQtd(N);
-
-        qDebug() << "Move 5";
-        std::ofstream myfile5 ("../Data/Incoming/M-5-" + std::to_string(i) + ".txt");
-
-        u[0] = 7.5;
-        u[1] = 0;
-        W->setX(750);
-        W->setY(100);
-        W->setRotation(90);
-//            this->update(-50, -50, 1000, 700);
-//            QTest::qWait(1000);
-
-        for (c = 0; c < 40; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        u[1] = 4.5;
-        for (; c < 60; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-
-        u[1] = 0;
-        for (; c < 100; c++){
-            z = new Measures; // Measure
-            W->Andar(u);
-            W->Medida(z);
-            XMCL(P, u, *z);
-            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
-            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
-//                    this->update(-50, -50, 1000, 700);
-//                    QTest::qWait(100);
-        }
-        myfile5.close();
-
-        time[i] = tempo.elapsed();
-        tempo.restart();
     }
 
-    std::ofstream myfile ("../Data/Incoming/Times.txt");
-    for (int i = 0; i < 100; i++)
-        myfile << i << " " << time[i] << "\n";
-    myfile.close();
 
-    qDebug() << "Done!";
+//    for (int i = 0; i < 100; i++){
+//        P->MudaQtd(0);
+//        P->MudaQtd(N);
+
+//        qDebug() << "Move 1";
+//        std::ofstream myfile1 ("../Data/Incoming/M-1-" + std::to_string(i) + ".txt");
+//        int c = 0;
+
+//        u[1] = -6;
+//        W->setX(300);
+//        W->setY(200);
+//        W->setRotation(30);
+////      this->update(-50, -50, 1000, 700);
+////      QTest::qWait(100);
+
+//        for(;c < 40; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
+////          this->update(-50, -50, 1000, 700);
+////          QTest::qWait(100);
+//        }
+
+//        u[0] = 10;
+//        u[1] = 0;
+//        for(; c < 60; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
+////          this->update(-50, -50, 1000, 700);
+////          QTest::qWait(100);
+//        }
+
+//        u[0] = 0;
+//        u[1] = -6;
+//        for (; c < 80; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
+////          this->update(-50, -50, 1000, 700);
+////          QTest::qWait(100);
+//        }
+
+//        u[0] = 10;
+//        u[1] = 0;
+//        for (; c < 100; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile1 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 1 << "/5 - " << c << "/100";
+////          this->update(-50, -50, 1000, 700);
+////          QTest::qWait(100);
+//        }
+
+//        myfile1.close();
+
+//        P->MudaQtd(0);
+//        P->MudaQtd(N);
+
+//        qDebug() << "Move 2";
+//        std::ofstream myfile2 ("../Data/Incoming/M-2-" + std::to_string(i) + ".txt");
+
+//        u[0] = 6;
+//        u[1] = 0.6;
+//        W->setX(700);
+//        W->setY(100);
+//        W->setRotation(120);
+////        this->update(-50, -50, 1000, 700);
+////        QTest::qWait(100);
+
+//        for (c = 0; c < 100; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile2 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 2 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        myfile2.close();
+
+//        P->MudaQtd(0);
+//        P->MudaQtd(N);
+
+//        qDebug() << "Move 3";
+//        std::ofstream myfile3 ("../Data/Incoming/M-3-" + std::to_string(i) + ".txt");
+
+//        u[0] = 7.5;
+//        u[1] = 0;
+//        W->setX(200);
+//        W->setY(50);
+//        W->setRotation(120);
+////      this->update(-50, -50, 1000, 700);
+////      QTest::qWait(100);
+
+//        for(c = 0; c < 13; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        u[0] = 0;
+//        u[1] = -5;
+//        for(; c < 31; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        u[0] = 7.5;
+//        u[1] = 0;
+//        for(; c < 100; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile3 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 3 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        myfile3.close();
+
+//        P->MudaQtd(0);
+//        P->MudaQtd(N);
+
+//        qDebug() << "Move 4";
+//        std::ofstream myfile4 ("../Data/Incoming/M-4-" + std::to_string(i) + ".txt");
+
+//        u[0] = 12;
+//        u[1] = -7;
+//        W->setX(300);
+//        W->setY(500);
+//        W->setRotation(0);
+////            this->update(-50, -50, 1000, 700);
+////            QTest::qWait(100);
+
+//        for (c = 0; c < 100; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile4 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 4 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        myfile4.close();
+
+//        P->MudaQtd(0);
+//        P->MudaQtd(N);
+
+//        qDebug() << "Move 5";
+//        std::ofstream myfile5 ("../Data/Incoming/M-5-" + std::to_string(i) + ".txt");
+
+//        u[0] = 7.5;
+//        u[1] = 0;
+//        W->setX(750);
+//        W->setY(100);
+//        W->setRotation(90);
+////            this->update(-50, -50, 1000, 700);
+////            QTest::qWait(1000);
+
+//        for (c = 0; c < 40; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        u[1] = 4.5;
+//        for (; c < 60; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+
+//        u[1] = 0;
+//        for (; c < 100; c++){
+//            z = new Measures; // Measure
+//            W->Andar(u);
+//            W->Medida(z);
+//            XMCL(P, u, *z);
+//            myfile5 << c << " " << W->x() << " " << W->y() << " " << L.F[1][0] << " " << L.F[1][1] << "\n";
+//            qDebug() << i << "/100 - " << 5 << "/5 - " << c << "/100";
+////                    this->update(-50, -50, 1000, 700);
+////                    QTest::qWait(100);
+//        }
+//        myfile5.close();
+
+//        time[i] = tempo.elapsed();
+//        tempo.restart();
+//    }
+
+//    std::ofstream myfile ("../Data/Incoming/Times.txt");
+//    for (int i = 0; i < 100; i++)
+//        myfile << i << " " << time[i] << "\n";
+//    myfile.close();
+
+//    qDebug() << tempo.elapsed();
+//    tempo.restart();
+
+    int t = total.elapsed();
+    qDebug() << "Done in" << int(t/(1000*60*60)) << "hours" << int((t-int(t/(1000*60*60)))/(1000*60)) << "minutes" << int((t-int((t-int(t/(1000*60*60)))/(1000*60)))/1000) << "seconds!";
 }

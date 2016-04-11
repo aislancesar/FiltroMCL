@@ -28,14 +28,11 @@ void Particulas::EstRobo()
     for(int i = 0; i < Rg; i++) Reg[i] = A;
 
     for (int i = 0; i < Qtd; i++){
-        int k = 2;
-        if (pow(Pr[i] - BB->r[1], 2) > pow(100, 2)) k = 1;
-        else if (pow(Pr[i] - BB->r[1], 2) < pow(80, 2)) k = 0;
-        Reg[k].cx += Pw[i]*Px[i];
-        Reg[k].cy += Pw[i]*Py[i];
-        Reg[k].pw += Pw[i];
-        Reg[k].rc += cos(Pr[i]*PI/180)*Pw[i];
-        Reg[k].rs += sin(Pr[i]*PI/180)*Pw[i];
+        Reg[0].cx += Pw[i]*Px[i];
+        Reg[0].cy += Pw[i]*Py[i];
+        Reg[0].pw += Pw[i];
+        Reg[0].rc += cos(Pr[i]*PI/180)*Pw[i];
+        Reg[0].rs += sin(Pr[i]*PI/180)*Pw[i];
     }
 
     L->F[rob][0] = Reg[0].cx/Reg[0].pw;
@@ -93,16 +90,23 @@ double Particulas::Mede(Measures zr)
     for (int c = 0; c < Qtd; c++)
     {
         Measures z;
+        double pw = 1;
 
         // Orientation
-        z.orientation = Pr[c];
+        if (zr.t_orient){
+            z.orientation = Pr[c];
+            pw *= AngGaussian(zr.orientation, OGVar, z.orientation);
+        }
 
         // Ball
-        dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
-        d = GaussRnd(d, MedErr*d/10);
-        if((d < LDIST) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
-        {
-            z.ball = d;
+        if (zr.t_ball){
+            dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
+            {
+                z.ball = d;
+            }
+            pw *= Gaussian(zr.ball, MedErr, z.ball);
         }
 
         // GoalKeeper
@@ -111,71 +115,76 @@ double Particulas::Mede(Measures zr)
         if (rob == 0) k = 1;
         else k = 0;
 
-        dist(L->F[k][0], L->F[k][1], Px[c], Py[c], &d, &r);
-        d = GaussRnd(d, MedErr*d/10);
-        if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
-        {
-            z.robo = d;
+        if(zr.t_robo){
+            dist(L->F[k][0], L->F[k][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
+            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
+            {
+                z.robo = d;
+            }
+            pw *= Gaussian(zr.robo, MedErr, z.robo);
         }
 
-//        // Landmark L
-//        for (int i = 0; i < 8; i++)
-//        {
-//            dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
-//            d = GaussRnd(d, MedErr*d/10);
+        // Landmark L
+        if (zr.t_lmL){
+            for (int i = 0; i < 8; i++)
+            {
+                dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
+                d = GaussRnd(d, MedErr*d/10);
 
-//            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
-//                z.lmL = d;
-//        }
+                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
+                    z.lmL = d;
+            }
+            pw *= Gaussian(zr.lmL, MedErr, z.lmL);
+        }
 
-//        // Landmark T
-//        for (int i = 0; i < 6; i++)
-//        {
-//            dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
-//            d = GaussRnd(d, MedErr*d/10);
+        // Landmark T
+        if (zr.lmT){
+            for (int i = 0; i < 6; i++)
+            {
+                dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
+                d = GaussRnd(d, MedErr*d/10);
 
-//            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
-//                z.lmT = d;
-//        }
+                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
+                    z.lmT = d;
+            }
+            pw *= Gaussian(zr.lmT, MedErr, z.lmT);
+        }
 
-//        // Landmark X
-//        for (int i = 0; i < 2; i++)
-//        {
-//            dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
-//            d = GaussRnd(d, MedErr*d/10);
+        // Landmark X
+        if (zr.lmX){
+            for (int i = 0; i < 2; i++)
+            {
+                dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
+                d = GaussRnd(d, MedErr*d/10);
 
-//            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
-//                z.lmX = d;
-//        }
+                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
+                    z.lmX = d;
+            }
+            pw *= Gaussian(zr.lmX, MedErr, z.lmX);
+        }
 
-//        // Goal Poles
-//        for (int i = 0; i < 4; i++)
-//        {
-//            dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
-//            d = GaussRnd(d, MedErr*d/10);
+        // Goal Poles
+        if (zr.t_goal){
+            for (int i = 0; i < 4; i++)
+            {
+                dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
+                d = GaussRnd(d, MedErr*d/10);
 
-//            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
-//            {
-//                if (d < z.goal1)
-//                {
-//                    z.goal2 = z.goal1;
-//                    z.goal1 = d;
-//                }else if(d < z.goal2){
-//                    z.goal2 = d;
-//                }
-//            }
-//        }
-
-        double pw = 1;
-
-        pw *= AngGaussian(zr.orientation, OGVar, z.orientation);
-        pw *= Gaussian(zr.ball, MedErr, z.ball);
-//        pw *= Gaussian(zr.goal1, MedErr, z.goal1);
-//        pw *= Gaussian(zr.goal2, MedErr, z.goal2);
-//        pw *= Gaussian(zr.lmL, MedErr, z.lmL);
-//        pw *= Gaussian(zr.lmT, MedErr, z.lmT);
-//        pw *= Gaussian(zr.lmX, MedErr, z.lmX);
-        pw *= Gaussian(zr.robo, MedErr, z.robo);
+                if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
+                {
+                    if (d < z.goal1)
+                    {
+                        z.goal2 = z.goal1;
+                        z.goal1 = d;
+                    }else if(d < z.goal2){
+                        z.goal2 = d;
+                    }
+                }
+            }
+            pw *= Gaussian(zr.goal1, MedErr, z.goal1);
+            pw *= Gaussian(zr.goal2, MedErr, z.goal2);
+        }
 
 //        qDebug() << c << ":" << pw;
 

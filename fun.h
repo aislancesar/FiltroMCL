@@ -78,15 +78,28 @@ struct Regiao
 
 struct Measures
 {
+    bool t_orient = true;
+    bool t_ball = true;
+    bool t_robo= true;
+    bool t_goal = true;
+    bool t_lmL = true;
+    bool t_lmT = true;
+    bool t_lmX = true;
+
     float orientation;
     float ball = LDIST;
     float robo = LDIST;
-//    float goal1 = LDIST;
-//    float goal2 = LDIST;
-//    float lmL = SDIST;
-//    float lmT = SDIST;
-//    float lmX = SDIST;
-    int n = 4;
+    float goal1 = LDIST;
+    float goal2 = LDIST;
+    float lmL = SDIST;
+    float lmT = SDIST;
+    float lmX = SDIST;
+
+    int n = 9;
 };
+
+void Dynamics_off(Measures *z);
+void Statics_off(Measures *z);
+void Measures_Mode(Measures *z, bool Dynamic, bool Static);
 
 #endif // FUN_H
