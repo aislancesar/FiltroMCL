@@ -6,6 +6,7 @@
 
 // ANMCL max distance
 #define DIST 100
+#define TP 0
 
 // Choose the algorithm to use
 void XMCL(Particulas *P, float u[], Measures z)
@@ -46,7 +47,7 @@ void MCL(Particulas *P, float u[], Measures z)
         P->Pw[i] = Pnw[i];
     }
 
-    P->EstRobo();
+    P->EstRobo(TP);
 }
 
 // Augmented Monte-Carlo Localization
@@ -93,7 +94,7 @@ void AMCL(Particulas *P, float u[], Measures z)
         P->Pw[i] = Pnw[i];
     }
 
-    P->EstRobo();
+    P->EstRobo(TP);
 }
 
 // All-New Augmented Monte-Carlo Localization

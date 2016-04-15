@@ -22,17 +22,39 @@ void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
     *nPw = 0;
 }
 
-void Particulas::EstRobo()
+void Particulas::EstRobo(int tp)
 {
     Regiao A;
     for(int i = 0; i < Rg; i++) Reg[i] = A;
 
-    for (int i = 0; i < Qtd; i++){
-        Reg[0].cx += Pw[i]*Px[i];
-        Reg[0].cy += Pw[i]*Py[i];
-        Reg[0].pw += Pw[i];
-        Reg[0].rc += cos(Pr[i]*PI/180)*Pw[i];
-        Reg[0].rs += sin(Pr[i]*PI/180)*Pw[i];
+    if (tp == 0){
+        for (int i = 0; i < Qtd; i++){
+            Reg[0].cx += Pw[i]*Px[i];
+            Reg[0].cy += Pw[i]*Py[i];
+            Reg[0].pw += Pw[i];
+            Reg[0].rc += cos(Pr[i]*PI/180)*Pw[i];
+            Reg[0].rs += sin(Pr[i]*PI/180)*Pw[i];
+        }
+    }else if(tp == 1){
+        double p = 0;
+        for (int i = 0; i < Qtd; i++){
+            if (Pw[i] > p) {
+                Reg[0].cx = Px[i]*Pw[i];
+                Reg[0].cy = Py[i]*Pw[i];
+                Reg[0].pw = Pw[i];
+                Reg[0].rc = cos(Pr[i]*PI/180)*Pw[i];
+                Reg[0].rs = sin(Pr[i]*PI/180)*Pw[i];
+                p = Pw[i];
+            }
+        }
+    }else if(tp == 2){
+        for (int i = 0; i < Qtd; i++){
+            Reg[0].cx += Px[i];
+            Reg[0].cy += Py[i];
+            Reg[0].pw += 1;
+            Reg[0].rc += cos(Pr[i]*PI/180);
+            Reg[0].rs += sin(Pr[i]*PI/180);
+        }
     }
 
     L->F[rob][0] = Reg[0].cx/Reg[0].pw;
