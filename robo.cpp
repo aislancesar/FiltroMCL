@@ -103,86 +103,80 @@ void robo::Medida(Measures *z)
 
     float d, r;
 
-    if (z->t_ball) {
-        dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
-        d = GaussRnd(d, meaerr*d/10);
-        if((d < LDIST) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
-        {
-            z->ball = d;
-        }
-    }
+//    if (z->t_ball) {
+//        dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
+//        d = GaussRnd(d, meaerr*d/10);
+//        if((d < LDIST) && (d > 10) && compAng(r, rotation()) && (L->Bknow[0] || L->Bknow[1]))
+//        {
+//            z->ball = d;
+//        }
+//    }
 
 
     // Goalkeeper
-    int k;
+//    int k;
 
-    if(nome == 0) k = 1;
-    else k = 0;
+//    if(nome == 0) k = 1;
+//    else k = 0;
 
-    if (z->t_robo) {
-        dist(BB->x[k], BB->y[k], x(), y(), &d, &r);
-        d = GaussRnd(d, meaerr*d/10);
+//    if (z->t_robo) {
+//        dist(BB->x[k], BB->y[k], x(), y(), &d, &r);
+//        d = GaussRnd(d, meaerr*d/10);
 
-        if((d < LDIST) && (d > 10) && compAng(r, rotation()))
-        {
-            z->robo = d;
-        }
-    }
+//        if((d < LDIST) && (d > 10) && compAng(r, rotation()))
+//        {
+//            z->robo = d;
+//        }
+//    }
 
     // Landmark L
-    if (z->t_lmL){
-        for (int i = 0; i < 8; i++)
-        {
-            dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
-            d = GaussRnd(d, meaerr*d/10);
+    for (int i = 0; i < 8; i++)
+    {
+        dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmL))
-                z->lmL = d;
-        }
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()))
+            z->lmprime++;
     }
     // Landmark T
-    if (z->t_lmT){
-        for (int i = 0; i < 6; i++)
-        {
-            dist(L->T[i][0], L->T[i][1], x(), y(), &d, &r);
-            d = GaussRnd(d, meaerr*d/10);
+    for (int i = 0; i < 6; i++)
+    {
+        dist(L->T[i][0], L->T[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmT))
-                z->lmT = d;
-        }
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()))
+            z->lmprime++;
     }
 
     // Landmark X
-    if (z->t_lmX){
-        for (int i = 0; i < 2; i++)
-        {
-            dist(L->X[i][0], L->X[i][1], x(), y(), &d, &r);
-            d = GaussRnd(d, meaerr*d/10);
+    for (int i = 0; i < 2; i++)
+    {
+        dist(L->X[i][0], L->X[i][1], x(), y(), &d, &r);
+        d = GaussRnd(d, meaerr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmX))
-                z->lmX = d;
-        }
+        if((d < SDIST) && (d > 10) && compAng(r, rotation()))
+            z->lmprime++;
     }
 
     // Goal Poles
-    if(z->t_goal){
-        for (int i = 0; i < 4; i++)
-        {
-            dist(L->G[i][0], L->G[i][1], x(), y(), &d, &r);
-            d = GaussRnd(d, meaerr*d/10);
+//    if(z->t_goal){
+//        for (int i = 0; i < 4; i++)
+//        {
+//            dist(L->G[i][0], L->G[i][1], x(), y(), &d, &r);
+//            d = GaussRnd(d, meaerr*d/10);
 
-            if((d < LDIST) && (d > 10) && compAng(r, rotation()))
-            {
-                if (d < z->goal1)
-                {
-                    z->goal2 = z->goal1;
-                    z->goal1 = d;
-                }else if(d < z->goal2){
-                    z->goal2 = d;
-                }
-            }
-        }
-    }
+//            if((d < LDIST) && (d > 10) && compAng(r, rotation()))
+//            {
+//                if (d < z->goal1)
+//                {
+//                    z->goal2 = z->goal1;
+//                    z->goal1 = d;
+//                }else if(d < z->goal2){
+//                    z->goal2 = d;
+//                }
+//            }
+//        }
+//    }
 
 //    qDebug() << BB->x[0] << BB->y[0];
 }

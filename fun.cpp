@@ -21,7 +21,8 @@ double Gaussian(float mu, float sig, float x)
 {
 //    return exp(-pow(mu-x, 2)/(2*pow(sig*mu/10, 2)))/(sqrt(2*pi())*sig*mu/10);
 //    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)))/(sqrt(2*PI)*sig*mu);
-    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)));
+//    return exp(-pow(mu-x, 2)/(2*pow(sig*mu, 2)));
+    return exp(-pow(mu-x, 2)/(2*pow(sig,2)))/sqrt(2*PI*pow(sig,2));
 }
 
 void dist(float x1, float y1, float x2, float y2, float *d, float *r)

@@ -20,6 +20,7 @@ void XMCL(Particulas *P, float u[], Measures z)
 void MCL(Particulas *P, float u[], Measures z)
 {
     P->Move(u);
+    qDebug() << z.lmprime;
     double Sum = P->Mede(z);
 
     float Pnx[P->Qtd], Pny[P->Qtd], Pnr[P->Qtd];

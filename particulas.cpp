@@ -121,92 +121,86 @@ double Particulas::Mede(Measures zr)
         }
 
         // Ball
-        if (zr.t_ball){
-            dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
-            d = GaussRnd(d, MedErr*d/10);
-            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
-            {
-                z.ball = d;
-            }
-            pw *= Gaussian(zr.ball, MedErr, z.ball);
-        }
+//        if (zr.t_ball){
+//            dist(L->B[0], L->B[1], Px[c], Py[c], &d, &r);
+//            d = GaussRnd(d, MedErr*d/10);
+//            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]) && (L->Bknow[0] || L->Bknow[1]))
+//            {
+//                z.ball = d;
+//            }
+//            pw *= Gaussian(zr.ball, MedErr, z.ball);
+//        }
 
         // GoalKeeper
-        int k;
+//        int k;
 
-        if (rob == 0) k = 1;
-        else k = 0;
+//        if (rob == 0) k = 1;
+//        else k = 0;
 
-        if(zr.t_robo){
-            dist(L->F[k][0], L->F[k][1], Px[c], Py[c], &d, &r);
-            d = GaussRnd(d, MedErr*d/10);
-            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
-            {
-                z.robo = d;
-            }
-            pw *= Gaussian(zr.robo, MedErr, z.robo);
-        }
+//        if(zr.t_robo){
+//            dist(L->F[k][0], L->F[k][1], Px[c], Py[c], &d, &r);
+//            d = GaussRnd(d, MedErr*d/10);
+//            if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
+//            {
+//                z.robo = d;
+//            }
+//            pw *= Gaussian(zr.robo, MedErr, z.robo);
+//        }
 
         // Landmark L
-        if (zr.t_lmL){
-            for (int i = 0; i < 8; i++)
-            {
-                dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
-                d = GaussRnd(d, MedErr*d/10);
+        for (int i = 0; i < 8; i++)
+        {
+            dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
 
-                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
-                    z.lmL = d;
-            }
-            pw *= Gaussian(zr.lmL, MedErr, z.lmL);
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
+                z.lmprime++;
         }
 
         // Landmark T
-        if (zr.lmT){
-            for (int i = 0; i < 6; i++)
-            {
-                dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
-                d = GaussRnd(d, MedErr*d/10);
+        for (int i = 0; i < 6; i++)
+        {
+            dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
 
-                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
-                    z.lmT = d;
-            }
-            pw *= Gaussian(zr.lmT, MedErr, z.lmT);
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
+                z.lmprime++;
         }
 
         // Landmark X
-        if (zr.lmX){
-            for (int i = 0; i < 2; i++)
-            {
-                dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
-                d = GaussRnd(d, MedErr*d/10);
+        for (int i = 0; i < 2; i++)
+        {
+            dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
+            d = GaussRnd(d, MedErr*d/10);
 
-                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
-                    z.lmX = d;
-            }
-            pw *= Gaussian(zr.lmX, MedErr, z.lmX);
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
+                z.lmprime++;
         }
+
+
+        pw *= Gaussian(zr.lmprime, 0.1, z.lmprime);
 
         // Goal Poles
-        if (zr.t_goal){
-            for (int i = 0; i < 4; i++)
-            {
-                dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
-                d = GaussRnd(d, MedErr*d/10);
+//        if (zr.t_goal){
+//            for (int i = 0; i < 4; i++)
+//            {
+//                dist(L->G[i][0], L->G[i][1], Px[c], Py[c], &d, &r);
+//                d = GaussRnd(d, MedErr*d/10);
 
-                if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
-                {
-                    if (d < z.goal1)
-                    {
-                        z.goal2 = z.goal1;
-                        z.goal1 = d;
-                    }else if(d < z.goal2){
-                        z.goal2 = d;
-                    }
-                }
-            }
-            pw *= Gaussian(zr.goal1, MedErr, z.goal1);
-            pw *= Gaussian(zr.goal2, MedErr, z.goal2);
-        }
+//                if((d < LDIST) && (d > 10) && compAng(r, Pr[c]))
+//                {
+//                    if (d < z.goal1)
+//                    {
+//                        z.goal2 = z.goal1;
+//                        z.goal1 = d;
+//                    }else if(d < z.goal2){
+//                        z.goal2 = d;
+//                    }
+//                }
+//            }
+//            pw *= Gaussian(zr.goal1, MedErr, z.goal1);
+//            pw *= Gaussian(zr.goal2, MedErr, z.goal2);
+//        }
 
 //        qDebug() << c << ":" << pw;
 

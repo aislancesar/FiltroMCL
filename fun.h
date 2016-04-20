@@ -14,7 +14,7 @@
 
 // Vision parameters
 #define LDIST 600 // Long distance
-#define SDIST 200 // Short distance
+#define SDIST 300 // Short distance
 
 double GaussRnd(float mu, float sig);
 double UniRnd();
@@ -94,6 +94,8 @@ struct Measures
     float lmL = SDIST;
     float lmT = SDIST;
     float lmX = SDIST;
+
+    int lmprime = 0;
 
     int n = 9;
 };
