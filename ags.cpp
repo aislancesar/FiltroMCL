@@ -91,13 +91,13 @@ void AGS::keyPressEvent(QKeyEvent *event)
     float u[2] = {0.0, 0.0}; // Moviment command
     Measures z; // Measure
 //    Measures_Mode(&z, false, true);
-    z.t_orient = true;
-    z.t_ball = false;
-    z.t_robo= false;
-    z.t_goal = false;
-    z.t_lmL = false;
-    z.t_lmT = false;
-    z.t_lmX = false;
+//    z.t_orient = true;
+//    z.t_ball = false;
+//    z.t_robo= false;
+//    z.t_goal = false;
+//    z.t_lmL = false;
+//    z.t_lmT = false;
+//    z.t_lmX = false;
 
 //    qDebug() << z.n;
 

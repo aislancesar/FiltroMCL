@@ -78,24 +78,26 @@ struct Regiao
 
 struct Measures
 {
-    bool t_orient = true;
-    bool t_ball = true;
-    bool t_robo= true;
-    bool t_goal = true;
-    bool t_lmL = true;
-    bool t_lmT = true;
-    bool t_lmX = true;
+//    bool t_orient = true;
+//    bool t_ball = true;
+//    bool t_robo= true;
+//    bool t_goal = true;
+//    bool t_lmL = true;
+//    bool t_lmT = true;
+//    bool t_lmX = true;
 
     float orientation;
-    float ball = LDIST;
-    float robo = LDIST;
-    float goal1 = LDIST;
-    float goal2 = LDIST;
-    float lmL = SDIST;
-    float lmT = SDIST;
-    float lmX = SDIST;
+//    float ball = LDIST;
+//    float robo = LDIST;
+//    float goal1 = LDIST;
+//    float goal2 = LDIST;
+//    float lmL = SDIST;
+//    float lmT = SDIST;
+//    float lmX = SDIST;
 
-    int lmprime = 0;
+    int lmprimeL = 0;
+    int lmprimeT = 0;
+    int lmprimeX = 0;
 
     int n = 9;
 };

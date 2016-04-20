@@ -87,16 +87,15 @@ void robo::Andar(float u[])
 void robo::Medida(Measures *z)
 {
 
-    if (z->t_orient) {
-        // Orientation
-        orienterr = GaussRnd(orienterr, 0.3);
-        if (pow(orienterr, 2) > pow(30, 2))
-        {
-            orienterr = 0;
-            qDebug() << "-=-=-=-=-=-=- IMU Reset -=-=-=-=-=-=-";
-        }
-        z->orientation = rotation() + orienterr;
+    // Orientation
+    orienterr = GaussRnd(orienterr, 0.3);
+    if (pow(orienterr, 2) > pow(30, 2))
+    {
+        orienterr = 0;
+        qDebug() << "-=-=-=-=-=-=- IMU Reset -=-=-=-=-=-=-";
     }
+    z->orientation = rotation() + orienterr;
+
     // Ball
 
 //    FindBall();
@@ -136,7 +135,7 @@ void robo::Medida(Measures *z)
         d = GaussRnd(d, meaerr*d/10);
 
         if((d < SDIST) && (d > 10) && compAng(r, rotation()))
-            z->lmprime++;
+            z->lmprimeL++;
     }
     // Landmark T
     for (int i = 0; i < 6; i++)
@@ -145,7 +144,7 @@ void robo::Medida(Measures *z)
         d = GaussRnd(d, meaerr*d/10);
 
         if((d < SDIST) && (d > 10) && compAng(r, rotation()))
-            z->lmprime++;
+            z->lmprimeT++;
     }
 
     // Landmark X
@@ -155,7 +154,7 @@ void robo::Medida(Measures *z)
         d = GaussRnd(d, meaerr*d/10);
 
         if((d < SDIST) && (d > 10) && compAng(r, rotation()))
-            z->lmprime++;
+            z->lmprimeX++;
     }
 
     // Goal Poles

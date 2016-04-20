@@ -115,10 +115,8 @@ double Particulas::Mede(Measures zr)
         double pw = 1;
 
         // Orientation
-        if (zr.t_orient){
-            z.orientation = Pr[c];
-            pw *= AngGaussian(zr.orientation, OGVar, z.orientation);
-        }
+        z.orientation = Pr[c];
+        pw *= AngGaussian(zr.orientation, OGVar, z.orientation);
 
         // Ball
 //        if (zr.t_ball){
@@ -154,8 +152,10 @@ double Particulas::Mede(Measures zr)
             d = GaussRnd(d, MedErr*d/10);
 
             if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
-                z.lmprime++;
+                z.lmprimeL++;
         }
+        float sig = 1/sqrt(2*PI);
+        pw *= Gaussian(zr.lmprimeL, sig, z.lmprimeL);
 
         // Landmark T
         for (int i = 0; i < 6; i++)
@@ -163,9 +163,10 @@ double Particulas::Mede(Measures zr)
             dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
-                z.lmprime++;
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
+                z.lmprimeT++;
         }
+        pw *= Gaussian(zr.lmprimeT, sig, z.lmprimeT);
 
         // Landmark X
         for (int i = 0; i < 2; i++)
@@ -173,12 +174,10 @@ double Particulas::Mede(Measures zr)
             dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
             d = GaussRnd(d, MedErr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
-                z.lmprime++;
+            if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
+                z.lmprimeX++;
         }
-
-
-        pw *= Gaussian(zr.lmprime, 0.1, z.lmprime);
+        pw *= Gaussian(zr.lmprimeX, 0.1, z.lmprimeX);
 
         // Goal Poles
 //        if (zr.t_goal){

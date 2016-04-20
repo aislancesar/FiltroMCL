@@ -78,17 +78,17 @@ double AngGaussian(float mu, float sig, float x)
 
 void Dynamics_off(Measures *z)
 {
-    z->t_ball = false;
-    z->t_robo = false;
-    z->t_orient = false;
+//    z->t_ball = false;
+//    z->t_robo = false;
+//    z->t_orient = false;
 }
 
 void Statics_off(Measures *z)
 {
-    z->t_goal = false;
-    z->t_lmL = false;
-    z->t_lmT = false;
-    z->t_lmX = false;
+//    z->t_goal = false;
+//    z->t_lmL = false;
+//    z->t_lmT = false;
+//    z->t_lmX = false;
 }
 
 void Measures_Mode(Measures *z, bool Dynamic, bool Static)
@@ -100,11 +100,11 @@ void Measures_Mode(Measures *z, bool Dynamic, bool Static)
         Statics_off(z);
     }
     z->n = 0;
-    if (z->t_orient) z->n += 2;
-    if (z->t_ball) z->n++;
-    if (z->t_robo) z->n++;
-    if (z->t_lmL) z->n++;
-    if (z->t_lmT) z->n++;
-    if (z->t_lmX) z->n++;
-    if (z->t_goal) z->n += 2;
+//    if (z->t_orient) z->n += 2;
+//    if (z->t_ball) z->n++;
+//    if (z->t_robo) z->n++;
+//    if (z->t_lmL) z->n++;
+//    if (z->t_lmT) z->n++;
+//    if (z->t_lmX) z->n++;
+//    if (z->t_goal) z->n += 2;
 }
