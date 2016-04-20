@@ -136,9 +136,21 @@ void robo::Medida(Measures *z)
             dist(L->L[i][0], L->L[i][1], x(), y(), &d, &r);
             d = GaussRnd(d, meaerr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmL))
-                z->lmL = d;
+            if((d < SDIST) && (d > 10) && compAng(r, rotation()))
+            {
+                if (d < z->lmL1)
+                {
+                    z->lmL2 = z->lmL1;
+                    z->almL2 = z->almL1;
+                    z->lmL1 = d;
+                    z->almL1 = r;
+                }else if(d < z->lmL2){
+                    z->lmL2 = d;
+                    z->almL2 = r;
+                }
+            }
         }
+
     }
     // Landmark T
     if (z->t_lmT){
@@ -148,7 +160,10 @@ void robo::Medida(Measures *z)
             d = GaussRnd(d, meaerr*d/10);
 
             if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmT))
+            {
                 z->lmT = d;
+                z->almT = r;
+            }
         }
     }
 
@@ -159,8 +174,19 @@ void robo::Medida(Measures *z)
             dist(L->X[i][0], L->X[i][1], x(), y(), &d, &r);
             d = GaussRnd(d, meaerr*d/10);
 
-            if((d < SDIST) && (d > 10) && compAng(r, rotation()) && (d < z->lmX))
-                z->lmX = d;
+            if((d < SDIST) && (d > 10) && compAng(r, rotation()))
+            {
+                if (d < z->lmX1)
+                {
+                    z->lmX2 = z->lmX1;
+                    z->almX2 = z->almX1;
+                    z->lmX1 = d;
+                    z->almX1 = r;
+                }else if(d < z->lmX2){
+                    z->lmX2 = d;
+                    z->almX2 = r;
+                }
+            }
         }
     }
 

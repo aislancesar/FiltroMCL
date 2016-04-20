@@ -154,36 +154,64 @@ double Particulas::Mede(Measures zr)
                 dist(L->L[i][0], L->L[i][1], Px[c], Py[c], &d, &r);
                 d = GaussRnd(d, MedErr*d/10);
 
-                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmL))
-                    z.lmL = d;
+                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
+                {
+                    if (d < z.lmL1)
+                    {
+                        z.lmL2 = z.lmL1;
+                        z.almL2 = z.almL1;
+                        z.lmL1 = d;
+                        z.almL1 = r;
+                    }else if(d < z.lmL2){
+                        z.lmL2 = d;
+                        z.almL2 = r;
+                    }
+                }
             }
-            pw *= Gaussian(zr.lmL, MedErr, z.lmL);
+            pw *= AngGaussian(zr.almL1, OGVar, z.almL1);
+            pw *= AngGaussian(zr.almL2, OGVar, z.almL2);
         }
 
         // Landmark T
-        if (zr.lmT){
+        if (zr.t_lmT){
             for (int i = 0; i < 6; i++)
             {
                 dist(L->T[i][0], L->T[i][1], Px[c], Py[c], &d, &r);
                 d = GaussRnd(d, MedErr*d/10);
 
                 if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmT))
+                {
                     z.lmT = d;
+                    z.almT = r;
+                }
+
             }
-            pw *= Gaussian(zr.lmT, MedErr, z.lmT);
+            pw *= AngGaussian(zr.almT, OGVar, z.almT);
         }
 
         // Landmark X
-        if (zr.lmX){
+        if (zr.t_lmX){
             for (int i = 0; i < 2; i++)
             {
                 dist(L->X[i][0], L->X[i][1], Px[c], Py[c], &d, &r);
                 d = GaussRnd(d, MedErr*d/10);
 
-                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]) && (d < z.lmX))
-                    z.lmX = d;
+                if((d < SDIST) && (d > 10) && compAng(r, Pr[c]))
+                {
+                    if (d < z.lmX1)
+                    {
+                        z.lmX2 = z.lmX1;
+                        z.almX2 = z.almX1;
+                        z.lmX1 = d;
+                        z.almX1 = r;
+                    }else if(d < z.lmX2){
+                        z.lmX2 = d;
+                        z.almX2 = r;
+                    }
+                }
             }
-            pw *= Gaussian(zr.lmX, MedErr, z.lmX);
+            pw *= AngGaussian(zr.almX1, OGVar, z.almX1);
+            pw *= AngGaussian(zr.almX2, OGVar, z.almX2);
         }
 
         // Goal Poles

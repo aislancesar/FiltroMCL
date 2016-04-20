@@ -90,7 +90,10 @@ void AGS::keyPressEvent(QKeyEvent *event)
     // KeyBoard Controler
     float u[2] = {0.0, 0.0}; // Moviment command
     Measures z; // Measure
-    Measures_Mode(&z, false, true);
+//    Measures_Mode(&z, true, true);
+    z.t_ball = false;
+    z.t_goal = false;
+    z.t_robo = false;
 
 //    qDebug() << z.n;
 
