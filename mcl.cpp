@@ -6,7 +6,12 @@
 
 // ANMCL max distance
 #define DIST 100
-#define TP 0
+
+// How is the position estimation
+#define TP 0 // Pondered mean
+//#define TP 1 // Greatest weighed particle
+//#define TP 2 // Normal mean
+
 
 // Choose the algorithm to use
 void XMCL(Particulas *P, float u[], Measures z)
