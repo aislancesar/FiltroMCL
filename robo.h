@@ -17,7 +17,7 @@ public:
     float spderr = 1; // Movement Error
     float trnerr = 1; // Turn Error
     float meaerr = 1; // Measurement Error
-    float orienterr = 0;
+    float orienterr = 0; // Holds the cumulative orientation error
 
     // LandMarks
     Landmarks *L;
@@ -26,7 +26,7 @@ public:
     BlackBoard *BB;
 
     void Medida(Measures *z); // Measures the position
-    void setVars (float velerr, float roterr, float mederr); // No comments
+    void setVars (float velerr, float roterr, float mederr);
     void FindBall();
 
     // Needed functions

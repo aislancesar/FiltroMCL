@@ -25,7 +25,7 @@ void Particulas::Nova(float *nPx, float *nPy, float *nPr, double *nPw)
 void Particulas::EstRobo(int tp)
 {
     Regiao A;
-    for(int i = 0; i < Rg; i++) Reg[i] = A;
+    for(int i = 0; i < 2; i++) Reg[i] = A;
 
     if (tp == 0){
         for (int i = 0; i < Qtd; i++){
@@ -208,8 +208,6 @@ double Particulas::Mede(Measures zr)
             pw *= Gaussian(zr.goal2, MedErr, z.goal2);
         }
 
-//        qDebug() << c << ":" << pw;
-
         Pw[c] = max(1e-300, pw);
 
         Sum += Pw[c];
@@ -231,26 +229,16 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     for(int i = 0; i<Qtd; i++)
     {
-//        x += Px[i]*Pw[i];
-//        y += Py[i]*Pw[i];
-//        rc += cos(Pr[i]*pi()/180)*Pw[i];
-//        rs += sin(Pr[i]*pi()/180)*Pw[i];
-//        w += Pw[i];
         painter->setPen(QPen(cor));
         QLineF linha(Px[i], Py[i], Px[i]+5, Py[i]);
         linha.setAngle(-Pr[i]);
         painter->drawLine(linha);    
     }
 
-//    x /= w;
-//    y /= w;
-//    float r = atan2(rs, rc)*180.0/pi();
-
-
     painter->setPen(QPen(QColor(0, 0, 255)));
     painter->setBrush(Qt::NoBrush);
     int M = 0;
-    for(int i = 0; i < Rg; i++)
+    for(int i = 0; i < 2; i++)
     {
         painter->drawEllipse(Reg[i].cx/Reg[i].pw-Reg[i].d, Reg[i].cy/Reg[i].pw-Reg[i].d, 2*Reg[i].d, 2*Reg[i].d);
         if (max(Reg[M].pw, Reg[i].pw) == Reg[i].pw) M = i;
@@ -261,20 +249,13 @@ void Particulas::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     painter->setBrush(QBrush(QColor(0, 255, 0, 128)));
     painter->drawEllipse(x-10, y-10, 20, 20);
-//    painter->drawEllipse(x-30, y-30, 60, 60);
-//    painter->drawEllipse(x-100, y-100, 200, 200);
+
     QLineF linha(x, y, x+10, y);
     linha.setAngle(-r+30);
     painter->drawLine(linha);
     linha.setAngle(-r-30);
     painter->drawLine(linha);
 
-//    linha = QLineF(x, y, x+1000, y);
-//    linha.setAngle(-r);
-//    painter->drawLine(linha);
-
-
-    //qDebug() << Gaussian(2400, MedErr, 2400)*exp(-1);
     option = option;
     widget = widget;
 }

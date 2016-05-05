@@ -7,7 +7,6 @@
 
 class Particulas : public QGraphicsItem
 {
-    //const int N = 2000;
 public:
     int Qtd; // Quantity of particles, max 1000
     QColor cor; // Color used to draw the particle
@@ -34,21 +33,18 @@ public:
     BlackBoard *BB;
 
     // Regions
-    Regiao Reg[Rg];
-//    float Reg[Rg][vRg];
-    //float aReg[Rg];
+    Regiao Reg[2];
 
     // Initializer
     Particulas(QColor c, int Q, robo *ROB, Landmarks *l);
 
     // Set of functions
-    //void Atualiza(float u[], float z[]); // Updates the particle set
     void Move(float u[]); // Aplies the movement model
     double Mede(Measures zr); // Aplies the measurement model (updates the weights)
     void Erros(float Mov, float Rot, float Med); // Changes the errors
     void MudaQtd(int nQtd); // Changes the Quantity of particles
     void EstRobo(int tp); // Control function (ignore this one)
-    void Nova(float *nPx, float *nPy, float *nPr, double *nPw);
+    void Nova(float *nPx, float *nPy, float *nPr, double *nPw); // Create new particle
 
     // These are needed to draw the particles
     QRectF boundingRect() const;

@@ -183,13 +183,10 @@ void robo::Medida(Measures *z)
             }
         }
     }
-
-//    qDebug() << BB->x[0] << BB->y[0];
 }
 
 void robo::FindBall()
 {
-//    qDebug() << "Find Ball:" << nome << L->Fknow[nome] << L->Bknow[nome];
     float d, r;
     dist(BB->B[0], BB->B[1], x(), y(), &d, &r);
     d = GaussRnd(d, meaerr*d/10);
@@ -225,8 +222,6 @@ void robo::FindBall()
         X2 = Ax+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*cos(A);
         Y2 = Ay+((Ax-Bx)*sin(B)+(By-Ay)*cos(B))/(sin(A)*cos(B)-cos(A)*sin(B))*sin(A);
     }
-
-//    qDebug() << nome << X1 << X2 << Y1 << Y2;
 
     if (X1 != X2 || Y1 != Y2)
     {

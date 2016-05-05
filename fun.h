@@ -9,8 +9,6 @@
 
 // Max Number of particles
 #define N 10000
-// Max Number of regions for ANMCL
-#define Rg 4
 
 // Vision parameters
 #define LDIST 600 // Long distance
