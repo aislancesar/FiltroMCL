@@ -49,14 +49,32 @@ double max(double a, double b)
 
 bool compAng(float ang, float base)
 {
-    if(base > 150 || base < -150)
-    {
-        if(ang > 0 && base < 0)
-            return (ang < base + 360 + 30) && (ang > base + 360 - 30);
-        else if(ang < 0 && base > 0)
-            return (ang < base - 360 + 30) && (ang > base - 360 - 30);
-    }
-    return (ang < base + 30) && (ang > base - 30);
+//    if(base > 150 || base < -150)
+//    {
+//        if(ang > 0 && base < 0)
+//            return (ang < base + 360 + 30) && (ang > base + 360 - 30);
+//        else if(ang < 0 && base > 0)
+//            return (ang < base - 360 + 30) && (ang > base - 360 - 30);
+//    }
+//    return (ang < base + 30) && (ang > base - 30);
+
+    float ax = cos(ang*PI/180);
+    float ay = sin(ang*PI/180);
+    float bx = cos(base*PI/180);
+    float by = sin(base*PI/180);
+
+    float dx = cos(30*PI/180);
+    float dy = sin(30*PI/180);
+    dx = dx-bx;
+    dy = dy-by;
+    float d = dx*dx+dy*dy;
+
+    float cx = ax-bx;
+    float cy = ay-by;
+    float c = cx*cx+cy*cy;
+
+//    qDebug() << d << c;
+    return c < d;
 }
 
 double AngGaussian(float mu, float sig, float x)
