@@ -12,7 +12,7 @@
 
 // Vision parameters
 #define LDIST 600 // Long distance
-#define SDIST 200 // Short distance
+#define SDIST 500 // Short distance
 
 double GaussRnd(float mu, float sig);
 double UniRnd();
@@ -26,30 +26,7 @@ double AngGaussian(float mu, float sig, float x);
 
 struct Landmarks
 {
-    // Used to measure the particles possible position
-    // L shaped Landmarks
-    float L [8][2] = {{0, 0}, {150, 150}, {150, 450}, {0, 600}, {750, 150}, {750, 450}, {900, 0}, {900, 600}};
-
-    // T shaped Landmarks
-    float T [6][2] = {{0, 150}, {0, 450}, {450, 0}, {450, 600}, {900, 150}, {900,450}};
-
-    // X shaped Landmarks
-    float X [2][2] = {{450, 200}, {450, 400}};
-
-    // Friend Robots
-    float F [2][2] = {{0, 0}, {0, 0}};
-    bool Fknow [2];
-
-    // Ball
-    float B [2] = {450, 300};
-    float Best [2][4];
-    bool Bknow [2];
-
-    // Goal Poles
-    float G[4][2] = {{0, 200}, {0, 400}, {900, 200}, {900, 400}};
-
-    // Total of LandMarks
-    int n = 9;
+    float LM[2] = {450, 300};
 };
 
 struct BlackBoard
@@ -77,27 +54,16 @@ struct Regiao
 struct Measures
 {
     bool t_orient = true;
-    bool t_ball = true;
-    bool t_robo= true;
-    bool t_goal = true;
-    bool t_lmL = true;
-    bool t_lmT = true;
-    bool t_lmX = true;
+    bool t_lm = true;
 
     float orientation;
-    float ball = LDIST;
-    float robo = LDIST;
-    float goal1 = LDIST;
-    float goal2 = LDIST;
-    float lmL = SDIST;
-    float lmT = SDIST;
-    float lmX = SDIST;
+    float lm = LDIST;
 
-    int n = 9;
+    int n = 2;
 };
 
-void Dynamics_off(Measures *z);
-void Statics_off(Measures *z);
-void Measures_Mode(Measures *z, bool Dynamic, bool Static);
+//void Dynamics_off(Measures *z);
+//void Statics_off(Measures *z);
+//void Measures_Mode(Measures *z, bool Dynamic, bool Static);
 
 #endif // FUN_H

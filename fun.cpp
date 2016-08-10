@@ -47,14 +47,22 @@ double max(double a, double b)
 
 bool compAng(float ang, float base)
 {
-    if(base > 150 || base < -150)
-    {
-        if(ang > 0 && base < 0)
-            return (ang < base + 360 + 30) && (ang > base + 360 - 30);
-        else if(ang < 0 && base > 0)
-            return (ang < base - 360 + 30) && (ang > base - 360 - 30);
-    }
-    return (ang < base + 30) && (ang > base - 30);
+    float ax = cos(ang*PI/180);
+    float ay = sin(ang*PI/180);
+
+    float bx = cos(base*PI/180);
+    float by = sin(base*PI/180);
+
+    float cx = ax-bx;
+    float cy = ay-by;
+    float c = pow(cx,2)+pow(cy,2);
+
+    float da = base+30;
+    float dx = cos(da*PI/180)-bx;
+    float dy = sin(da*PI/180)-by;
+    float d = pow(dx,2)+pow(dy,2);
+
+    return c < d;
 }
 
 double AngGaussian(float mu, float sig, float x)
@@ -71,35 +79,3 @@ double AngGaussian(float mu, float sig, float x)
     return ret;
 }
 
-void Dynamics_off(Measures *z)
-{
-    z->t_ball = false;
-    z->t_robo = false;
-    z->t_orient = false;
-}
-
-void Statics_off(Measures *z)
-{
-    z->t_goal = false;
-    z->t_lmL = false;
-    z->t_lmT = false;
-    z->t_lmX = false;
-}
-
-void Measures_Mode(Measures *z, bool Dynamic, bool Static)
-{
-    if (!Dynamic) {
-        Dynamics_off(z);
-    }
-    if (!Static) {
-        Statics_off(z);
-    }
-    z->n = 0;
-    if (z->t_orient) z->n += 2;
-    if (z->t_ball) z->n++;
-    if (z->t_robo) z->n++;
-    if (z->t_lmL) z->n++;
-    if (z->t_lmT) z->n++;
-    if (z->t_lmX) z->n++;
-    if (z->t_goal) z->n += 2;
-}
